@@ -6,9 +6,8 @@
                         navigation</span><span class="navbar-toggler-icon ham-btn"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="nav navbar-nav">
-                    
                         <li class="dropdown">
-                        <a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown" aria-expanded="false" href="#">강의 </a>
+                        <a>강의 </a>
                             <div class="dropdown-menu" role="menu">
                                 <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=front&small_category=0">웹프론트엔드</a>
                                 <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=backend&small_category=0">웹백엔드</a>
@@ -16,16 +15,16 @@
                             </div>
                         </li>
                         <!--<li class="nav-item" role="presentation"><a class="nav-link active" href="#">Link</a></li>-->
-                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
-                            data-toggle="dropdown" aria-expanded="false" href="#">고객센터 </a>
+                        <li>
+                            <a>고객센터 </a>
                             <div class="dropdown-menu" role="menu">
-                                <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/notice/list">공지사항</a>
-                                <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/faq/list">자주묻는질문</a>
-                                <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_board/list">1:1 문의</a>
+                                <a>공지사항</a>
+                                <a>자주묻는질문</a>
+                                <a>1:1 문의</a>
                             </div>
                         </li>
-                        <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
-                            data-toggle="dropdown" aria-expanded="false" href="#">커뮤니티</a>
+                        <li>
+                            <a>커뮤니티</a>
                             <div class="dropdown-menu" role="menu">
                                 <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_users/list">질문답변</a>
                                 <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_free/list">자유게시판</a>
@@ -38,7 +37,6 @@
                             <input class="form-control search-field" type="search" name="search" id="search-field">
                         </div>
                     </form> -->
-
                     <div style="margin-left:auto">
                         <c:choose>
                             <c:when test="${ empty sessionScope.id}">
@@ -63,7 +61,6 @@
                 </div>
             </div>
         </nav>
-        
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     </div>
 </template>
@@ -72,7 +69,7 @@
 export default {
     name: 'Header',
     props:{
-
+        
     }
 }
 </script>
