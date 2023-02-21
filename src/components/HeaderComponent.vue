@@ -1,4 +1,3 @@
-
 <template>
     <div class="header-blue" id="HeaderComponent">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="background-color:#fff">
@@ -68,6 +67,20 @@
         <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     </div>
 </template>
+
+<script>
+export default {
+    name: 'Header',
+    props:{
+
+    }
+}
+</script>
+
+<style>
+
+</style>
+
 
 
 
