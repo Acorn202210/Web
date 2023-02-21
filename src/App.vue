@@ -1,9 +1,7 @@
 <template>
-  <Header/>
-
-  <div class="wrapper" id="App">
-    <!--<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>-->
   
+  <div class="wrapper" id="App">
+    <Header/>
     <div class="visual-bg">
       <div class="container hero">
           <div class="row">
@@ -20,13 +18,14 @@
           </div>
         </div>
       </div>
-      <!-- <a href="${pageContext.request.contextPath}/studentLecture/list?Large_category=1&small_category=1">수강신청 리스트</a> -->
+      <Footer/>
   </div>
   
 </template>
 
 <script>
 import Header from './components/common/Header.vue'
+import Footer from './components/common/Footer.vue'
 
 export default {
   name: 'App',
@@ -39,7 +38,8 @@ export default {
     
   },
   components: {
-    Header : Header
+    Header : Header,
+    Footer : Footer
   },
   
   
@@ -77,13 +77,6 @@ export default {
   border:none;
 }
 
-@media (min-width:768px) {
-  .header-blue .navbar {
-    padding-top:1rem;
-    padding-bottom:1rem;
-  }
-}
-
 .header-blue .navbar .navbar-brand {
   font-weight:bold;
   color:#1EBD8E;
@@ -92,13 +85,6 @@ export default {
 .header-blue .navbar .navbar-collapse {
   border-top:1px solid rgba(255,255,255,0.3);
   margin-top:.5rem;
-}
-
-@media (min-width:768px) {
-  .header-blue .navbar .navbar-collapse {
-    border-color:transparent;
-    margin:0;
-  }
 }
 
 .header-blue .navbar .navbar-collapse span .login {
@@ -119,20 +105,6 @@ export default {
 .header-blue .navbar .navbar-nav a.active, .header-blue .navbar .navbar-nav > .show .dropdown-item {
   background:none;
   box-shadow:none;
-}
-
-@media (min-width: 768px) {
-  .header-blue .navbar-nav .nav-link {
-    padding-left:.7rem;
-    padding-right:.7rem;
-  }
-}
-
-@media (min-width: 992px) {
-  .header-blue .navbar-nav .nav-link {
-    padding-left:1.2rem;
-    padding-right:1.2rem;
-  }
 }
 
 .header-blue .navbar .navbar-nav > li > .dropdown-menu {
@@ -196,12 +168,6 @@ export default {
   text-align:center;
 }
 
-@media (min-width:768px) {
-  .header-blue .hero {
-    margin-top:60px;
-    text-align:left;
-  }
-}
 
 .header-blue .hero h1 {
   color:#fff;
@@ -212,13 +178,6 @@ export default {
   line-height:1.4;
 }
 
-@media (min-width:992px) {
-  .header-blue .hero h1 {
-    margin-top:190px;
-    margin-bottom:24px;
-    line-height:1.2;
-  }
-}
 
 .header-blue .hero p {
   color:rgba(255,255,255,0.8);
@@ -363,4 +322,41 @@ a {color:inherit; text-decoration: none}
     border: 0;
     clip: rect(0,0,0,0);
 }
+
+@media (min-width: 768px) {
+  .header-blue .navbar .navbar-collapse {
+    border-color:transparent;
+    margin:0;
+  }
+  .header-blue .navbar-nav .nav-link {
+    padding-left:.7rem;
+    padding-right:.7rem;
+  }
+  .header-blue .hero {
+    margin-top:60px;
+    text-align:left;
+  }
+  .header-blue .navbar {
+    padding-top:1rem;
+    padding-bottom:1rem;
+  }
+}
+
+
+
+@media (min-width: 992px) {
+  .header-blue .hero h1 {
+    margin-top:190px;
+    margin-bottom:24px;
+    line-height:1.2;
+  }
+  .header-blue .navbar-nav .nav-link {
+    padding-left:1.2rem;
+    padding-right:1.2rem;
+  }
+}
+
+
+
+
 </style>
