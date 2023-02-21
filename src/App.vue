@@ -1,5 +1,5 @@
 <template>
-  <header-component/>
+  <Header/>
 
   <div class="wrapper" id="App">
     <!--<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>-->
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import HeaderComponent from './components/HeaderComponent.vue'
+import Header from './components/common/Header.vue'
 
 export default {
   name: 'App',
@@ -39,7 +39,7 @@ export default {
     
   },
   components: {
-    HeaderComponent
+    Header
   },
   
   
