@@ -1,4 +1,5 @@
 <template>
+
     <div id="FooterComponent">
         <footer class="bg-dark text-center text-white">
             <!-- Grid container -->
@@ -61,11 +62,10 @@
     </div>
 </template>
 <script>
+
 export default {
-    name: 'Footer',
-    props:{
-        
-    }
+    name: 'Footer'
+
 }
 </script>
 
