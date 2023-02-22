@@ -1,5 +1,16 @@
 <template>
-  <div class="wrapper">
+
+	<div>
+		<div v-for="user in users.body.data" :key="user">
+			{{ user.question}}
+		</div>
+		<div>{{users.body}}</div>
+		<div>{{users.body.totalPage}}</div>
+		<div>{{users.body.currentPage}}</div>
+		<div>{{users.body.limit}}</div>
+  	</div>
+
+  	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 		<div class="sub-tit-box">
 			<div class="container">
@@ -78,16 +89,29 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
+    name: 'Faq',
+    data(){
+        return{
+            users: []
+        }
+    },
+    created() {
+    var vm = this;
+    axios.get('http://localhost:9000/project/api/faq/Faqlist')
+      .then(function(response) {
+        console.log(response);
+        vm.users = response.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      })
+  },
 
 }
 </script>
-export default {
-    name: 'Faq',
-    props : {
-
-    }
-}
 
 <style>
 

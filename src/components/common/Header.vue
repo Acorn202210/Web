@@ -1,14 +1,18 @@
 <template>
     <div class="header-blue" id="HeaderComponent">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="background-color:#fff">
-        <div class="container"><a class="navbar-brand" href="${pageContext.request.contextPath}/">logo</a><button class="navbar-toggler"
-                data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle
-                    navigation</span><span class="navbar-toggler-icon ham-btn"></span></button>
+            <div class="container">
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/">logo</a>
+                <button class="navbar-toggler"
+                data-toggle="collapse" data-target="#navcol-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="navbar-toggler-icon ham-btn"></span>
+                </button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="nav navbar-nav">
                    
                     <li class="dropdown">
-                    <a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown" aria-expanded="false" href="#">강의 </a>
+                        <a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown" aria-expanded="false" href="#">강의 </a>
                         <div class="dropdown-menu" role="menu">
                             <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=front&small_category=0">웹프론트엔드</a>
                             <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=backend&small_category=0">웹백엔드</a>
