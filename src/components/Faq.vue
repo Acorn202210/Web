@@ -1,7 +1,10 @@
 <template>
+  
   <div>
-    <div v-for="user in users.body.data" :key="user">  {{ user.question}}</div>
-    <div>{{users.body}}</div>
+    <div v-for="user in users.body.data" :key="user">  
+      {{ user.question}}
+    </div>
+    <div>{{users.content}}</div>
     <div>{{users.body.totalPage}}</div>
     <div>{{users.body.currentPage}}</div>
     <div>{{users.body.limit}}</div>
