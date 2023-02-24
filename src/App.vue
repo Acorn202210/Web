@@ -1,15 +1,11 @@
 <template>
-
-  <div>
-    <div v-for="user in users.body.data" :key="user">  {{ user.question}}</div>
-    <div>{{users.body}}</div>
-    <div>{{users.body.totalPage}}</div>
-    <div>{{users.body.currentPage}}</div>
-    <div>{{users.body.limit}}</div>
-  </div>
   
   <div class="wrapper" id="App">
     <Header/>
+    <div class="container">
+      <router-view></router-view>
+    </div>
+
     <div class="visual-bg">
       <div class="container hero">
           <div class="row">
