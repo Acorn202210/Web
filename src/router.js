@@ -3,9 +3,18 @@ import Faq from './components/Faq.vue';
 
 const routes = [
     {
-        path: "/faq",
-        component: Faq,
+        path: '/',
+        redirect: '/home',
+        
     },
+    {
+        path: "/faq",
+        component: Faq
+    },
+    {
+        path: "/home",
+        component: () => import('@/components/Home.vue')
+    }
 ];
 
 const router = createRouter({
