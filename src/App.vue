@@ -22,8 +22,8 @@
           </div>
         </div>
       </div>
-      <Footer/>
-  </div>
+    </div>
+  <Footer/>
   
 </template>
 
