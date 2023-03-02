@@ -16,7 +16,7 @@ const store = createStore({
         getData(context){
             axios.get('http://localhost:9000/project/api/faq/Faqlist').then((a)=>{
                 console.log(a.data)
-                context.commit('setMore', a.data)
+                context.commit('setMore', a.data.body)
             })
         },
     },
