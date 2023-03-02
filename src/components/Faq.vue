@@ -14,22 +14,18 @@
   export default {
 	  name: 'Faq',
 	  data(){
-		  return{
-			  users: []
-		  }
+
 	  },
-	  created() {
-	  var vm = this;
-	  axios.get('http://localhost:9000/project/api/faq/Faqlist')
-		.then(function(response) {
-		  console.log(response);
-		  vm.users = response.data;
-		})
-		.catch(function(error) {
-		  console.log(error);
-		})
-	},
-  }
+	  methods : {
+		more(){
+			axios.get('http://localhost:9000/project/api/faq/Faqlist')
+			.then( result =>{
+				this.게시물.push(result.data);
+			})
+		}
+	  }
+	}
+  
   </script>
   <style>
   </style>

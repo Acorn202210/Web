@@ -23,9 +23,9 @@
                     <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
                         data-toggle="dropdown" aria-expanded="false" href="#">고객센터 </a>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/notice/list">공지사항</a>
+                            <a class="dropdown-item" role="presentation"><router-link to="notice">공지사항</router-link></a>
                             <a class="dropdown-item" role="presentation"><router-link to="faq">자주묻는질문</router-link></a>
-                            <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_board/list">1:1 문의</a>
+                            <a class="dropdown-item" role="presentation"><router-link to="qna">1:1 문의</router-link></a>
                         </div>
                     </li>
                     <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
