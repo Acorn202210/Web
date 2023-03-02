@@ -1,29 +1,22 @@
 <template>
-	<div>
-	  <div v-for="user in users.body.data" :key="user">
-		{{ user.question}}
-	  </div>
-	  <div>{{users.content}}</div>
-	  <div>{{users.body.totalPage}}</div>
-	  <div>{{users.body.currentPage}}</div>
-	  <div>{{users.body.limit}}</div>
-	</div>
+
+	<p>{{ $store.state.more }}</p>
+  	<button @click="$store.dispatch('getData')">더보기버튼</button>
+
+	
   </template>
   <script>
-  import axios from 'axios';
-  export default {
+  	import { mapMutations } from 'vuex'
+
+  	export default {
 	  name: 'Faq',
 	  data(){
 
 	  },
 	  methods : {
-		more(){
-			axios.get('http://localhost:9000/project/api/faq/Faqlist')
-			.then( result =>{
-				this.게시물.push(result.data);
-			})
-		}
-	  }
+		...mapMutations(['setMore']),
+	  },
+      
 	}
   
   </script>
