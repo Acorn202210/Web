@@ -14,7 +14,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown" aria-expanded="false" href="#">강의 </a>
                         <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=front&small_category=0">웹프론트엔드</a>
+                            <a class="dropdown-item" role="presentation"><router-link to="lecture">웹프론트엔드</router-link></a>
                             <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=backend&small_category=0">웹백엔드</a>
                             <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=mobile&small_category=0">모바일</a>
                         </div>
