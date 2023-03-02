@@ -2,7 +2,7 @@
     <div class="header-blue" id="HeaderComponent">
         <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="background-color:#fff">
             <div class="container">
-                <a class="navbar-brand" href="${pageContext.request.contextPath}/">logo</a>
+                <a class="navbar-brand"><router-link to="home">logo</router-link></a>
                 <button class="navbar-toggler"
                 data-toggle="collapse" data-target="#navcol-1">
                     <span class="sr-only">Toggle navigation</span>
@@ -24,7 +24,7 @@
                         data-toggle="dropdown" aria-expanded="false" href="#">고객센터 </a>
                         <div class="dropdown-menu" role="menu">
                             <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/notice/list">공지사항</a>
-                            <a @click="$router.push('/faq')" class="dropdown-item" role="presentation"><router-link to="faq">자주묻는질문</router-link></a>
+                            <a class="dropdown-item" role="presentation"><router-link to="faq">자주묻는질문</router-link></a>
                             <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_board/list">1:1 문의</a>
                         </div>
                     </li>
