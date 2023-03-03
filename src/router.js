@@ -2,7 +2,9 @@ import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/Faq.vue';
 import Notice from './components/Notice.vue';
 import Qna from './components/Qna.vue';
-import Lecture from './components/Lecture.vue';
+import Front from './components/Front.vue';
+import Backend from './components/Backend.vue';
+import Mobile from './components/Mobile.vue';
 
 const routes = [
     {
@@ -15,8 +17,16 @@ const routes = [
         component: Faq
     },
     {
-        path: "/lecture",
-        component: Lecture
+        path: "/front",
+        component: Front
+    },
+    {
+        path: "/backend",
+        component: Backend
+    },
+    {
+        path: "/mobile",
+        component: Mobile
     },
     {
         path: "/notice",
