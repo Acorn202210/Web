@@ -22,6 +22,8 @@
 			  </form>
 			</main>
 		</div>
+        dkssud
+        {{ $store.getters.isLogin }}
 	</div>
   </template>
   
@@ -41,13 +43,14 @@ import axios from 'axios';
             const data ={
                 lecUserId : this.id,
                 userPwd : this.pwd
-            }
+            };
             console.log(data);
-
+            var vm = this;
             axios.post(url, data)
                 .then(function(response){
+                    vm.$store.dispatch('setUserId', vm.id)
                     console.log(response.data)
-                    this.$store.dispatch('setUserId', )
+
                 })
                 .catch(function(error){
                     console.log(error)

@@ -7,6 +7,11 @@ const store = new Vuex.Store({
             userId : null
         }
     },
+    getters:{
+        isLogin(state){
+            return state.userId
+        }
+    },
     mutations :{
         setUserId(state, userId){
             state.userId = userId;
