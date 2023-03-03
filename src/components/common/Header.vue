@@ -45,7 +45,7 @@
                 <div style="margin-left:auto">
                     <c:choose>
                         <c:when test="${ empty sessionScope.id}">
-                            <span class="navbar-text"><a href="${pageContext.request.contextPath}/users/loginform" class="login">로그인</a></span>
+                            <span class="navbar-text"><router-link to="login" class="login">로그인</router-link></span>
                             <a href="${pageContext.request.contextPath}/users/signup_form" class="btn btn-light action-button" role="button" >회원가입</a>
                             </c:when>
                             <c:otherwise>
