@@ -27,6 +27,11 @@ const routes = [
         component: Qna
     },
     {
+        path: "/qna/detail/:boardQuestionNum",
+        component: Qna
+    },
+
+    {
         path: "/home",
         component: () => import('@/components/Home.vue')
     }
