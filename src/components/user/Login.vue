@@ -1,6 +1,6 @@
 <template>
 	<div>
-        <div class="container userform">
+      <div class="container userform">
 			<main class="form-signin w-100 m-auto">
 			  <form @submit.prevent="submitForm">
 			    <h1 class="mb-3 fw-normal main">login</h1>
@@ -50,13 +50,13 @@ import axios from 'axios';
                     vm.$store.dispatch('setIsManager', response.data.body.isManager)
                     vm.$router.push('/home');
                 })
-                .catch(function(error){
-                    console.log(error)
+                .catch(function(){
+                    alert('아이디나 비밀번호가 잘 못 되었습니다!');
                 });
         }
       }
     }
   </script>
   <style>
-  @import '../assets/css/user.css'
+  @import '../../assets/css/user.css'
   </style>

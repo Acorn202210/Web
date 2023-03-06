@@ -78,11 +78,9 @@ export default {
     }
 }
 </script>
-
-<style scoped>
+<style>
   @import '../../assets/css/main_nav.css'
 </style>
-
 
 
 
