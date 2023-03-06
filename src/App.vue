@@ -11,7 +11,6 @@
 <script>
 import Header from './components/common/Header.vue'
 import Footer from './components/common/Footer.vue'
-import axios from 'axios';
 
 export default {
   name: 'App',
@@ -22,15 +21,7 @@ export default {
     }
   }, 
   created() {
-    var vm = this;
-    axios.get('http://localhost:9000/project/api/faq/Faqlist')
-      .then(function(response) {
-        console.log(response);
-        vm.users = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      })
+
   },
 
   methods:{
