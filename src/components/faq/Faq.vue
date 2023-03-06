@@ -1,9 +1,11 @@
 <template>
 <div id="faq">
-	<div v-for="faq in faq.data" :key="faq">
-		<div>{{faq.question}}
-		</div>
+	<div v-for="faq in faq.data" :key="faq.faqNum">
+		<div>{{faq.question}}</div>
+		<a href="/faqOne/${faq.faqNum}">하나만</a>
+		<div>{{faq.faqNum}}</div>
 		<div>{{faq.content}}</div>
+		{{faq}}
 	</div>
 
 	<div>
@@ -48,6 +50,7 @@ export default {
 			no: 0,
 			question: '',
 			content: '',
+			faqNum: '',
 			result: null
 		}
 	},

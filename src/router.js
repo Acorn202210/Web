@@ -1,11 +1,13 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Faq from './components/Faq.vue';
+import Faq from './components/faq/Faq.vue';
 import Notice from './components/Notice.vue';
 import Qna from './components/Qna.vue';
 import Front from './components/Front.vue';
 import Backend from './components/Backend.vue';
 import Mobile from './components/Mobile.vue';
 import Login from './components/Login.vue';
+import Updateform from './components/Updateform.vue';
+import FaqOne from './components/faq/FaqOne.vue';
 
 const routes = [
     {
@@ -15,7 +17,17 @@ const routes = [
     },
     {
         path: "/faq",
-        component: Faq
+        component: Faq,
+        children:[
+            {
+                path: "updateform/:faqNum",
+                component: Updateform, 
+            }
+        ]
+    },
+    {
+        path: "/faqOne/:faqNum",
+        component: FaqOne,
     },
     {
         path: "/front",
