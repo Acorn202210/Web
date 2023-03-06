@@ -22,8 +22,6 @@
 			  </form>
 			</main>
 		</div>
-        dkssud
-        {{ $store.getters.isLogin }}
 	</div>
   </template>
   
@@ -48,9 +46,9 @@ import axios from 'axios';
             var vm = this;
             axios.post(url, data)
                 .then(function(response){
-                    vm.$store.dispatch('setUserId', vm.id)
-                    console.log(response.data)
-
+                    vm.$store.dispatch('setUserId', vm.id);
+                    vm.$store.dispatch('setIsManager', response.data.body.isManager)
+                    vm.$router.push('/home');
                 })
                 .catch(function(error){
                     console.log(error)
