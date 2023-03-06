@@ -78,8 +78,8 @@ export default {
     }
 }
 </script>
-<style>
-  @import '../../assets/css/main_nav.css'
+<style >
+ 
 </style>
 
 
