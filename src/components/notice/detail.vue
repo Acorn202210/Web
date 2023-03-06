@@ -23,7 +23,7 @@
                 <td>{{tmp.notiNum}} </td>
                 <td>{{tmp.title}}</td>
                 <td>{{tmp.regdate}}</td>
-                <td>{{tmp.notiWriter}}</td>
+                <td>{{ tmp.notiWriter }}</td>
                 <td>{{tmp.viewCount}}</td>
               </tr>
           </tbody>
@@ -36,7 +36,7 @@
 <script>
 import axios from 'axios'
 export default {
-    name: 'Notice',
+    name: 'NoticeDetail',
 	  data(){
       return{
         notices:{}
@@ -56,7 +56,7 @@ export default {
     },
     methods:{
       detail:function(){
-
+        
       }
     }
 }
