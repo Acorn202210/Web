@@ -1,11 +1,11 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/Faq.vue';
-import Notice from './components/Notice.vue';
+import Notice from './components/notice/Notice.vue';
 import Qna from './components/Qna.vue';
 import Front from './components/Front.vue';
 import Backend from './components/Backend.vue';
 import Mobile from './components/Mobile.vue';
-import Login from './components/Login.vue';
+import Login from './components/user/Login.vue';
 
 const routes = [
     {
