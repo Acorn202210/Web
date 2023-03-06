@@ -5,6 +5,7 @@ import Qna from './components/Qna.vue';
 import Front from './components/Front.vue';
 import Backend from './components/Backend.vue';
 import Mobile from './components/Mobile.vue';
+import Login from './components/Login.vue';
 
 const routes = [
     {
@@ -39,7 +40,12 @@ const routes = [
     {
         path: "/home",
         component: () => import('@/components/Home.vue')
-    }
+    },
+    {
+        path: "/login",
+        component: Login
+    },
+   
 ];
 
 const router = createRouter({
