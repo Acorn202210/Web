@@ -1,13 +1,14 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/faq/Faq.vue';
-import Notice from './components/Notice.vue';
 import Qna from './components/Qna.vue';
-import Front from './components/Front.vue';
-import Backend from './components/Backend.vue';
-import Mobile from './components/Mobile.vue';
-import Login from './components/Login.vue';
+import Login from './components/user/Login.vue';
 import Updateform from './components/Updateform.vue';
 import FaqOne from './components/faq/FaqOne.vue';
+import Notice from './components/notice/Notice.vue';
+import Front from './components/lecture/Front.vue';
+import Backend from './components/lecture/Backend.vue';
+import Mobile from './components/lecture/Mobile.vue';
+import LectureDetail from './components/lecture/LectureDetail.vue'
 
 const routes = [
     {
@@ -40,6 +41,10 @@ const routes = [
     {
         path: "/mobile",
         component: Mobile
+    },
+    {
+        path: "/lectureDetail/:lecNum",
+        component: LectureDetail
     },
     {
         path: "/notice",

@@ -10,7 +10,7 @@
       <div class="table-responsive table-top">
         <table class="table table-hover align-middle">
           <thead>
-            <tr style="text-align: center;">
+            <tr style="text-align: center" on-click="">
               <th width="15%">글번호</th>
               <th width="auto">제목</th>
               <th width="25%">작성일</th>
@@ -21,9 +21,7 @@
           <tbody class="table-group-divider" >              
               <tr style="text-align: center;" v-for="tmp in notices.data" :key="tmp">
                 <td>{{tmp.notiNum}} </td>
-                <td>
-                  <a href="detail?num=${tmp.num }&condition=${condition}&keyword=${encodedK}">{{tmp.title}}</a>
-                </td>
+                <td>{{tmp.title}}</td>
                 <td>{{tmp.regdate}}</td>
                 <td>{{ tmp.notiWriter }}</td>
                 <td>{{tmp.viewCount}}</td>
