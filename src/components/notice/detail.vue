@@ -1,36 +1,50 @@
 <template>
-  
-  <div>
-    <div class="sub-tit-box">
-      <div class="container">
-        <h3 class="sub-tit">공지사항</h3>
-      </div>
-    </div>
-    <div class="container">
-      <div class="table-responsive table-top">
-        <table class="table table-hover align-middle">
-          <thead>
-            <tr style="text-align: center" on-click="detail">
-              <th width="15%">글번호</th>
-              <th width="auto">제목</th>
-              <th width="25%">작성일</th>
-              <th width="15%">작성자</th>
-              <th width="15%">조회수</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider" >              
-              <tr style="text-align: center;" v-for="tmp in notices.data" :key="tmp">
-                <td>{{tmp.notiNum}} </td>
-                <td>{{tmp.title}}</td>
-                <td>{{tmp.regdate}}</td>
-                <td>{{ tmp.notiWriter }}</td>
-                <td>{{tmp.viewCount}}</td>
-              </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
+ <div class="container mt-5">
+			
+	        <div class="d-md-flex justify-content-md-end">
+            <a v-if="notice.prevNum != 0" :href="`/notice/${notice.prevNum}`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+            <a v-if="notice.nextNum != 0" :href="`/notice/${notice.nextNum}`"  class="btn btn-sm btn-secondary">다음글</a>
+	        </div>
+	            
+			<c:if test="${not empty keyword }">
+				<p class="mt-2">
+					<strong>${condition }</strong> 조건 
+					<strong>${keyword }</strong> 검색어로 검색된 내용입니다.
+				</p>
+			</c:if>
+			<h3 class="sr-only">글 상세 보기</h3>
+			<table>
+				<!-- <tr>
+					<th>글번호</th>
+					<td>${dto.num }</td>
+				</tr> -->
+				<tr>
+					<th class="sr-only">제목</th>
+					<td><h2 class="fw-bold ">{{notice.title }}</h2></td>
+				</tr>
+				<!-- <tr>
+					<th class="sr-only">조회수</th>
+					<td>${dto.viewCount }</td>	
+				</tr> -->
+	            <tr>
+					<th class="sr-only">작성자</th>
+					<td class="fw-bold fs-6">by {{notice.viewCount }}</td>	 <!--작성자 추가해야함.-->
+				</tr>
+				<tr>
+					<th class="sr-only">작성일</th>
+					<td>{{notice.regdate }}</td>
+				</tr>
+			</table>
+      <div class="mainContent mt-3">{{ notice.content	 }}</div>
+	        <div class="d-grid d-md-flex justify-content-md-end mt-3">
+            <div class="d-grid d-md-flex " v-if="$store.getters.isManager == 'Y'">
+                <a :href="`/notice/${notice.prevNum}/update`" class="btn btn-sm me-2 new-btn">수정</a>
+                <a href="javascript:" @click="deleteConfirm(notice.notiNum)" class="btn btn-sm me-2 btn-danger">삭제</a>                
+            </div>
+	            <a :href="'/notice'" class="btn btn-sm me-2 btn-secondary">목록</a>
+	        </div>
+		</div>
+	
 </template>
 
 <script>
@@ -39,29 +53,40 @@ export default {
     name: 'NoticeDetail',
 	  data(){
       return{
-        notices:{}
+        notice:{}
       }
 	  },
     created(){
       var vm = this;
-      var url = "http://localhost:9000/project/api/notice/list";
+      var url = `http://localhost:9000/project/api/notice/${this.$route.params.notiNum}`;
       axios.get(url)
       .then(function(response){
-        console.log(response.data);
-        vm.notices = response.data.body;
+        console.log(response.data.body);
+        vm.notice = response.data.body;
       })
       .catch(function(error){
         console.log(error);
       })
     },
     methods:{
-      detail:function(){
-        
+      deleteConfirm:function(notiNum){
+        const isDelete = confirm("이 공지 사항을 삭제하겠습니까?");
+        var url = `http://localhost:9000/project/api/notice/${notiNum}/delete`;
+        if(isDelete){
+          axios.put(url)
+          .then(function(){
+            alert('공지 사항이 삭제 되었습니다.');
+            this.$router.push('/notice');
+          })
+          .catch(function(){
+            alert('공지 사항 삭제에 실패했습니다.')
+          })
+        }
       }
     }
 }
 </script>
 
 <style>
-
+    @import '../../assets/css/board.css'
 </style>

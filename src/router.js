@@ -10,6 +10,8 @@ import Mobile from './components/lecture/Mobile.vue';
 import LectureDetail from './components/lecture/LectureDetail.vue'
 
 
+// let path2 = '/' + window.location.host;
+// console.log(path2);
 
 const routes = [
     {
@@ -39,10 +41,10 @@ const routes = [
     },
     {
         path: "/notice",
-        component: Notice
+        component: Notice,
     },
     {
-        path: "/notice/detail",
+        path: "/notice/:notiNum",
         component: NoticeDetail
     },
     {
@@ -57,7 +59,6 @@ const routes = [
         path: "/login",
         component: Login
     },
-   
 ];
 
 const router = createRouter({

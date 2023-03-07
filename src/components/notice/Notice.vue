@@ -21,7 +21,7 @@
           <tbody class="table-group-divider" >              
               <tr style="text-align: center;" v-for="tmp in notices.data" :key="tmp">
                 <td>{{tmp.notiNum}} </td>
-                <td>{{tmp.title}}</td>
+                <td><a :href="`/notice/${tmp.notiNum}`">{{tmp.title}}</a></td>
                 <td>{{tmp.regdate}}</td>
                 <td>{{tmp.notiWriter}}</td>
                 <td>{{tmp.viewCount}}</td>
@@ -29,6 +29,31 @@
           </tbody>
         </table>
       </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isManager == 'Y'">
+        <a href="${pageContext.request.contextPath }/notice/insertform" class="new-btn btn btn-sm">글쓰기</a>
+      </div>
+      <nav aria-label="Page navigation" class="page-btn">
+					<ul class="pagination justify-content-center">
+							<li class="page-item" v-if="notices.currentPage != 1">
+								<a class="page-link new-page-link" href="list?pageNum=${startPageNum-1 }&condition=${condition}&keyword=${encodedK}">
+									<span aria-hidden="true">&lt;</span>
+								</a>
+							</li>
+						
+							<li v-for="i in (notices.startPageNum, notices.endPageNum)" :key="i" class="page-item ${notices.pageNum eq i ? 'active' : '' }">
+								<a class="page-link new-page-link" href="list?pageNum=${i }&condition=${condition}&keyword=${encodedK}">{{i}}</a>
+							</li>
+
+						
+						<c:if test="${endPageNum lt totalPageCount }">
+							<li class="page-item" v-if="notices.endPageNum < notices.totalPage">
+								<a class="page-link new-page-link" href="list?pageNum=${endPageNum+1 }&condition=${condition}&keyword=${encodedK}">
+									<span aria-hidden="true">&gt;</span>
+								</a>
+							</li>
+						</c:if>				
+					</ul>
+				</nav>
     </div>
   </div>
 </template>
