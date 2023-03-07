@@ -2,7 +2,7 @@
   <div class="header-blue" id="HeaderComponent">
       <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="background-color:#fff">
           <div class="container">
-              <a class="navbar-brand"><router-link to="home">plec</router-link></a>
+              <a class="navbar-brand" @click="$router.push('/home')"><router-link to="home">plec</router-link></a>
               <button class="navbar-toggler"
               data-toggle="collapse" data-target="#navcol-1">
                   <span class="sr-only">Toggle navigation</span>

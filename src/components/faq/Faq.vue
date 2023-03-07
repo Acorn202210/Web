@@ -5,18 +5,38 @@
 			<h3 class="sub-tit">자주묻는 질문</h3>
 		</div>
 	</div>
-	<div id="faq">
+
 		<div class="container">
-			<div class="row">
-				<div v-for="faq in faq.data" :key="faq.faqNum">
-					<div class="card mb-3">
-						<div class="card-body">
-						<div>{{ faq.question }}</div> <li><a :href="`/updateform/${faq.faqNum}`">클릭</a></li>
-						<div><strong>{{ faq.content }}</strong></div>
+			<div v-for="faq in faq.data" :key="faq.faqNum">
+				<div class="accordion mb-2" id="accordionPanelsStayOpenExample">
+				<div class="accordion-item">
+					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
+					<button class="accordion-button acco-btn-new collapsed "  type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+						<div class="d-flex align-items-center acco-head-box">
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-question-circle me-2" viewBox="0 0 16 16">
+							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+							<path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z"/>
+							</svg>
+							<strong>{{ faq.question }}</strong>
 						</div>
+					</button>
+					</h2>
+					<div id="panelsStayOpen-collapse" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading">
+					<div class="accordion-body">
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+							<a :href="`/updateform/${faq.faqNum}`" class="btn new-btn">수정</a>
+							<div>
+								<input type="text" v-model="no"/>
+								<button @click="faqupdatedelete" class="btn btn-danger">삭제</button>
+							</div>
+						</div>
+						<div>{{ faq.content }}</div>
+					</div>
 					</div>
 				</div>
+				</div>
 			</div>
+				<a href="${pageContext.request.contextPath}/faq/insertform">새글 작성</a>
 			<nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item" v-bind:class="{ disabled : faq.currentPage <= 1 }">
@@ -63,7 +83,7 @@
 			<div id="result" class="container">
 			{{ result }}
 			</div>
-	</div>
+	
 </template>
   
 <script>
@@ -73,12 +93,10 @@ export default {
 	name: 'Faq',
 	data(){
 		return {
-			page: 0,
 			faq:[],
 			no: 0,
 			question: '',
 			content: '',
-			faqNum: '',
 			result: null
 		}
 	},
@@ -131,7 +149,7 @@ export default {
 				console.warn("ERROR!!!!! : ",ex)
 			})
 		},
-	}
+	},
 }
 </script>
   
