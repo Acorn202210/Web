@@ -11,7 +11,7 @@
 				<div class="accordion mb-2" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item">
 					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
-					<button class="accordion-button acco-btn-new collapsed "  type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapse" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+					<button class="accordion-button acco-btn-new collapsed "  type="button" data-bs-toggle="collapse" :data-bs-target="`#panelsStayOpen-collapse-${faq.faqNum}`" aria-expanded="true" aria-controls="panelsStayOpen-collapse">
 						<div class="d-flex align-items-center acco-head-box">
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-question-circle me-2" viewBox="0 0 16 16">
 							<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
@@ -21,7 +21,7 @@
 						</div>
 					</button>
 					</h2>
-					<div id="panelsStayOpen-collapse" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading">
+					<div :id="`panelsStayOpen-collapse-${faq.faqNum}`" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading">
 					<div class="accordion-body">
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 							<a :href="`/updateform/${faq.faqNum}`" class="btn new-btn">수정</a>
