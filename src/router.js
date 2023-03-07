@@ -3,6 +3,7 @@ import Faq from './components/faq/Faq.vue';
 import Qna from './components/Qna.vue';
 import Login from './components/user/Login.vue';
 import Updateform from './components/faq/Updateform.vue';
+import Insertform from './components/faq/Insertform.vue';
 import Notice from './components/notice/Notice.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
@@ -22,6 +23,10 @@ const routes = [
     {
         path: "/updateform/:num",
         component: Updateform,
+    },
+    {
+        path: "/insertform",
+        component: Insertform,
     },
     {
         path: "/front",

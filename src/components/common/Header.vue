@@ -24,7 +24,7 @@
                       data-toggle="dropdown" aria-expanded="false" href="#">고객센터 </a>
                       <div class="dropdown-menu" role="menu">
                           <a class="dropdown-item" role="presentation"><router-link to="notice">공지사항</router-link></a>
-                          <a class="dropdown-item" role="presentation"><router-link to="faq">자주묻는질문</router-link></a>
+                          <a class="dropdown-item" role="presentation" @click="$router.push('/faq')"><router-link to="faq">자주묻는질문</router-link></a>
                           <a class="dropdown-item" role="presentation"><router-link to="qna">1:1 문의</router-link></a>
                       </div>
                   </li>

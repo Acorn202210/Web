@@ -26,7 +26,7 @@
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 							<a :href="`/updateform/${faq.faqNum}`" class="btn new-btn">수정</a>
 							<div>
-								<input type="text" v-model="faq.faqNum"/>
+								<input type="hidden" v-model="faq.faqNum"/>
 								<button @click="faqupdatedelete(faq.faqNum)" class="btn btn-danger">삭제</button>
 							</div>
 						</div>
@@ -36,7 +36,7 @@
 				</div>
 				</div>
 			</div>
-				<a href="${pageContext.request.contextPath}/faq/insertform">새글 작성</a>
+				<a href="/insertform" class="btn new-btn" style="display: inline-block; margin: 0 5px;  float: right;">등록</a>
 			<nav>
 				<ul class="pagination justify-content-center">
 					<li class="page-item" v-bind:class="{ disabled : faq.currentPage <= 1 }">
@@ -77,36 +77,12 @@ export default {
 			})
 	},
 	methods : {
-		faqinsert : function() {
-			axios.post('http://localhost:9000/project/api/faq/faq-insert', 
-				{ question:this.question, content:this.content }
-			).then(response => {
-				console.warn(response)
-				this.result = response.data
-				this.no = response.data.no
-			}).catch((ex) => {
-				console.warn("ERROR!!!!! : ",ex)
-			})
-		},
 
 		faqone : function() {
 			axios.get('http://localhost:9000/project/api/faq/' + this.no + '/faqOne')
 			.then((response) => {
 				console.warn(response);
 				this.result = response.data
-			})
-		},
-
-		faqupdate : function() {
-			axios.put('http://localhost:9000/project/api/faq/' + this.no + '/update', 
-				{ faqNum:this.no, question:this.question, content:this.content }
-			).then(response => {
-				console.warn(response)
-				this.question = '';
-				this.content = '';
-				this.result = response.data
-			}).catch((ex) => {
-				console.warn("ERROR!!!!! : ",ex)
 			})
 		},
 

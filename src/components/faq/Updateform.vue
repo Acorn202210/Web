@@ -11,7 +11,7 @@
     </div>
     <button @click="faqupdate">수정</button>
     <button @click="$router.go(-1)">취소</button>
-</div>
+  </div>
 </template>
 
 <script>
@@ -37,7 +37,7 @@ export default {
         this.question = '';
         this.content = '';
         this.result = response.data;
-        this.$router.push('/faq'); // 수정 완료 후 이전 페이지로 이동
+        this.$router.push('/faq'); // 수정 완료 후 faq 페이지로 이동
       }).catch((ex) => {
         console.warn("ERROR!!!!! : ", ex)
       })
