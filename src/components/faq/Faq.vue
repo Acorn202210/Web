@@ -27,7 +27,7 @@
 							<a :href="`/updateform/${faq.faqNum}`" class="btn new-btn">수정</a>
 							<div>
 								<input type="hidden" v-model="faq.faqNum"/>
-								<button @click="faqupdatedelete(faq.faqNum)" class="btn btn-danger">삭제</button>
+								<button @click="confirmDelete(faq.faqNum)" class="btn btn-danger">삭제</button>
 							</div>
 						</div>
 						<div>{{ faq.content }}</div>
@@ -91,12 +91,18 @@ export default {
 				{ faqNum }
 			).then(response => {
 				console.warn(response)
-				this.result = response.data
+				this.result = response.data;
 			}).catch((ex) => {
 				console.warn("ERROR!!!!! : ",ex)
 			})
 		},
+		confirmDelete: function (faqNum) {
+      		if (confirm("정말 삭제하시겠습니까?")) {
+        		this.faqupdatedelete(faqNum);
+      		}
+    	},
 	},
+	
 }
 </script>
   
