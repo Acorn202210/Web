@@ -32,7 +32,7 @@
                       data-toggle="dropdown" aria-expanded="false" href="#">커뮤니티</a>
                       <div class="dropdown-menu" role="menu">
                           <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_users/list">질문답변</a>
-                          <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_free/list">자유게시판</a>
+                          <a class="dropdown-item" role="presentation" @click="$router.push('/qnafree')"><router-link to="qnafree">자유게시판</router-link></a>
                       </div>
                   </li>
               </ul>
