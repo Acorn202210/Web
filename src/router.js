@@ -5,6 +5,7 @@ import Login from './components/user/login.vue';
 import Updateform from './components/faq/Updateform.vue';
 import Insertform from './components/faq/Insertform.vue';
 import Notice from './components/notice/Notice.vue';
+import NoticeDetail from './components/notice/detail';
 import Qna from './components/qna/Qna.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
@@ -14,6 +15,7 @@ import LectureDetail from './components/lecture/LectureDetail.vue'
 
 // let path2 = '/' + window.location.host;
 // console.log(path2);
+
 
 const routes = [
     {

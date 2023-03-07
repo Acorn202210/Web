@@ -32,26 +32,23 @@
       <div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isManager == 'Y'">
         <a href="${pageContext.request.contextPath }/notice/insertform" class="new-btn btn btn-sm">글쓰기</a>
       </div>
-      <nav aria-label="Page navigation" class="page-btn">
+      <nav>
 					<ul class="pagination justify-content-center">
-							<li class="page-item" v-if="notices.currentPage != 1">
-								<a class="page-link new-page-link" href="list?pageNum=${startPageNum-1 }&condition=${condition}&keyword=${encodedK}">
-									<span aria-hidden="true">&lt;</span>
+							<li class="page-item" v-if="notices.startPageNum != 1">
+								<a class="page-link new-page-link" @click="paging(notices.startPageNum - 1)">
+								<span aria-hidden="true">&lt;</span>
 								</a>
 							</li>
 						
-							<li v-for="i in (notices.startPageNum, notices.endPageNum)" :key="i" class="page-item ${notices.pageNum eq i ? 'active' : '' }">
-								<a class="page-link new-page-link" href="list?pageNum=${i }&condition=${condition}&keyword=${encodedK}">{{i}}</a>
+							<li v-for="i in 5" :key="i" class="page-item ${notices.pageNum eq i ? 'active' : '' }">
+								<a class="page-link new-page-link" v-if="i+notices.startPageNum-1 <= notices.endPageNum" @click="paging(i+notices.startPageNum-1)">{{i+notices.startPageNum-1}}</a>
 							</li>
 
-						
-						<c:if test="${endPageNum lt totalPageCount }">
 							<li class="page-item" v-if="notices.endPageNum < notices.totalPage">
-								<a class="page-link new-page-link" href="list?pageNum=${endPageNum+1 }&condition=${condition}&keyword=${encodedK}">
+								<a class="page-link new-page-link" @click="paging(notices.endPageNum + 1)">
 									<span aria-hidden="true">&gt;</span>
 								</a>
 							</li>
-						</c:if>				
 					</ul>
 				</nav>
     </div>
@@ -70,7 +67,10 @@ export default {
     created(){
       var vm = this;
       var url = "http://localhost:9000/project/api/notice/list";
-      axios.get(url)
+      const data={
+        limit : 5
+      }
+      axios.get(url, { params: data })
       .then(function(response){
         console.log(response.data);
         vm.notices = response.data.body;
@@ -80,8 +80,21 @@ export default {
       })
     },
     methods:{
-      detail:function(){
-
+      paging:function(currentPage){
+        var vm = this;
+        var url = "http://localhost:9000/project/api/notice/list";
+        const data={
+          limit : 5,
+          currentPage:currentPage
+        }
+        axios.get(url, { params: data })
+        .then(function(response){
+          console.log(response.data);
+          vm.notices = response.data.body;
+        })
+        .catch(function(error){
+          console.log(error);
+        })
       }
     }
 }
