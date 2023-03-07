@@ -1,10 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/faq/Faq.vue';
-import Qna from './components/Qna.vue';
 import Login from './components/user/Login.vue';
 import Updateform from './components/faq/Updateform.vue';
 import Insertform from './components/faq/Insertform.vue';
 import Notice from './components/notice/Notice.vue';
+import Qna from './components/qna/Qna.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
