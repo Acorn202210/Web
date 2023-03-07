@@ -26,8 +26,8 @@
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 							<a :href="`/updateform/${faq.faqNum}`" class="btn new-btn">수정</a>
 							<div>
-								<input type="text" v-model="no"/>
-								<button @click="faqupdatedelete" class="btn btn-danger">삭제</button>
+								<input type="text" v-model="faq.faqNum"/>
+								<button @click="faqupdatedelete(faq.faqNum)" class="btn btn-danger">삭제</button>
 							</div>
 						</div>
 						<div>{{ faq.content }}</div>
@@ -55,35 +55,6 @@
 				</ul>
 			</nav>
 		</div>
-
-		<div>
-			<input type="text" v-model="question" 
-				placeholder="질문을 입력합니다"/>
-			<input type="text" v-model="content" 
-				placeholder="내용을 입력합니다"/>
-			<button @click="faqinsert">자주묻는질문 1건 추가</button>
-		</div>
-		<div>
-			<input type="text" v-model="no"/>
-			<button @click="faqone">자주묻는질문 1건 조회</button>
-		</div>
-		<div>
-			<input type="text" v-model="no"/>
-			<input type="text" v-model="question" 
-									placeholder="질문을 입력합니다"/>
-		<input type="text" v-model="content" 
-									placeholder="내용을 입력합니다"/>
-			<button @click="faqupdate">수정</button>
-		</div>
-		<div>
-			<input type="text" v-model="no"/>
-			<button @click="faqupdatedelete">삭제</button>
-		</div>
-		<span>JSON 출력</span>
-			<div id="result" class="container">
-			{{ result }}
-			</div>
-	
 </template>
   
 <script>
@@ -101,13 +72,13 @@ export default {
 		}
 	},
 	created() {
-	  axios.get('http://localhost:9000/project/api/faq/faqlist').then((a)=>{
+	  axios.get('http://localhost:9000/project/api/faq/faq-list').then((a)=>{
 				this.faq = a.data.body;
 			})
 	},
 	methods : {
 		faqinsert : function() {
-			axios.post('http://localhost:9000/project/api/faq/faqinsert', 
+			axios.post('http://localhost:9000/project/api/faq/faq-insert', 
 				{ question:this.question, content:this.content }
 			).then(response => {
 				console.warn(response)
@@ -139,9 +110,9 @@ export default {
 			})
 		},
 
-		faqupdatedelete : function() {
-			axios.put('http://localhost:9000/project/api/faq/' + this.no + '/delete', 
-				{ faqNum:this.no }
+		faqupdatedelete : function(faqNum) {
+			axios.put('http://localhost:9000/project/api/faq/' + faqNum + '/delete', 
+				{ faqNum }
 			).then(response => {
 				console.warn(response)
 				this.result = response.data
