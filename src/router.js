@@ -2,8 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/faq/Faq.vue';
 import Qna from './components/Qna.vue';
 import Login from './components/user/Login.vue';
-import Updateform from './components/Updateform.vue';
-import FaqOne from './components/faq/FaqOne.vue';
+import Updateform from './components/faq/Updateform.vue';
 import Notice from './components/notice/Notice.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
@@ -19,16 +18,10 @@ const routes = [
     {
         path: "/faq",
         component: Faq,
-        children:[
-            {
-                path: "updateform/:faqNum",
-                component: Updateform, 
-            }
-        ]
     },
     {
-        path: "/faqOne/:faqNum",
-        component: FaqOne,
+        path: "/updateform/:num",
+        component: Updateform,
     },
     {
         path: "/front",

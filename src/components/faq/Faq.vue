@@ -11,7 +11,7 @@
 				<div v-for="faq in faq.data" :key="faq.faqNum">
 					<div class="card mb-3">
 						<div class="card-body">
-						<div>{{ faq.question }}</div>
+						<div>{{ faq.question }}</div> <li><a :href="`/updateform/${faq.faqNum}`">클릭</a></li>
 						<div><strong>{{ faq.content }}</strong></div>
 						</div>
 					</div>
