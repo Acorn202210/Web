@@ -1,317 +1,86 @@
 <template>
-    <div class="header-blue" id="HeaderComponent">
-        <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="background-color:#fff">
-            <div class="container">
-                <a class="navbar-brand"><router-link to="home">logo</router-link></a>
-                <button class="navbar-toggler"
-                data-toggle="collapse" data-target="#navcol-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="navbar-toggler-icon ham-btn"></span>
-                </button>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav">
-                   
-                    <li class="dropdown">
-                        <a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown" aria-expanded="false" href="#">강의 </a>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation"><router-link to="lecture">웹프론트엔드</router-link></a>
-                            <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=backend&small_category=0">웹백엔드</a>
-                            <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/lecture/list?large_category=mobile&small_category=0">모바일</a>
-                        </div>
-                    </li>
-                    <!--<li class="nav-item" role="presentation"><a class="nav-link active" href="#">Link</a></li>-->
-                    <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
-                        data-toggle="dropdown" aria-expanded="false" href="#">고객센터 </a>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation"><router-link to="notice">공지사항</router-link></a>
-                            <a class="dropdown-item" role="presentation"><router-link to="faq">자주묻는질문</router-link></a>
-                            <a class="dropdown-item" role="presentation"><router-link to="qna">1:1 문의</router-link></a>
-                        </div>
-                    </li>
-                    <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
-                        data-toggle="dropdown" aria-expanded="false" href="#">커뮤니티</a>
-                        <div class="dropdown-menu" role="menu">
-                            <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_users/list">질문답변</a>
-                            <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_free/list">자유게시판</a>
-                        </div>
-                    </li>
-                </ul>
-                <!-- //검색 
-                <form class="form-inline mr-auto" target="_self">
-                    <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label>
-                        <input class="form-control search-field" type="search" name="search" id="search-field">
-                    </div>
-                </form> -->
-                <div style="margin-left:auto">
-                    <c:choose>
-                        <c:when test="${ empty sessionScope.id}">
-                            <span class="navbar-text"><a href="${pageContext.request.contextPath}/users/loginform" class="login">로그인</a></span>
-                            <a href="${pageContext.request.contextPath}/users/signup_form" class="btn btn-light action-button" role="button" >회원가입</a>
-                            </c:when>
-                            <c:otherwise>
-                            <p>
-                                <c:choose>
-									<c:when test="${sessionScope.id eq 'admin'}">
-                                        <a href="${pageContext.request.contextPath }/users/list" class="login" style="vertical-align: middle;">회원 목록</a>
-									</c:when>
-									<c:otherwise>
-										<span class="navbar-text"><a href="${pageContext.request.contextPath}/users/info" class="login" style="vertical-align: middle;">${sessionScope.id }</a> 로그인중... </span>
-									</c:otherwise>
-								</c:choose>
-                                <a href="${pageContext.request.contextPath}/users/logout" class="btn btn-light action-button" role="button" >로그아웃</a>
-                            </p>
-                        </c:otherwise>
-                    </c:choose>	
-                </div>
-			
-            </div>
-        </div>
-    </nav>
-    </div>
+  <div class="header-blue" id="HeaderComponent">
+      <nav class="navbar navbar-dark navbar-expand-md navigation-clean-search" style="background-color:#fff">
+          <div class="container">
+              <a class="navbar-brand"><router-link to="home">plec</router-link></a>
+              <button class="navbar-toggler"
+              data-toggle="collapse" data-target="#navcol-1">
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="navbar-toggler-icon ham-btn"></span>
+              </button>
+          <div class="collapse navbar-collapse" id="navcol-1">
+              <ul class="nav navbar-nav">
+                 
+                  <li class="dropdown">
+                      <a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown" aria-expanded="false" href="#">강의 </a>
+                      <div class="dropdown-menu" role="menu">
+                          <a class="dropdown-item" role="presentation"><router-link to="front">웹프론트엔드</router-link></a>
+                          <a class="dropdown-item" role="presentation"><router-link to="backend">백엔드</router-link></a>
+                          <a class="dropdown-item" role="presentation"><router-link to="mobile">모바일</router-link></a>
+                      </div>
+                  </li>
+                  <!--<li class="nav-item" role="presentation"><a class="nav-link active" href="#">Link</a></li>-->
+                  <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
+                      data-toggle="dropdown" aria-expanded="false" href="#">고객센터 </a>
+                      <div class="dropdown-menu" role="menu">
+                          <a class="dropdown-item" role="presentation"><router-link to="notice">공지사항</router-link></a>
+                          <a class="dropdown-item" role="presentation"><router-link to="faq">자주묻는질문</router-link></a>
+                          <a class="dropdown-item" role="presentation"><router-link to="qna">1:1 문의</router-link></a>
+                      </div>
+                  </li>
+                  <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
+                      data-toggle="dropdown" aria-expanded="false" href="#">커뮤니티</a>
+                      <div class="dropdown-menu" role="menu">
+                          <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_users/list">질문답변</a>
+                          <a class="dropdown-item" role="presentation" href="${pageContext.request.contextPath}/qna_free/list">자유게시판</a>
+                      </div>
+                  </li>
+              </ul>
+              <!-- //검색 
+              <form class="form-inline mr-auto" target="_self">
+                  <div class="form-group"><label for="search-field"><i class="fa fa-search"></i></label>
+                      <input class="form-control search-field" type="search" name="search" id="search-field">
+                  </div>
+              </form> -->
+              <div style="margin-left:auto">
+                  <div v-if="$store.getters.isUserId == null">
+                    <span class="navbar-text"><router-link to="login" class="login">로그인</router-link></span>
+                    <a href="${pageContext.request.contextPath}/users/signup_form" class="btn btn-light action-button" role="button" >회원가입</a>
+                  </div>
+                  <div v-if="$store.getters.isUserId != null">
+                    <p>
+                      <span v-if="$store.getters.isManager == 'Y'">
+                        <a href="${pageContext.request.contextPath }/users/list" class="login" style="vertical-align: middle;">회원 목록</a>
+                      </span>
+                      <span v-if="$store.getters.isManager == 'N'">
+                        <span class="navbar-text"><a href="${pageContext.request.contextPath}/users/info" class="login" style="vertical-align: middle;">{{$store.getters.isUserId}}</a> 로그인중... </span>
+                      </span>
+                      <a class="btn btn-light action-button" role="button" @click="logout" >로그아웃</a>
+                    </p>
+                  </div>   
+              </div>
+    
+          </div>
+      </div>
+  </nav>
+  </div>
 </template>
 
 <script>
 export default {
-    name: 'Header',
-    props:{
-        
+  name: 'Header',
+  methods:{
+    logout:function(){
+      window.localStorage.clear();
+      window.sessionStorage.clear();
+      this.$router.go();
     }
+  }
 }
 </script>
-
-<style scoped>
-
-/*reset*/
-a {color:inherit; text-decoration: none}
-
-.wrapper {
-  min-height: calc(100vh - 70px);
-}
-.header-blue {
-  font-family:'Source Sans Pro', sans-serif;
-  border-bottom: 1px solid #1EBD8E;
-}
-.header-blue .navbar {
-  background:transparent;
-  padding-top:.75rem;
-  padding-bottom:.75rem;
-  color:#000;
-  border-radius:0;
-  box-shadow:none;
-  border:none;
-}
-
-@media (min-width:768px) {
-  .header-blue .navbar {
-    padding-top:1rem;
-    padding-bottom:1rem;
-  }
-}
-
-.header-blue .navbar .navbar-brand {
-  font-weight:bold;
-  color:#1EBD8E;
-}
-
-/*.header-blue .navbar .navbar-brand:hover {
-  color:#f0f0f0;
-}*/
-
-.header-blue .navbar .navbar-collapse {
-  border-top:1px solid rgba(255,255,255,0.3);
-  margin-top:.5rem;
-}
-
-@media (min-width:768px) {
-  .header-blue .navbar .navbar-collapse {
-    border-color:transparent;
-    margin:0;
-  }
-}
-
-.header-blue .navbar .navbar-collapse span .login {
-  color:#000;
-  margin-right:.2rem;
-  text-decoration:none;
-  font-weight:bold;
-}
-
-
-.header-blue .navbar .navbar-toggler {
-  border-color:#1EBD8E;
-}
-
-.header-blue .navbar .navbar-toggler:hover, .header-blue .navbar-toggler:focus {
-  background:none;
-}
-
-.header-blue .navbar .navbar-nav a.active, .header-blue .navbar .navbar-nav > .show .dropdown-item {
-  background:none;
-  box-shadow:none;
-}
-
-@media (min-width: 768px) {
-  .header-blue .navbar-nav .nav-link {
-    padding-left:.7rem;
-    padding-right:.7rem;
-  }
-}
-
-@media (min-width: 992px) {
-  .header-blue .navbar-nav .nav-link {
-    padding-left:1.2rem;
-    padding-right:1.2rem;
-  }
-}
-
-.header-blue .navbar .navbar-nav > li > .dropdown-menu {
-  margin-top:-5px;
-  box-shadow:0 4px 8px rgba(0,0,0,.1);
-  background-color:#fff;
-  border-radius:2px;
-}
-
-.header-blue .navbar .dropdown-menu .dropdown-item:focus, .header-blue .navbar .dropdown-menu .dropdown-item {
-  line-height:2;
-  color:#37434d;
-}
-
-.header-blue .navbar .dropdown-menu .dropdown-item:focus, .header-blue .navbar .dropdown-menu .dropdown-item:hover {
-  background:#ebeff1;
-}
-
-.header-blue .action-button, .header-blue .action-button:not(.disabled):active {
-  border:1px solid #1EBD8E;
-  border-radius:40px;
-  color:#1EBD8E;
-  font-weight:700;
-  box-shadow:none;
-  text-shadow:none;
-  padding:.3rem .8rem;
-  background:transparent;
-  transition:background-color 0.25s;
-  outline:none;
-  margin-left:5px;
-}
-
-.header-blue .action-button:hover {
-  color:#fff;
-  background:#1EBD8E;
-}
-
-.header-blue .navbar .form-inline label {
-  color:#d9d9d9;
-}
-
-.header-blue .navbar .form-inline .search-field {
-  display:inline-block;
-  width:80%;
-  background:none;
-  border:none;
-  border-bottom:1px solid transparent;
-  border-radius:0;
-  color:#ccc;
-  box-shadow:none;
-  color:inherit;
-  transition:border-bottom-color 0.3s;
-}
-
-.header-blue .navbar .form-inline .search-field:focus {
-  border-bottom:1px solid #ccc;
-}
-
-.header-blue .hero {
-  margin-top:20px;
-  text-align:center;
-}
-
-@media (min-width:768px) {
-  .header-blue .hero {
-    margin-top:60px;
-    text-align:left;
-  }
-}
-
-.header-blue .hero h1 {
-  color:#fff;
-  font-size:40px;
-  margin-top:0;
-  margin-bottom:15px;
-  font-weight:300;
-  line-height:1.4;
-}
-
-@media (min-width:992px) {
-  .header-blue .hero h1 {
-    margin-top:190px;
-    margin-bottom:24px;
-    line-height:1.2;
-  }
-}
-
-.header-blue .hero p {
-  color:rgba(255,255,255,0.8);
-  font-size:20px;
-  margin-bottom:30px;
-  font-weight:300;
-}
-
-.header-blue .phone-holder {
-  text-align:right;
-}
-
-.header-blue div.iphone-mockup {
-  position:relative;
-  max-width:300px;
-  margin:20px;
-  display:inline-block;
-}
-
-.header-blue .iphone-mockup img.device {
-  width:100%;
-  height:auto;
-}
-
-.header-blue .iphone-mockup .screen {
-  position:absolute;
-  width:88%;
-  height:77%;
-  top:12%;
-  border-radius:2px;
-  left:6%;
-  border:1px solid #444;
-  background-color:#aaa;
-  overflow:hidden;
-  /*background:url(../../assets/img/screen-content-iphone-6.jpg);*/
-  background-size:cover;
-  background-position:center;
-}
-
-.header-blue .iphone-mockup .screen:before {
-  content:'';
-  background-color:#fff;
-  position:absolute;
-  width:70%;
-  height:140%;
-  top:-12%;
-  right:-60%;
-  transform:rotate(-19deg);
-  opacity:0.2;
-}
-
-/* 메인 header */
-.navbar-text{color:#000; vertical-align: middle;}
-.new-nav-link {color:#000}
-.new-nav-link:hover, 
-.new-nav-link:focus,
-.navbar-nav .new-nav-link.active, 
-.navbar-nav .show>.new-nav-link{color:#000; font-weight:700}
-/*.ham-btn{background-image:url(../images/Hamburger_Icon.png);}*/
-
-
+<style >
 
 </style>
-
 
 
 

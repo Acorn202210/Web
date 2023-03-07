@@ -1,10 +1,13 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/Faq.vue';
-import Notice from './components/Notice.vue';
+import Notice from './components/notice/Notice.vue';
 import Qna from './components/qna/Qna.vue';
-import Lecture from './components/Lecture.vue';
+import Front from './components/lecture/Front.vue';
+import Backend from './components/lecture/Backend.vue';
+import Mobile from './components/lecture/Mobile.vue';
+import LectureDetail from './components/lecture/LectureDetail.vue'
+import Login from './components/user/Login.vue';
 
-import QnaDetail from './components/qna/QnaDetail.vue';
 
 const routes = [
     {
@@ -17,8 +20,20 @@ const routes = [
         component: Faq
     },
     {
-        path: "/lecture",
-        component: Lecture
+        path: "/front",
+        component: Front
+    },
+    {
+        path: "/backend",
+        component: Backend
+    },
+    {
+        path: "/mobile",
+        component: Mobile
+    },
+    {
+        path: "/lectureDetail/:lecNum",
+        component: LectureDetail
     },
     {
         path: "/notice",
@@ -29,15 +44,14 @@ const routes = [
         component: Qna
     },
     {
-        path: "/qna/detail/:boardQuestionNum",        
-        name: 'QnaDetail',
-        component: QnaDetail
-    },
-
-    {
         path: "/home",
         component: () => import('@/components/Home.vue')
-    }
+    },
+    {
+        path: "/login",
+        component: Login
+    },
+   
 ];
 
 const router = createRouter({
