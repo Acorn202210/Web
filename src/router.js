@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/Faq.vue';
 import Notice from './components/notice/Notice.vue';
 import Qna from './components/qna/Qna.vue';
+import insertform from './components/qna/insertform.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
@@ -42,6 +43,10 @@ const routes = [
     {
         path: "/qna",
         component: Qna
+    },
+    {
+        path: "/insertform",
+        component: insertform,
     },
     {
         path: "/home",

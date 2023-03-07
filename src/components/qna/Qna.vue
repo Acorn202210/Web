@@ -8,7 +8,9 @@
     
   <div class="container">
     <div>
-      <button class="btn btn-sm me-2 mb-3 button"  type="button">등록</button>
+      <button class="btn btn-sm me-2 mb-3 button">
+        <a href="/insertform">등록</a>
+      </button>
     </div>         
     <div class="table-responsive table-top">
       <table class="table table-hover align-middle">
@@ -36,8 +38,9 @@
           </tr>
         </tbody>
 
-      </table>
+      </table>      
     </div>   
+    
   </div>
 </template>
 
@@ -53,7 +56,7 @@ export default {
 	  },
     created(){
       var vm=this;
-      axios.get('http://localhost:9000/project/api/qna_board/list')
+      axios.get('http://localhost:9000/project/api/qna-board/list')
         .then(function(response){
           console.log(response);
           vm.list=response.data;        
