@@ -9,6 +9,7 @@ import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
 import LectureDetail from './components/lecture/LectureDetail.vue'
+import LectureUploadForm from './components/lecture/LectureUploadForm.vue'
 
 const routes = [
     {
@@ -43,6 +44,10 @@ const routes = [
     {
         path: "/lectureDetail/:lecNum",
         component: LectureDetail
+    },
+    {
+        path: "/lectureUploadForm",
+        component: LectureUploadForm
     },
     {
         path: "/notice",

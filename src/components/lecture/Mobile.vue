@@ -1,42 +1,42 @@
 <template>
-	<div class="container">
-		<div>
-			<a href="/lectureUploadForm">강의 등록</a>
-		</div>
-	  <div class="row">
-		<div v-for="mobile in list.data" :key="mobile.lecNum">
-		  <div class="card mb-3">
-			<a :href="`/lectureDetail/${mobile.lecNum}`">
-				<div class="img-wrapper">
-					<img :src="`http://localhost:9000/project/api/lecture/${mobile.lecNum}/image?lecNum=${mobile.lecNum}`" style="width: 100px; height: 100px;">
-				</div>
-			</a>
-			<div class="card-body">
-			  <h5>{{ mobile.title }}</h5>
-			  <p><strong>{{ mobile.teacher }}</strong></p>
-			</div>
-		  </div>
-		</div>
-	  </div>
-	  <nav>
-		<ul class="pagination justify-content-center">
-		  <li class="page-item" v-bind:class="{ disabled : list.currentPage <= 1 }">
-			<a class="page-link" href="javascript:void(0);" aria-label="Previous" @click.prevent="setPage(list.currentPage - 1)">
-			  <span aria-hidden="true">&laquo;</span>
-			</a>
-		  </li>
-		  <li class="page-item" v-for="num in list.totalPage" :key="num" v-bind:class="{ active : list.currentPage == num }">
-			<a class="page-link" href="javascript:void(0);" @click.prevent="setPage(num)">{{ num }}</a>
-		  </li>
-		  <li class="page-item" v-bind:class="{ disabled : list.currentPage >= list.totalPage }">
-			<a class="page-link" href="javascript:void(0);" aria-label="Next" @click.prevent="setPage(list.currentPage + 1)">
-			  <span aria-hidden="true">&raquo;</span>
-			</a>
-		  </li>
-		</ul>
-	  </nav>
-	</div>
-  </template>
+  <div class="container">
+    <div>
+      <a href="/lectureUploadForm">강의 등록</a>
+    </div>
+    <div class="row">
+      <div v-for="mobile in list.data" :key="mobile.lecNum">
+        <div class="card mb-3">
+          <a :href="`/lectureDetail/${mobile.lecNum}`">
+            <div class="img-wrapper">
+              <img :src="`http://localhost:9000/project/api/lecture/${mobile.lecNum}/image?lecNum=${mobile.lecNum}`" style="width: 100px; height: 100px;">
+            </div>
+          </a>
+          <div class="card-body">
+            <h5>{{ mobile.title }}</h5>
+            <p><strong>{{ mobile.teacher }}</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav>
+      <ul class="pagination justify-content-center">
+        <li class="page-item" v-bind:class="{ disabled : list.currentPage <= 1 }">
+          <a class="page-link" href="javascript:void(0);" aria-label="Previous" @click.prevent="setPage(list.currentPage - 1)">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" v-for="num in pageCount" :key="num" v-bind:class="{ active : list.currentPage == num }">
+          <a class="page-link" href="javascript:void(0);" @click.prevent="setPage(num)">{{ num }}</a>
+        </li>
+        <li class="page-item" v-bind:class="{ disabled : list.currentPage >= pageCount }">
+          <a class="page-link" href="javascript:void(0);" aria-label="Next" @click.prevent="setPage(list.currentPage + 1)">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</template>
   
   <script>
   import axios from 'axios';
@@ -49,6 +49,8 @@
 		  data: [],
 		  currentPage: '',
 		  totalPage: '',
+		  startPageNum: '',
+          endPageNum: '',
 		},
 		lecNum: '',
 		teacher: '',
@@ -97,9 +99,13 @@
 		  .then(response => {
 			this.list.data = response.data.body.data;
 			this.list.currentPage = response.data.body.currentPage;
-			this.list.totalPage = response.data.body.totalPage;
+			this.list.startPageNum = response.data.body.startPageNum;
+			this.list.endPageNum = response.data.body.endPageNum;
+			this.list.totalPage = this.list.endPageNum - this.list.startPageNum + 1;
 			this.$set(this.list, 'data', this.list.data);
 			this.$set(this.list, 'currentPage', this.list.currentPage);
+			this.$set(this.list, 'startPageNum', this.list.startPageNum);
+			this.$set(this.list, 'endPageNum', this.list.endPageNum);
 			this.$set(this.list, 'totalPage', this.list.totalPage);
 		  })
 		  .catch(error => {

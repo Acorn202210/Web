@@ -49,6 +49,8 @@
 		  data: [],
 		  currentPage: '',
 		  totalPage: '',
+		  startPageNum: '',
+		  endPageNum : '',
 		},
 		lecNum: '',
 		teacher: '',
@@ -97,9 +99,13 @@
 		  .then(response => {
 			this.list.data = response.data.body.data;
 			this.list.currentPage = response.data.body.currentPage;
-			this.list.totalPage = response.data.body.totalPage;
+			this.list.startPageNum = response.data.body.startPageNum;
+			this.list.endPageNum = response.data.body.endPageNum;
+			this.list.totalPage = this.list.endPageNum - this.list.startPageNum + 1;
 			this.$set(this.list, 'data', this.list.data);
 			this.$set(this.list, 'currentPage', this.list.currentPage);
+			this.$set(this.list, 'startPageNum', this.list.startPageNum);
+			this.$set(this.list, 'endPageNum', this.list.endPageNum);
 			this.$set(this.list, 'totalPage', this.list.totalPage);
 		  })
 		  .catch(error => {

@@ -63,8 +63,8 @@ export default {
         describe: "",
         videoPath: "",
         largeCategory: "",
-        small_category: "",
-        file: null,
+        smallCategory: "",
+        file: '',
       },
     };
   },
