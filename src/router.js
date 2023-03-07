@@ -1,5 +1,8 @@
 import { createWebHistory, createRouter } from "vue-router";
-import Faq from './components/Faq.vue';
+import Faq from './components/faq/Faq.vue';
+import Login from './components/user/Login.vue';
+import Updateform from './components/faq/Updateform.vue';
+import Insertform from './components/faq/Insertform.vue';
 import Notice from './components/notice/Notice.vue';
 import Qna from './components/qna/Qna.vue';
 import insertform from './components/qna/insertform.vue';
@@ -7,8 +10,6 @@ import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
 import LectureDetail from './components/lecture/LectureDetail.vue'
-import Login from './components/user/Login.vue';
-
 
 const routes = [
     {
@@ -18,7 +19,15 @@ const routes = [
     },
     {
         path: "/faq",
-        component: Faq
+        component: Faq,
+    },
+    {
+        path: "/updateform/:num",
+        component: Updateform,
+    },
+    {
+        path: "/insertform",
+        component: Insertform,
     },
     {
         path: "/front",
