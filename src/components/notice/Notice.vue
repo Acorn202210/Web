@@ -40,7 +40,7 @@
 								</a>
 							</li>
 						
-							<li v-for="i in 5" :key="i" class="page-item ${notices.pageNum eq i ? 'active' : '' }">
+							<li v-for="i in 5" :key="i" :class="[ 'page-item', notices.currentPage == i ? 'active' : '' ]">
 								<a class="page-link new-page-link" v-if="i+notices.startPageNum-1 <= notices.endPageNum" @click="paging(i+notices.startPageNum-1)">{{i+notices.startPageNum-1}}</a>
 							</li>
 
