@@ -1,12 +1,15 @@
 <template>
 	<div class="container">
+		<div>
+			<a href="/lectureUploadForm">강의 등록</a>
+		</div>
 	  <div class="row">
 		<div v-for="front in list.data" :key="front.lecNum">
 		  <div class="card mb-3">
 			<a :href="`/lectureDetail/${front.lecNum}`">
-			  <div class="img-wrapper">
-				<img :src="`http://localhost:9000/project/api/lecture/${front.lecNum}/Image?lecNum=${front.lecNum}`" style="width: 100px; height: 100px;">
-			  </div>
+				<div class="img-wrapper">
+					<img :src="`http://localhost:9000/project/api/lecture/${front.lecNum}/image?lecNum=${front.lecNum}`" style="width: 100px; height: 100px;">
+				</div>
 			</a>
 			<div class="card-body">
 			  <h5>{{ front.title }}</h5>
