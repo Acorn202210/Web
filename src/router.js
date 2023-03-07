@@ -1,6 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/faq/Faq.vue';
-import Login from './components/user/login.vue';
+import Login from './components/user/Login.vue';
 import Updateform from './components/faq/Updateform.vue';
 import Insertform from './components/faq/Insertform.vue';
 import Notice from './components/notice/Notice.vue';
