@@ -92,6 +92,7 @@ export default {
 			).then(response => {
 				console.warn(response)
 				this.result = response.data;
+				location.reload();
 			}).catch((ex) => {
 				console.warn("ERROR!!!!! : ",ex)
 			})
