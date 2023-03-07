@@ -18,7 +18,7 @@
           <tr v-for="item in list.body.data" :key="item.boardQuestionNum">
             <td>{{item.boardQuestionNum}}</td>
             <td>
-              {{item.title}}
+              <a href="/qna/detail/${item.boardQuestionNum}">{{item.title}}</a>
             </td>
             <td>{{item.boardQuestionWriter}}</td>
             <td>{{item.userRegdate}}</td>

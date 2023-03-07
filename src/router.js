@@ -1,8 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/Faq.vue';
 import Notice from './components/Notice.vue';
-import Qna from './components/Qna.vue';
+import Qna from './components/qna/Qna.vue';
 import Lecture from './components/Lecture.vue';
+
+import QnaDetail from './components/qna/QnaDetail.vue';
 
 const routes = [
     {
@@ -27,8 +29,9 @@ const routes = [
         component: Qna
     },
     {
-        path: "/qna/detail/:boardQuestionNum",
-        component: Qna
+        path: "/qna/detail/:boardQuestionNum",        
+        name: 'QnaDetail',
+        component: QnaDetail
     },
 
     {
