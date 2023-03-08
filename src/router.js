@@ -1,21 +1,18 @@
 import { createWebHistory, createRouter } from "vue-router";
 
 import Faq from './components/faq/Faq.vue';
-import Login from './components/user/Login.vue';
+import Login from './components/user/login.vue';
+import Signup from './components/user/signup.vue';
 import Updateform from './components/faq/Updateform.vue';
 import Insertform from './components/faq/Insertform.vue';
 import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
+import NoticeInsert from './components/notice/insert';
 import Qna from './components/qna/Qna.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
 import LectureDetail from './components/lecture/LectureDetail.vue'
-
-
-// let path2 = '/' + window.location.host;
-// console.log(path2);
-
 
 const routes = [
     {
@@ -60,6 +57,10 @@ const routes = [
         component: NoticeDetail
     },
     {
+        path:"/notice/insert",
+        component: NoticeInsert
+    },
+    {
         path: "/qna",
         component: Qna
     },
@@ -70,6 +71,10 @@ const routes = [
     {
         path: "/login",
         component: Login
+    },
+    {
+        path: "/signup",
+        component: Signup
     },
 ];
 
