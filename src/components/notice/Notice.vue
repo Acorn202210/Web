@@ -40,7 +40,7 @@
 								</a>
 							</li>
 						
-							<li v-for="i in 5" :key="i" :class="[ 'page-item', notices.currentPage == i+notices.startPageNum-1 ? 'active' : '' ]">
+							<li v-for="i in 7" :key="i" :class="[ 'page-item', notices.currentPage == i+notices.startPageNum-1 ? 'active' : '' ]">
 								<a class="page-link new-page-link" v-if="i+notices.startPageNum-1 <= notices.endPageNum" @click="paging(i+notices.startPageNum-1)">{{i+notices.startPageNum-1}}</a>
 							</li>
 
@@ -82,7 +82,7 @@ export default {
       var vm = this;
       var url = "http://localhost:9000/project/api/notice/list";
       const data={
-        limit : 5
+        limit : 7
       }
       axios.get(url, { params: data })
       .then(function(response){
@@ -101,7 +101,7 @@ export default {
         var vm = this;
         var url = "http://localhost:9000/project/api/notice/list";
         const data={
-          limit : 5,
+          limit : 7,
           currentPage:currentPage,
           keyword:vm.keyword,
           condition:vm.condition
@@ -119,7 +119,7 @@ export default {
         var vm = this;
         var url = "http://localhost:9000/project/api/notice/list";
         const data={
-          limit : 5,
+          limit : 7,
           currentPage:vm.currentPage,
           keyword:vm.keyword,
           condition:vm.condition

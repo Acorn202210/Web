@@ -14,18 +14,18 @@
                   <li class="dropdown">
                       <a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown" aria-expanded="false" href="#">강의 </a>
                       <div class="dropdown-menu" role="menu">
-                          <a class="dropdown-item" role="presentation"><router-link to="front">웹프론트엔드</router-link></a>
-                          <a class="dropdown-item" role="presentation"><router-link to="backend">백엔드</router-link></a>
-                          <a class="dropdown-item" role="presentation"><router-link to="mobile">모바일</router-link></a>
+                          <a class="dropdown-item" role="presentation" @click="$router.push('/front')">웹프론트엔드</a>
+                          <a class="dropdown-item" role="presentation" @click="$router.push('/backend')">백엔드</a>
+                          <a class="dropdown-item" role="presentation" @click="$router.push('/mobile')">모바일</a>
                       </div>
                   </li>
                   <!--<li class="nav-item" role="presentation"><a class="nav-link active" href="#">Link</a></li>-->
                   <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
                       data-toggle="dropdown" aria-expanded="false" href="#">고객센터 </a>
                       <div class="dropdown-menu" role="menu">
-                          <a class="dropdown-item" role="presentation"><router-link to="notice">공지사항</router-link></a>
-                          <a class="dropdown-item" role="presentation" @click="$router.push('/faq')"><router-link to="faq">자주묻는질문</router-link></a>
-                          <a class="dropdown-item" role="presentation"><router-link to="qna">1:1 문의</router-link></a>
+                          <a class="dropdown-item" role="presentation" @click="$router.push('/notice')">공지사항</a>
+                          <a class="dropdown-item" role="presentation" @click="$router.push('/faq')">자주묻는질문</a>
+                          <a class="dropdown-item" role="presentation" @click="$router.push('/qna')">1:1 문의</a>
                       </div>
                   </li>
                   <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link"
@@ -44,7 +44,7 @@
               </form> -->
               <div style="margin-left:auto">
                   <div v-if="$store.getters.isUserId == null">
-                    <span class="navbar-text"><router-link to="login" class="login">로그인</router-link></span>
+                    <span class="navbar-text" @click="$router.push('/login')">로그인</span>
                     <a href="${pageContext.request.contextPath}/users/signup_form" class="btn btn-light action-button" role="button" >회원가입</a>
                   </div>
                   <div v-if="$store.getters.isUserId != null">
