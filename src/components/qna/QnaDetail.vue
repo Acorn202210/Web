@@ -1,8 +1,18 @@
 <template>
     <div class="container mt-5">
         <div>
-            <!-- 이전글, 다음글 처리 -->
+            <div class="d-md-flex justify-content-md-end">
+            <a v-if="qna.prevNum != 0" :href="`/qna/${qna.prevNum}`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+            <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}`" class="btn btn-sm btn-secondary">다음글</a>
+	        </div>
         </div>
+        <c:if test="${not empty keyword }">
+            <p class="mt-2">
+                <strong>${condition }</strong> 조건 
+                <strong>${keyword }</strong> 검색어로 검색된 내용입니다.
+            </p>
+        </c:if>
+
         <h3 class="sr-only">1:1문의 상세 보기</h3>
         <h1>{{ qna.title }}</h1>
         <table>
@@ -10,10 +20,10 @@
                 <th>글번호</th>
                 <td>{{qna.boardQuestionNum}}</td>
             </tr>
-            <tr>                
+            <!--<tr>                
                 <th>조회수</th>
                 <td>{{qna.viewCount}}</td>
-            </tr>
+            </tr>-->
             <tr>                
                 <th>작성자</th>
                 <td>{{qna.boardQuestionWriter}}</td>
@@ -22,18 +32,15 @@
                 <th>작성일</th>
                 <td>{{qna.userRegdate}}</td>
             </tr>
-            <div class="mainContent mt-3">{{qna.content}}</div>
-            <div class="d-grid d-md-flex justify-content-md-end mt-3">
-            <div class="d-grid d-md-flex">
-                <!-- (본인만 삭제가능) v-if="$store.getters.lecUserId == {{qna.boardQuestionWriter}}" -->
-                <a :href="`/qna/${qna.prevNum}/update`" class="btn btn-sm me-2 new-btn">수정</a>
-                <a href="javascript:" @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</a>                
-            </div>
-	            <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>
-	        </div>
-
         </table>
-
+        <div class="mainContent mt-3">{{ qna.content }}</div>
+        <div class="d-grid d-md-flex justify-content-md-end mt-3">
+            <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
+                <a :href="`/qna/${qna.boardQuestionNum}/update`" class="btn btn-sm me-2 new-btn">수정</a>
+                <a href="javascript:" @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</a>                           
+            </div>
+            <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>
+        </div>           
     </div>
 </template>
 
@@ -78,5 +85,5 @@ export default {
 </script>
 
 <style>
-    /* @import '../../assets/css/board.css' */
+    @import '../../assets/css/board.css'
 </style>
