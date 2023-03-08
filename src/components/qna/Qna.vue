@@ -13,7 +13,7 @@
     <div class="table-responsive table-top">
       <table class="table table-hover align-middle">
         <thead>
-          <tr style="text-align: center" on-click="">
+          <tr style="text-align: center" on-click="detail">
             <th width="15%">번호</th>
             <th width="auto">제목</th>
             <th width="15%">작성자</th>
@@ -22,10 +22,10 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr style="text-align: center;" v-for="item in qnalist.data" :key="item">
+          <tr style="text-align: center;" v-for="item in qnalist.data" :key="item" @click="detail(item.boardQuestionNum)">
             <td>{{item.boardQuestionNum}}</td>
             <td>
-              <a href="/qna/detail/${item.boardQuestionNum}">{{item.title}}</a>
+              {{item.title}}
             </td>
             <td>{{item.boardQuestionWriter}}</td>
             <td>{{item.userRegdate}}</td>
@@ -46,7 +46,7 @@
               <span aria-hidden="true">&lt;</span>
               </a>
             </li>
-            <li v-for="i in 5" :key="i" :class="[ 'page-item', qnalist.currentPage == i ? 'active' : '' ]">
+            <li v-for="i in 5" :key="i" :class="[ 'page-item', qnalist.currentPage == i+qnalist.startPageNum-1 ? 'active' : '' ]">
 							<a class="page-link new-page-link" v-if="i+qnalist.startPageNum-1 <= qnalist.endPageNum" @click="paging(i+qnalist.startPageNum-1)">{{i+qnalist.startPageNum-1}}</a>
 						</li>
             <li class="page-item" v-if="qnalist.endPageNum < qnalist.totalPage">
@@ -86,6 +86,9 @@ export default {
         })
     },
     methods:{
+      detail:function(boardQuestionNum){
+        this.$router.push('/qna/'+boardQuestionNum);
+      },
       paging:function(currentPage){
         var vm = this;
         var url = "http://localhost:9000/project/api/qna-board/list";
