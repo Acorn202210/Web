@@ -15,4 +15,3 @@ import store from './store/store.js'
 app.use(store).use(router).mount('#app')
 
 
-

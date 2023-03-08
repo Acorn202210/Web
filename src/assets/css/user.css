@@ -24,7 +24,7 @@ textarea{
 }
 
 .form-signin #floatingId {
-  margin-top: 50px;
+  margin-top: 10px;
 }
 
 .form-signin input[type="password"] {
@@ -39,9 +39,12 @@ textarea{
 
 .form-signin #floatingEmail {
   margin-top: 10px;
-  margin-bottom : 30px
-  
 }
+
+.form-login{
+  text-align: center;
+}
+
 
 .button{
 	background: #1EBD8E;
@@ -60,7 +63,4 @@ textarea{
 	margin-top:100px;
 }
 
-main{
-  text-align: center;
 
-}

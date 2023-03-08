@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 
 import Faq from './components/faq/Faq.vue';
 import Login from './components/user/login.vue';
+import Signup from './components/user/signup.vue';
 import Updateform from './components/faq/Updateform.vue';
 import Insertform from './components/faq/Insertform.vue';
 import Notice from './components/notice/Notice.vue';
@@ -12,8 +13,6 @@ import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
 import LectureDetail from './components/lecture/LectureDetail.vue'
-
-
 
 const routes = [
     {
@@ -72,6 +71,10 @@ const routes = [
     {
         path: "/login",
         component: Login
+    },
+    {
+        path: "/signup",
+        component: Signup
     },
 ];
 
