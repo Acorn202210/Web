@@ -56,6 +56,20 @@
             </li>
 					</ul>
 				</nav>
+
+        <form @submit.prevent="submitForm" action="list" method="get">
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end table-search-box">
+						<select v-model="condition" name="condition" id="condition" class="form-select">
+              <option value="" disabled >검색조건</option>
+              <option value="title_content" >제목 + 내용</option>
+							<option value="title" >제목</option>
+              <option value="writer" >작성자</option>
+						</select>
+						<input type="text" name="keyword" placeholder="검색어..." class="form-control" v-model="keyword"/>
+						<button type="submit" class="table-search-btn new-btn-black btn">검색</button>
+					</div>
+				</form>
+
     </div>    
   </div>
 </template>
@@ -66,7 +80,9 @@ export default {
     name: 'Qna',
 	  data(){
       return{
-        qnalist: {}        
+        qnalist: {},
+        condition:'',
+        keyword:''     
       }
 
 	  },
@@ -94,7 +110,27 @@ export default {
         var url = "http://localhost:9000/project/api/qna-board/list";
         const data={
           limit : 5,
-          currentPage:currentPage
+          currentPage:currentPage,
+          keyword:vm.keyword,
+          condition:vm.condition
+        }
+        axios.get(url, { params: data })
+        .then(function(response){
+          console.log(response.data);
+          vm.qnalist = response.data.body;
+        })
+        .catch(function(error){
+          console.log(error);
+        })
+      },
+      submitForm:function(){
+        var vm = this;
+        var url = "http://localhost:9000/project/api/qna-board/list";
+        const data={
+          limit : 5,
+          currentPage:vm.currentPage,
+          keyword:vm.keyword,
+          condition:vm.condition
         }
         axios.get(url, { params: data })
         .then(function(response){
