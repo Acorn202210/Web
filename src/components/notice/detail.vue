@@ -13,25 +13,22 @@
 				</p>
 			</c:if>
 			<h3 class="sr-only">글 상세 보기</h3>
+      <h1>{{ notice.title }}</h1>
 			<table>
-				<!-- <tr>
+				<tr>
 					<th>글번호</th>
-					<td>${dto.num }</td>
-				</tr> -->
-				<tr>
-					<th class="sr-only">제목</th>
-					<td><h2 class="fw-bold ">{{notice.title }}</h2></td>
+					<td>{{notice.notiNum }}</td>
 				</tr>
-				<!-- <tr>
-					<th class="sr-only">조회수</th>
+				<tr>
+					<th>조회수</th>
 					<td>${dto.viewCount }</td>	
-				</tr> -->
+				</tr>
 	            <tr>
-					<th class="sr-only">작성자</th>
-					<td class="fw-bold fs-6">by {{notice.viewCount }}</td>	 <!--작성자 추가해야함.-->
+					<th>작성자</th>
+					<td class="fw-bold fs-6">by {{notice.notiWriter }}</td>	 <!--작성자 추가해야함.-->
 				</tr>
 				<tr>
-					<th class="sr-only">작성일</th>
+					<th>작성일</th>
 					<td>{{notice.regdate }}</td>
 				</tr>
 			</table>
