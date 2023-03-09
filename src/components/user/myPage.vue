@@ -56,7 +56,7 @@
                         </table>
                     </div>
                     <a href="${pageContext.request.contextPath}/users/pwd_updateform" class="btn new-btn">비밀번호 수정하기</a>
-                    <a href="javascript:deleteConfirm()" class="btn btn-outline-secondary">탈퇴</a>
+                    <a @click="del" class="btn btn-outline-secondary">탈퇴</a>
                 </div>
             </div>
         </div>
@@ -70,12 +70,13 @@ export default {
     data() {
         return {
             my: {},
-            profile: false
+            profile: false,
+            id : this.$store.getters.isUserId
         }
     },
     created() {
         var vm = this;
-        var url = `http://localhost:9000/project/api/users/${this.$store.getters.isUserId}`;
+        var url = `http://localhost:9000/project/api/users/${this.id}`;
         axios.get(url)
             .then(function (response) {
                 console.log(response.data);
@@ -85,7 +86,7 @@ export default {
                 console.log(error);
             })
 
-        var url2 = `http://localhost:9000/project/api/users/${this.$store.getters.isUserId}/profile`;
+        var url2 = `http://localhost:9000/project/api/users/${this.id}/profile`;
         axios.get(url2)
             .then(function (response) {
                 if (response != null) {
@@ -97,7 +98,20 @@ export default {
             })
     },
     methods: {
-
+        del: function () {
+            var vm = this;
+            var url = `http://localhost:9000/project/api/users/${this.id}/delete`;
+            axios.put(url)
+                .then(function () {
+                    alert("탈퇴되었습니다.");
+                    vm.$store.dispatch('setremoveId');
+                    vm.$store.dispatch('setremoveManager');
+                    vm.$router.push("/home");                    
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
     }
 }
 </script>

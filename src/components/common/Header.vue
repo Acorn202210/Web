@@ -72,9 +72,12 @@ export default {
   name: 'Header',
   methods: {
     logout: function () {
-      window.localStorage.clear();
-      window.sessionStorage.clear();
-      this.$router.go();
+      // window.localStorage.clear();
+      // window.sessionStorage.clear();
+      this.$store.dispatch('setremoveId');
+      this.$store.dispatch('setremoveManager');
+
+      this.$router.push("/home");
 
     }
   }
