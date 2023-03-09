@@ -8,7 +8,7 @@
     
   <div class="container">
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">            
-      <a href="${pageContext.request.contextPath }/qna-insertform" class="new-btn btn btn-sm">등록</a>      
+      <a href="/qna-insertform" class="new-btn btn btn-sm">등록</a>      
     </div>         
     <div class="table-responsive table-top">
       <table class="table table-hover align-middle">

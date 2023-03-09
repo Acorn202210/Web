@@ -22,14 +22,12 @@
 import axios from 'axios';
 
 export default {
-    name: 'insertform',
+    name: 'QnaInsertform',
     data() {
         return {
-            qna: [],
-            no: 0,
+            qna: {},            
             title: '',
-            content: '',
-            result: null
+            content: ''
         }
     },
     methods: {
