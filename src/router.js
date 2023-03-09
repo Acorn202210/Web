@@ -3,6 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/faq/Faq.vue';
 import Login from './components/user/login.vue';
 import Signup from './components/user/signup.vue';
+import UserList from './components/user/userList.vue';
 import Updateform from './components/faq/Updateform.vue';
 import Insertform from './components/faq/Insertform.vue';
 import Notice from './components/notice/Notice.vue';
@@ -75,6 +76,10 @@ const routes = [
     {
         path: "/signup",
         component: Signup
+    },
+    {
+        path: "/manager",
+        component: UserList,
     },
 ];
 

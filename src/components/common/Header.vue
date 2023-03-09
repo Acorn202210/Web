@@ -52,8 +52,7 @@
             <div v-if="$store.getters.isUserId != null">
               <p>
                 <span v-if="$store.getters.isManager == 'Y'">
-                  <a href="${pageContext.request.contextPath }/users/list" class="login"
-                    style="vertical-align: middle;">회원 목록</a>
+                  <a @click="$router.push('/manager')" class="login" style="vertical-align: middle;">회원 목록</a>
                 </span>
                 <span v-if="$store.getters.isManager == 'N'">
                   <span class="navbar-text"><a href="${pageContext.request.contextPath}/users/info" class="login"
