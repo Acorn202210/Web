@@ -23,16 +23,16 @@
             </tr>
           </thead>
           <tbody class="table-group-divider">
-              <tr style="text-align: center;" v-for="tmp in list.data" :key="tmp">
-                <td>{{tmp.lecUserId }}</td>
-                <td>{{tmp.userBirth }}</td>
-                <td>{{tmp.userEmail }}</td>
-                <td>{{tmp.userPhone }}</td>
-                <td>{{tmp.userRegdate }}</td>
-                <td>
-                  <button class="btn btn-danger btn-sm" @click="del(tmp.lecUserId)"> 삭제</button>
-                </td>
-              </tr>
+            <tr style="text-align: center;" v-for="tmp in list.data" :key="tmp">
+              <td>{{ tmp.lecUserId }}</td>
+              <td>{{ tmp.userBirth }}</td>
+              <td>{{ tmp.userEmail }}</td>
+              <td>{{ tmp.userPhone }}</td>
+              <td>{{ tmp.userRegdate }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" @click="del(tmp.lecUserId)"> 삭제</button>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -46,26 +46,26 @@ export default {
   name: 'Signup',
   data() {
     return {
-      list:{}
+      list: {}
     }
   },
   created() {
     var vm = this;
-      var url = "http://localhost:9000/project/api/users/list";
-      const data = {
-        limit: 7
-      }
-      axios.get(url, { params: data })
-        .then(function (response) {
-          console.log(response.data);
-          vm.list = response.data.body;
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+    var url = "http://localhost:9000/project/api/users/list";
+    const data = {
+      limit: 7
+    }
+    axios.get(url, { params: data })
+      .then(function (response) {
+        console.log(response.data);
+        vm.list = response.data.body;
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
   },
   methods: {
-    del:function(lecUserId){
+    del: function (lecUserId) {
       console.log(lecUserId);
       var url = `http://localhost:9000/project/api/users/${lecUserId}/delete`;
       axios.put(url)
@@ -75,7 +75,7 @@ export default {
         .catch(function (error) {
           console.log(error);
         })
-      
+
       var vm = this;
       var url2 = "http://localhost:9000/project/api/users/list";
       const data = {
@@ -93,5 +93,4 @@ export default {
   }
 }
 </script>
-<style>
-</style>
+<style></style>

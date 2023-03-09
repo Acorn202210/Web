@@ -5,6 +5,7 @@ import FaqInsertform from './components/faq/FaqInsertform.vue';
 import Login from './components/user/login.vue';
 import Signup from './components/user/signup.vue';
 import UserList from './components/user/userList.vue';
+import MyPage from './components/user/myPage.vue';
 import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
 import NoticeInsert from './components/notice/insert';
@@ -94,6 +95,10 @@ const routes = [
     {
         path: "/manager",
         component: UserList,
+    },
+    {
+        path: "/myPage",
+        component: MyPage,
     },
 ];
 
