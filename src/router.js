@@ -1,9 +1,13 @@
 import { createWebHistory, createRouter } from "vue-router";
+
 import Faq from './components/faq/Faq.vue';
-import Login from './components/user/Login.vue';
 import FaqUpdateform from './components/faq/FaqUpdateform.vue';
 import FaqInsertform from './components/faq/FaqInsertform.vue';
+import Login from './components/user/login.vue';
+import Signup from './components/user/signup.vue';
 import Notice from './components/notice/Notice.vue';
+import NoticeDetail from './components/notice/detail';
+import NoticeInsert from './components/notice/insert';
 import Qna from './components/qna/Qna.vue';
 import QnaFree from './components/qna_free/QnaFree.vue';
 import QnaFreeInsertform from './components/qna_free/QnaFreeInsertform.vue';
@@ -61,7 +65,15 @@ const routes = [
     },
     {
         path: "/notice",
-        component: Notice
+        component: Notice,
+    },
+    {
+        path: "/notice/:notiNum",
+        component: NoticeDetail
+    },
+    {
+        path:"/notice/insert",
+        component: NoticeInsert
     },
     {
         path: "/qna",
@@ -75,7 +87,10 @@ const routes = [
         path: "/login",
         component: Login
     },
-   
+    {
+        path: "/signup",
+        component: Signup
+    },
 ];
 
 const router = createRouter({
