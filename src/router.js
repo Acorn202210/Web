@@ -6,6 +6,8 @@ import FaqInsertform from './components/faq/FaqInsertform.vue';
 import Notice from './components/notice/Notice.vue';
 import Qna from './components/qna/Qna.vue';
 import QnaFree from './components/qna_free/QnaFree.vue';
+import QnaFreeInsertform from './components/qna_free/QnaFreeInsertform.vue';
+import QnaFreeUpdateform from './components/qna_free/QnaFreeUpdateform.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
@@ -20,6 +22,14 @@ const routes = [
     {
         path: "/qnafree",
         component: QnaFree
+    },
+    {
+        path: "/qnafreeupdateform",
+        component: QnaFreeUpdateform
+    },
+    {
+        path: "/qnafreeinsertform",
+        component: QnaFreeInsertform
     },
     {
         path: "/faq",

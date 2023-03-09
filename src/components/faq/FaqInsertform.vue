@@ -17,7 +17,7 @@
 import axios from 'axios';
 
 export default {
-    name: 'Insertform',
+    name: 'FaqInsertform',
     data() {
         return {
         faq: [],
