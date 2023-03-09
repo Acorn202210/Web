@@ -27,7 +27,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.userId == Y ">
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.userId == 'Y' ">
 			<a @click="$router.push('/qnafree/insert')" class="new-btn btn btn-sm">새글작성</a>
 		</div>
 		<nav>
@@ -58,6 +58,7 @@
 				<option value="" disabled>검색 조건</option>
 				<option value="title_content">제목 + 내용</option>
 				<option value="title">제목</option>
+				<option value="writer">작성자</option>
 			</select>
 			<input type="text" name="keyword" placeholder="검색어..." class="form-control" v-model="keyword" />
 			<button type="submit" class="table-search-btn new-btn-black btn">검색</button>
@@ -72,11 +73,11 @@ import axios from 'axios';
 export default {
 	name: 'QnaFree',
     data() {
-    return {
-      qnafree: {},
-      condition: '',
-      keyword: ''
-    }
+		return {
+		qnafree: {},
+		condition: '',
+		keyword: ''
+		}
 	},
 	created() {
 		var vm = this;
