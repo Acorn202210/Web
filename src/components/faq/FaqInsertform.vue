@@ -26,18 +26,18 @@ export default {
         }
     },
     methods: {
-		faqinsert : function() {
-			axios.post('http://localhost:9000/project/api/faq/faq-insert', 
-				{ question:this.question, content:this.content }
-			).then(response => {
-				console.warn(response)
-				this.result = response.data;
-				this.no = response.data.no;
-        this.$router.push('/faq'); // 등록 완료 후 faq 페이지로 이동
-			}).catch((ex) => {
-				console.warn("ERROR!!!!! : ",ex)
-			})
-		},
+      faqinsert : function() {
+        axios.post('http://localhost:9000/project/api/faq/faq-insert', 
+          { question:this.question, content:this.content }
+        ).then(response => {
+          console.warn(response)
+          this.result = response.data;
+          this.no = response.data.no;
+          this.$router.push('/faq'); // 등록 완료 후 faq 페이지로 이동
+        }).catch((ex) => {
+          console.warn("ERROR!!!!! : ",ex)
+        })
+      },
     }
 }
 </script>

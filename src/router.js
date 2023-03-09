@@ -10,7 +10,8 @@ import NoticeInsert from './components/notice/insert';
 import Qna from './components/qna/Qna.vue';
 import QnaFree from './components/qna_free/QnaFree.vue';
 import QnaFreeDetail from './components/qna_free/detail.vue';
-import QnaFreeInsertform from './components/qna_free/QnaFreeInsertform.vue';
+import QnaFreeInsert from './components/qna_free/insert.vue';
+import QnaFreeUpdate from './components/qna_free/update.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
@@ -31,8 +32,12 @@ const routes = [
         component: QnaFreeDetail
     },
     {
-        path: "/qnafreeinsertform",
-        component: QnaFreeInsertform
+        path: "/qnafree/insert",
+        component: QnaFreeInsert
+    },
+    {
+        path: "/qnafree/update/:freeQuestionNum",
+        component: QnaFreeUpdate
     },
     {
         path: "/faq",
