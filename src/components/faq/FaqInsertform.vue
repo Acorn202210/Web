@@ -20,11 +20,9 @@ export default {
     name: 'FaqInsertform',
     data() {
         return {
-        faq: [],
-        no: 0,
-        question: '',
-        content: '',
-        result: null
+          faq: {},
+          question: '',
+          content: '',
         }
     },
     methods: {

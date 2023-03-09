@@ -7,7 +7,7 @@
 	</div>
 
 		<div class="container">
-			<div v-for="faq in faq.data" :key="faq.faqNum">
+			<div v-for="faq in faq.data" :key="faq">
 				<div class="accordion mb-2" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item">
 					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -64,15 +64,7 @@ export default {
 	name: 'Faq',
 	data(){
 		return {
-			faq:{
-				data: [],
-				currentPage: '',
-				totalPage: '',
-			},
-			no: 0,
-			question: '',
-			content: '',
-			result: null
+			faq:{},
 		}
 	},
 	created() {
@@ -115,9 +107,10 @@ export default {
 		  });
 	  	},
 
-		faqone : function() {
-			axios.get('http://localhost:9000/project/api/faq/' + this.no + '/faqOne')
-			.then((response) => {
+		faqone : function(faqNum) {
+			axios.get('http://localhost:9000/project/api/faq/' + faqNum + '/faqOne',
+				{ faqNum }
+			).then((response) => {
 				console.warn(response);
 				this.result = response.data
 			})
