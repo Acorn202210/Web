@@ -73,7 +73,8 @@ export default {
   computed: {
     isFormValid() {
       // 모델을 활용해서 얻어낼 값이 있으면 얻어낸다.
-      let result = this.isIdValid && this.isPwdValid && this.isEmailValid;
+      let result = this.isIdValid && this.isPwdValid && this.isEmailValid 
+                && (this.isManager != "") && (this.phone != "")  && (this.birth != "");
       // 함수에서 리턴해주는 값을 모델처럼 사용하면 됨.
       return result;
     }

@@ -55,7 +55,7 @@
                             </tr>
                         </table>
                     </div>
-                    <a href="${pageContext.request.contextPath}/users/pwd_updateform" class="btn new-btn">비밀번호 수정하기</a>
+                    <a @click="this.$router.push('/pwd-update')" class="btn new-btn">비밀번호 수정하기</a>
                     <a @click="del" class="btn btn-outline-secondary">탈퇴</a>
                 </div>
             </div>
@@ -79,7 +79,6 @@ export default {
         var url = `http://localhost:9000/project/api/users/${this.id}`;
         axios.get(url)
             .then(function (response) {
-                console.log(response.data);
                 vm.my = response.data.body;
             })
             .catch(function (error) {

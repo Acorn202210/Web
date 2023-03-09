@@ -6,6 +6,7 @@ import Login from './components/user/login.vue';
 import Signup from './components/user/signup.vue';
 import UserList from './components/user/userList.vue';
 import MyPage from './components/user/myPage.vue';
+import PwdUpdate from './components/user/pwdUpdate.vue';
 import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
 import NoticeInsert from './components/notice/insert';
@@ -97,8 +98,12 @@ const routes = [
         component: UserList,
     },
     {
-        path: "/myPage",
+        path: "/my-page",
         component: MyPage,
+    }, 
+    {
+        path: "/pwd-update",
+        component: PwdUpdate,
     },
 ];
 
