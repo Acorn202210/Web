@@ -34,7 +34,7 @@
 		</table>
 		<div class="mainContent mt-3">{{ qnafree.content }}</div>
 		<div class="d-grid d-md-flex justify-content-md-end mt-3">
-			<div class="d-grid d-md-flex ">
+			<div class="d-grid d-md-flex " v-if="$store.getters.isUserId == qnafree.freeQuestionWriter">
 				<a :href="`/qnafree/update/${qnafree.freeQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
 				<a href="javascript:" @click="confirmDelete(qnafree.freeQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</a>
 			</div>

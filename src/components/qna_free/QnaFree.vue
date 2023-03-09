@@ -27,7 +27,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.userId == 'Y' ">
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isUserId != null">
 			<a @click="$router.push('/qnafree/insert')" class="new-btn btn btn-sm">새글작성</a>
 		</div>
 		<nav>
