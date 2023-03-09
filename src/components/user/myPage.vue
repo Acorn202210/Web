@@ -49,9 +49,7 @@
                             </tr>
                             <tr>
                                 <th></th>
-                                <td><a href="${pageContext.request.contextPath}/users/updateform" class="btn btn-dark"
-                                        style="width:100%">개인정보
-                                        수정</a></td>
+                                <td><a  @click="this.$router.push('/user-update')" class="btn btn-dark" style="width:100%">개인정보 수정</a></td>
                             </tr>
                         </table>
                     </div>

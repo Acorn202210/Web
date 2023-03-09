@@ -7,6 +7,7 @@ import Signup from './components/user/signup.vue';
 import UserList from './components/user/userList.vue';
 import MyPage from './components/user/myPage.vue';
 import PwdUpdate from './components/user/pwdUpdate.vue';
+import UserUpdate from './components/user/update.vue';
 import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
 import NoticeInsert from './components/notice/insert';
@@ -104,6 +105,10 @@ const routes = [
     {
         path: "/pwd-update",
         component: PwdUpdate,
+    },
+    {
+        path: "/user-update",
+        component: UserUpdate,
     },
 ];
 
