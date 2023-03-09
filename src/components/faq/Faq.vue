@@ -7,7 +7,7 @@
 	</div>
 
 		<div class="container">
-			<div v-for="faq in faq.data" :key="faq.faqNum">
+			<div v-for="faq in faq.data" :key="faq">
 				<div class="accordion mb-2" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item">
 					<h2 class="accordion-header" id="panelsStayOpen-headingOne">
@@ -24,19 +24,19 @@
 					<div :id="`panelsStayOpen-collapse-${faq.faqNum}`" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading">
 					<div class="accordion-body">
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-							<a :href="`/updateform/${faq.faqNum}`" class="btn new-btn">수정</a>
+							<a :href="`/faqupdateform/${faq.faqNum}`" class="btn new-btn">수정</a>
 							<div>
 								<input type="hidden" v-model="faq.faqNum"/>
 								<button @click="confirmDelete(faq.faqNum)" class="btn btn-danger">삭제</button>
 							</div>
 						</div>
-						<div>{{ faq.content }}</div>
+						<div><strong>{{ faq.content }}</strong></div>
 					</div>
 					</div>
 				</div>
 				</div>
 			</div>
-				<a href="/insertform" class="btn new-btn" style="display: inline-block; margin: 0 5px;  float: right;">등록</a>
+				<a href="/faqinsertform" class="btn new-btn" style="display: inline-block; margin: 0 5px;  float: right;">등록</a>
 			<nav>
 				<ul class="pagination justify-content-center">
 				<li class="page-item" :class="{ 'disabled': faq.currentPage <= 1 }">
@@ -44,7 +44,7 @@
 					<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
-				<li class="page-item" v-for="num in faq.totalPage" :key="num" :class="{ 'active': faq.currentPage === num }">
+				<li class="page-item" v-for="num in (faq.startPageNum, faq.endPageNum )" :key="num" :class="{ 'active': faq.currentPage === num }">
 					<a class="page-link" href="javascript:void(0);" @click.prevent="setPage(num)">{{ num }}</a>
 				</li>
 				<li class="page-item" :class="{ 'disabled': faq.currentPage >= faq.totalPage }">
@@ -64,15 +64,7 @@ export default {
 	name: 'Faq',
 	data(){
 		return {
-			faq:{
-				data: [],
-				currentPage: '',
-				totalPage: '',
-			},
-			no: 0,
-			question: '',
-			content: '',
-			result: null
+			faq:{},
 		}
 	},
 	created() {
@@ -83,6 +75,7 @@ export default {
 			const url = 'http://localhost:9000/project/api/faq/faq-list';
 			const data = {
 				currentPage: currentPage,
+				limit:5			
 			};
 
 			axios
@@ -114,9 +107,10 @@ export default {
 		  });
 	  	},
 
-		faqone : function() {
-			axios.get('http://localhost:9000/project/api/faq/' + this.no + '/faqOne')
-			.then((response) => {
+		faqone : function(faqNum) {
+			axios.get('http://localhost:9000/project/api/faq/' + faqNum + '/faqOne',
+				{ faqNum }
+			).then((response) => {
 				console.warn(response);
 				this.result = response.data
 			})

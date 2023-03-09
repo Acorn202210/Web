@@ -33,8 +33,7 @@
               <div class="dropdown-menu" role="menu">
                 <a class="dropdown-item" role="presentation"
                   href="${pageContext.request.contextPath}/qna_users/list">질문답변</a>
-                <a class="dropdown-item" role="presentation"
-                  href="${pageContext.request.contextPath}/qna_free/list">자유게시판</a>
+                <a class="dropdown-item" role="presentation" @click="$router.push('/qnafree')">자유게시판</a>
               </div>
             </li>
           </ul>
