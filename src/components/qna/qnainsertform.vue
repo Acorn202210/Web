@@ -7,11 +7,11 @@
   <div class="container">
     <div>
         <label for="title">제목</label>
-        <input class="title" type="text" v-model="title" placeholder="질문 입력..."/>
+        <input type="text" v-model="title" placeholder="질문 입력..."/>
     </div>
     <div>
-        <label style="padding: 100px 0px;" for="content">내용</label>
-        <textarea class="content" type="text" v-model="content" placeholder="내용 입력..."/>
+        <label for="content">내용</label>
+        <textarea type="text" v-model="content" placeholder="내용 입력..."/>
     </div>
     <button class="btn btn-sm me-2 mb-3 button" @click="qnainsert">등록</button>
     <button class="btn btn-sm me-2 mb-3 button" @click="$router.go(-1)">취소</button>
@@ -37,7 +37,7 @@ export default {
 			).then(response => {
 				console.warn(response)
 				this.result = response.data;
-				this.no = response.data.no;
+				this.boardQuestionNum = response.data.boardQuestionNum;
                 this.$router.push('/qna'); 
 			}).catch((ex) => {
 				console.warn("ERROR!!!!! : ",ex)
@@ -48,16 +48,5 @@ export default {
 </script>
 
 <style>
-    .title{
-        flex: 1;
-        height: 35px;
-        padding: 0 4px;
-        margin: 10px 10px;
-    }
-    .content{
-        flex: 1;
-        height: 100px;
-        padding: 0 4px;
-        margin: 10px 10px 0;
-    }
+    
 </style>

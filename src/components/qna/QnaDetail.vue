@@ -36,7 +36,7 @@
         <div class="mainContent mt-3">{{ qna.content }}</div>
         <div class="d-grid d-md-flex justify-content-md-end mt-3">
             <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
-                <a :href="`/qna/${qna.boardQuestionNum}/update`" class="btn btn-sm me-2 new-btn">수정</a>
+                <a :href="`/qnaupdate/${qna.boardQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
                 <a href="javascript:" @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</a>                           
             </div>
             <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>

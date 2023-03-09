@@ -9,6 +9,7 @@ import NoticeDetail from './components/notice/detail';
 import Qna from './components/qna/Qna.vue';
 import qnainsertform from './components/qna/qnainsertform.vue';
 import QnaDetail from './components/qna/QnaDetail.vue';
+import QnaUpdate from './components/qna/QnaUpdate.vue'
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
@@ -72,6 +73,10 @@ const routes = [
     {
         path: "/qna/:boardQuestionNum",
         component: QnaDetail,
+    },
+    {
+        path: "/qnaupdate/:boardQuestionNum",
+        component: QnaUpdate,
     },
     {
         path: "/home",
