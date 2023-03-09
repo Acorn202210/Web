@@ -2,7 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/faq/Faq.vue';
 import FaqUpdateform from './components/faq/FaqUpdateform.vue';
 import FaqInsertform from './components/faq/FaqInsertform.vue';
-import Login from './components/user/Login.vue';
+import Login from './components/user/login.vue';
 import Signup from './components/user/signup.vue';
 import UserList from './components/user/userList.vue';
 import Notice from './components/notice/Notice.vue';

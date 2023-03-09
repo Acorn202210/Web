@@ -66,16 +66,17 @@ export default {
   },
   methods: {
     deleteConfirm: function (notiNum) {
+      var vm = this;
       const isDelete = confirm("이 공지 사항을 삭제하겠습니까?");
       var url = `http://localhost:9000/project/api/notice/${notiNum}/delete`;
       if (isDelete) {
         axios.put(url)
           .then(function () {
             alert('공지 사항이 삭제 되었습니다.');
-            this.$router.push('/notice');
+            vm.$router.push('/notice');
           })
           .catch(function () {
-            alert('공지 사항 삭제에 실패했습니다.')
+            alert('공지 사항 삭제에 실패했습니다.');
           })
       }
     }
