@@ -23,8 +23,8 @@
 					</h2>
 					<div :id="`panelsStayOpen-collapse-${faq.faqNum}`" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading">
 					<div class="accordion-body">
-						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-							<a :href="`/faqupdateform/${faq.faqNum}`" class="btn new-btn">수정</a>
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isManager == 'Y'">
+							<a @click="$router.push(`/faqupdateform/${faq.faqNum}`)" class="btn new-btn">수정</a>
 							<div>
 								<input type="hidden" v-model="faq.faqNum"/>
 								<button @click="confirmDelete(faq.faqNum)" class="btn btn-danger">삭제</button>
@@ -36,20 +36,26 @@
 				</div>
 				</div>
 			</div>
-				<a href="/faqinsertform" class="btn new-btn" style="display: inline-block; margin: 0 5px;  float: right;">등록</a>
+			<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isManager == 'Y'">
+				<a @click="$router.push('/faqinsertform')" class="btn new-btn">등록</a>
+			</div>
 			<nav>
 				<ul class="pagination justify-content-center">
-				<li class="page-item" :class="{ 'disabled': faq.currentPage <= 1 }">
-					<a class="page-link" href="javascript:void(0);" aria-label="Previous" @click.prevent="setPage(faq.currentPage - 1)">
-					<span aria-hidden="true">&laquo;</span>
+				<li class="page-item" v-if="faq.startPageNum != 1">
+					<a class="page-link new-page-link" @click="paging(faq.startPageNum - 1)">
+					<span aria-hidden="true">&lt;</span>
 					</a>
 				</li>
-				<li class="page-item" v-for="num in (faq.startPageNum, faq.endPageNum )" :key="num" :class="{ 'active': faq.currentPage === num }">
-					<a class="page-link" href="javascript:void(0);" @click.prevent="setPage(num)">{{ num }}</a>
+
+				<li v-for="i in 10" :key="i"
+					:class="['page-item', faq.currentPage == i + faq.startPageNum - 1 ? 'active' : '']">
+					<a class="page-link new-page-link" v-if="i + faq.startPageNum - 1 <= faq.endPageNum"
+					@click="paging(i + faq.startPageNum - 1)">{{ i + faq.startPageNum - 1 }}</a>
 				</li>
-				<li class="page-item" :class="{ 'disabled': faq.currentPage >= faq.totalPage }">
-					<a class="page-link" href="javascript:void(0);" aria-label="Next" @click.prevent="setPage(faq.currentPage + 1)">
-					<span aria-hidden="true">&raquo;</span>
+
+				<li class="page-item" v-if="faq.endPageNum < faq.totalPage">
+					<a class="page-link new-page-link" @click="paging(faq.endPageNum + 1)">
+					<span aria-hidden="true">&gt;</span>
 					</a>
 				</li>
 				</ul>
@@ -68,44 +74,37 @@ export default {
 		}
 	},
 	created() {
-    	this.fetchData(this.faq.currentPage);
+		var vm = this;
+		var url = "http://localhost:9000/project/api/faq/faq-list";
+		const data = {
+		limit: 10
+		}
+		axios.get(url, { params: data })
+		.then(function (response) {
+			console.log(response.data);
+			vm.faq = response.data.body;
+		})
+		.catch(function (error) {
+			console.log(error);
+		})
  	 },
 	methods: {
-		setPage(currentPage) {
-			const url = 'http://localhost:9000/project/api/faq/faq-list';
+		paging: function (currentPage) {
+			var vm = this;
+			var url = "http://localhost:9000/project/api/faq/faq-list";
 			const data = {
+				limit: 10,
 				currentPage: currentPage,
-				limit:5			
-			};
-
-			axios
-			.get(url, { params: data })
-			.then((response) => {
-				this.faq = response.data.body;
-				window.scrollTo(0, 0);
-			})
-			.catch((error) => {
+			}
+			axios.get(url, { params: data })
+				.then(function (response) {
+				console.log(response.data);
+				vm.faq = response.data.body;
+				})
+				.catch(function (error) {
 				console.log(error);
-			});
+				})
 		},
-		fetchData(currentPage) {
-		const url = 'http://localhost:9000/project/api/faq/faq-list';
-		const data = {
-		  currentPage: currentPage,
-		};
-		axios.get(url, { params: data })
-		  .then(response => {
-			this.faq.data = response.data.body.data;
-			this.faq.currentPage = response.data.body.currentPage;
-			this.faq.totalPage = response.data.body.totalPage;
-			this.$set(this.faq, 'data', this.faq.data);
-			this.$set(this.faq, 'currentPage', this.faq.currentPage);
-			this.$set(this.faq, 'totalPage', this.faq.totalPage);
-		  })
-		  .catch(error => {
-			console.log(error);
-		  });
-	  	},
 
 		faqone : function(faqNum) {
 			axios.get('http://localhost:9000/project/api/faq/' + faqNum + '/faqOne',
