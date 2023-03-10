@@ -8,6 +8,9 @@ import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
 import NoticeInsert from './components/notice/insert';
 import Qna from './components/qna/Qna.vue';
+import qnainsertform from './components/qna/qnainsertform.vue';
+import QnaDetail from './components/qna/QnaDetail.vue';
+import QnaUpdate from './components/qna/QnaUpdate.vue'
 import QnaFree from './components/qna_free/QnaFree.vue';
 import QnaFreeDetail from './components/qna_free/detail.vue';
 import QnaFreeInsertform from './components/qna_free/QnaFreeInsertform.vue';
@@ -77,6 +80,18 @@ const routes = [
     {
         path: "/qna",
         component: Qna
+    },
+    {
+        path: "/qna-insertform",
+        component: qnainsertform,
+    },
+    {
+        path: "/qna/:boardQuestionNum",
+        component: QnaDetail,
+    },
+    {
+        path: "/qnaupdate/:boardQuestionNum",
+        component: QnaUpdate,
     },
     {
         path: "/home",
