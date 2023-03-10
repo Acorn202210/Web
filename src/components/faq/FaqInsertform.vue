@@ -17,14 +17,12 @@
 import axios from 'axios';
 
 export default {
-    name: 'Insertform',
+    name: 'FaqInsertform',
     data() {
         return {
-        faq: [],
-        no: 0,
-        question: '',
-        content: '',
-        result: null
+          faq: {},
+          question: '',
+          content: '',
         }
     },
     methods: {
@@ -35,7 +33,7 @@ export default {
 				console.warn(response)
 				this.result = response.data;
 				this.no = response.data.no;
-                this.$router.push('/faq'); // 등록 완료 후 faq 페이지로 이동
+        this.$router.push('/faq'); // 등록 완료 후 faq 페이지로 이동
 			}).catch((ex) => {
 				console.warn("ERROR!!!!! : ",ex)
 			})

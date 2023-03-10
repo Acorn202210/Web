@@ -1,7 +1,7 @@
 <template>
 	<div>
-      <div class="container userform">
-			<main class="form-signin w-100 m-auto">
+    <div class="container userform">
+			<main class="form-signin form-login w-100 m-auto">
 			  <form @submit.prevent="submitForm">
 			    <h1 class="mb-3 fw-normal main">login</h1>
 			    <div class="form-floating">
@@ -37,22 +37,22 @@ import axios from 'axios';
 	  },
 	  methods:{
         submitForm: function(){
-            const url = 'http://localhost:9000/project/api/users/login';
-            const data ={
-                lecUserId : this.id,
-                userPwd : this.pwd
-            };
-            console.log(data);
-            var vm = this;
-            axios.post(url, data)
-                .then(function(response){
-                    vm.$store.dispatch('setUserId', vm.id);
-                    vm.$store.dispatch('setIsManager', response.data.body.isManager)
-                    vm.$router.push('/home');
-                })
-                .catch(function(){
-                    alert('아이디나 비밀번호가 잘 못 되었습니다!');
-                });
+          const url = 'http://localhost:9000/project/api/users/login';
+          const data ={
+            lecUserId : this.id,
+            userPwd : this.pwd
+          };
+          console.log(data);
+          var vm = this;
+          axios.post(url, data)
+            .then(function(response){
+                vm.$store.dispatch('setUserId', vm.id);
+                vm.$store.dispatch('setIsManager', response.data.body.isManager)
+                vm.$router.push('/home');
+            })
+            .catch(function(){
+                alert('아이디나 비밀번호가 잘 못 되었습니다!');
+            });
         }
       }
     }
