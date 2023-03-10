@@ -2,8 +2,12 @@ import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/faq/Faq.vue';
 import FaqUpdateform from './components/faq/FaqUpdateform.vue';
 import FaqInsertform from './components/faq/FaqInsertform.vue';
-import Login from './components/user/Login.vue';
+import Login from './components/user/login.vue';
 import Signup from './components/user/signup.vue';
+import UserList from './components/user/userList.vue';
+import MyPage from './components/user/myPage.vue';
+import PwdUpdate from './components/user/pwdUpdate.vue';
+import UserUpdate from './components/user/update.vue';
 import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
 import NoticeInsert from './components/notice/insert';
@@ -104,6 +108,22 @@ const routes = [
     {
         path: "/signup",
         component: Signup
+    },
+    {
+        path: "/manager",
+        component: UserList,
+    },
+    {
+        path: "/my-page",
+        component: MyPage,
+    }, 
+    {
+        path: "/pwd-update",
+        component: PwdUpdate,
+    },
+    {
+        path: "/user-update",
+        component: UserUpdate,
     },
 ];
 

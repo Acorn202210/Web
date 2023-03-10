@@ -51,12 +51,10 @@
             <div v-if="$store.getters.isUserId != null">
               <p>
                 <span v-if="$store.getters.isManager == 'Y'">
-                  <a href="${pageContext.request.contextPath }/users/list" class="login"
-                    style="vertical-align: middle;">회원 목록</a>
+                  <a @click="$router.push('/manager')" class="login" style="vertical-align: middle;">회원 목록</a>
                 </span>
                 <span v-if="$store.getters.isManager == 'N'">
-                  <span class="navbar-text"><a href="${pageContext.request.contextPath}/users/info" class="login"
-                      style="vertical-align: middle;">{{ $store.getters.isUserId }}</a> 로그인중... </span>
+                  <span class="navbar-text"><a @click="$router.push('/my-page')" class="login" style="vertical-align: middle;">{{ $store.getters.isUserId }}</a> 로그인중... </span>
                 </span>
                 <a class="btn btn-light action-button" role="button" @click="logout">로그아웃</a>
               </p>
@@ -74,9 +72,11 @@ export default {
   name: 'Header',
   methods: {
     logout: function () {
-      window.localStorage.clear();
-      window.sessionStorage.clear();
-      this.$router.go();
+      this.$store.dispatch('setremoveId');
+      this.$store.dispatch('setremoveManager');
+
+      this.$router.push("/home");
+
     }
   }
 }
