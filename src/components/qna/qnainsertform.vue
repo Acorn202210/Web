@@ -13,7 +13,7 @@
         <label for="content">내용</label>
         <textarea type="text" v-model="content" placeholder="내용 입력..."/>
     </div>
-    <button class="btn btn-sm me-2 mb-3 button" @click="qnainsert">등록</button>
+    <button class="btn btn-sm me-2 mb-3 button" @click="qnaboardinsert">등록</button>
     <button class="btn btn-sm me-2 mb-3 button" @click="$router.go(-1)">취소</button>
   </div>
 </template>
@@ -31,18 +31,18 @@ export default {
         }
     },
     methods: {
-		qnainsert : function() {
-			axios.post('http://localhost:9000/project/api/qna-board/insert', 
-				{ title:this.title, content:this.content }
-			).then(response => {
-				console.warn(response)
-				this.result = response.data;
-				this.boardQuestionNum = response.data.boardQuestionNum;
-                this.$router.push('/qna'); 
-			}).catch((ex) => {
-				console.warn("ERROR!!!!! : ",ex)
-			})
-		},
+      qnaboardinsert : function() {
+        axios.post('http://localhost:9000/project/api/qna-board/insert', 
+          { title:this.title, content:this.content }
+        ).then(response => {
+          console.warn(response)
+          this.result = response.data;
+          this.boardQuestionNum = response.data.boardQuestionNum;
+          this.$router.push('/qna'); 
+        }).catch((ex) => {
+          console.warn("ERROR!!!!! : ",ex)
+        })
+      },
     }
 }
 </script>
