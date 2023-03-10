@@ -1,24 +1,23 @@
 import { createWebHistory, createRouter } from "vue-router";
-
 import Faq from './components/faq/Faq.vue';
+import FaqUpdateform from './components/faq/FaqUpdateform.vue';
+import FaqInsertform from './components/faq/FaqInsertform.vue';
 import Login from './components/user/Login.vue';
-import Updateform from './components/faq/Updateform.vue';
-import Insertform from './components/faq/Insertform.vue';
+import Signup from './components/user/signup.vue';
 import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
+import NoticeInsert from './components/notice/insert';
 import Qna from './components/qna/Qna.vue';
 import qnainsertform from './components/qna/qnainsertform.vue';
 import QnaDetail from './components/qna/QnaDetail.vue';
 import QnaUpdate from './components/qna/QnaUpdate.vue'
+import QnaFree from './components/qna_free/QnaFree.vue';
+import QnaFreeDetail from './components/qna_free/detail.vue';
+import QnaFreeInsertform from './components/qna_free/QnaFreeInsertform.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
 import LectureDetail from './components/lecture/LectureDetail.vue'
-
-
-// let path2 = '/' + window.location.host;
-// console.log(path2);
-
 
 const routes = [
     {
@@ -27,16 +26,28 @@ const routes = [
         
     },
     {
+        path: "/qnafree",
+        component: QnaFree
+    },
+    {
+        path: "/qnafree/:freeQuestionNum",
+        component: QnaFreeDetail
+    },
+    {
+        path: "/qnafreeinsertform",
+        component: QnaFreeInsertform
+    },
+    {
         path: "/faq",
         component: Faq,
     },
     {
-        path: "/updateform/:num",
-        component: Updateform,
+        path: "/faqupdateform/:num",
+        component: FaqUpdateform,
     },
     {
-        path: "/insertform",
-        component: Insertform,
+        path: "/faqinsertform",
+        component: FaqInsertform,
     },
     {
         path: "/front",
@@ -63,6 +74,10 @@ const routes = [
         component: NoticeDetail
     },
     {
+        path:"/notice/insert",
+        component: NoticeInsert
+    },
+    {
         path: "/qna",
         component: Qna
     },
@@ -85,6 +100,10 @@ const routes = [
     {
         path: "/login",
         component: Login
+    },
+    {
+        path: "/signup",
+        component: Signup
     },
 ];
 

@@ -18,14 +18,13 @@
 import axios from 'axios';
 
 export default {
-  name: 'Updateform',
+  name: 'FaqUpdate',
   data() {
     return {
-      faq: [],
+      faq: {},
       no: this.$route.params.num, // $route.params.num 값으로 초기화
       question: '',
       content: '',
-      result: null
     }
   },
   methods: {
