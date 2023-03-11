@@ -6,7 +6,7 @@
       <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
         <div class="mb-3">
           <label class="form-label" for="file">썸네일</label>
-          <input class="form-control" type="file" id="file" ref="file" accept=".jpg, .jpeg, .png, .JPG, .JPEG" @change="handleFileChange">
+          <input class="form-control" type="file" id="file" ref="file" accept="image/*" @change="handleFileChange">
         </div>
         <div class="mb-3">
           <label class="form-label" for="title">강의 제목</label>
@@ -53,7 +53,6 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   data() {
     return {
@@ -64,15 +63,21 @@ export default {
         videoPath: "",
         largeCategory: "",
         smallCategory: "",
-        file: '',
+        file: "",
       },
     };
   },
   methods: {
+    handleFileChange(event) {
+      this.file = event.target.files[0];
+    },
     async handleSubmit() {
-      
+      if (!this.lecture.file) {
+        console.log("파일을 선택해주세요.");
+        return;
+      }
       const formData = new FormData();
-      formData.append("file", this.lecture.file);
+      formData.append("file", this.file);
       formData.append("title", this.lecture.title);
       formData.append("teacher", this.lecture.teacher);
       formData.append("describe", this.lecture.describe);
@@ -80,23 +85,19 @@ export default {
       formData.append("largeCategory", this.lecture.largeCategory);
       formData.append("smallCategory", this.lecture.smallCategory);
 
-      try {
-        const response = await axios.post('http://localhost:9000/project/api/lecture/lecture-insert', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        console.log(response.data);
-        console.log("강의 등록 성공");
-      } catch (error) {
-        console.log(error);
-        console.log("강의 등록 실패");
-      }
-    },
-    handleFileChange(event) {
-      // 파일 선택 이벤트 핸들러
-      const files = event.target.files;
-      if (files.length > 0) {
-        this.lecture.file = files[0];
-      }
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "http://localhost:9000/project/api/lecture/lecture-insert");
+      xhr.send(formData);
+
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            console.log("강의 등록 성공");
+          } else {
+            console.log("강의 등록 실패");
+          }
+        }
+      };
     },
   },
 };
