@@ -5,7 +5,7 @@
 		  <div class="card mb-3">
 			<a :href="`/lectureDetail/${front.lecNum}`">
 			  <div class="img-wrapper">
-				<img :src="`http://localhost:9000/project/api/lecture/${front.lecNum}/Image?lecNum=${front.lecNum}`" style="width: 100px; height: 100px;">
+				<img :src="`/project/api/lecture/${front.lecNum}/Image?lecNum=${front.lecNum}`" style="width: 100px; height: 100px;">
 			  </div>
 			</a>
 			<div class="card-body">
@@ -66,7 +66,7 @@
 	},
 	methods: {
 	  setPage(currentPage) {
-		const url = 'http://localhost:9000/project/api/lecture/lectureList';
+		const url = '/project/api/lecture/lectureList';
 		const data = {
 		  currentPage: currentPage,
 		  largeCategory: this.largeCategory,
@@ -84,7 +84,7 @@
 		  });
 	  },
 	  fetchData(currentPage) {
-		const url = 'http://localhost:9000/project/api/lecture/lectureList';
+		const url = '/project/api/lecture/lectureList';
 		const data = {
 		  currentPage: currentPage,
 		  largeCategory: this.largeCategory,

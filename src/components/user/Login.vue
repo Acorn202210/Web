@@ -37,7 +37,7 @@ import axios from 'axios';
 	  },
 	  methods:{
         submitForm: function(){
-          const url = 'http://localhost:9000/project/api/users/login';
+          const url = '/project/api/users/login';
           const data ={
             lecUserId : this.id,
             userPwd : this.pwd

@@ -81,7 +81,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = "http://localhost:9000/project/api/notice/list";
+    var url = "/project/api/notice/list";
     const data = {
       limit: 7
     }
@@ -100,7 +100,7 @@ export default {
     },
     paging: function (currentPage) {
       var vm = this;
-      var url = "http://localhost:9000/project/api/notice/list";
+      var url = "/project/api/notice/list";
       const data = {
         limit: 7,
         currentPage: currentPage,
@@ -118,7 +118,7 @@ export default {
     },
     submitForm: function () {
       var vm = this;
-      var url = "http://localhost:9000/project/api/notice/list";
+      var url = "/project/api/notice/list";
       const data = {
         limit: 7,
         currentPage: vm.currentPage,

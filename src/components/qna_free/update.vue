@@ -29,7 +29,7 @@ export default {
 	},
     methods: {
         qnafreeupdate: function () {
-        axios.put('http://localhost:9000/project/api/qna-free/' + this.no + '/update',
+        axios.put('/project/api/qna-free/' + this.no + '/update',
             { freeQuestionNum: this.no, title: this.title, content: this.content }
         ).then(response => {
             console.warn(response)

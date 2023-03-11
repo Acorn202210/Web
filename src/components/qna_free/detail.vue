@@ -58,7 +58,7 @@ export default {
 
 	created() {
 		var vm = this;
-		var url = `http://localhost:9000/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
+		var url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
 		axios.get(url)
 		.then(function (response) {
 			console.log(response.data.body);
@@ -72,7 +72,7 @@ export default {
 	methods: {
 
 		qnafreedelete : function(freeQuestionNum) {
-			axios.put('http://localhost:9000/project/api/qna-free/' + freeQuestionNum + '/delete', 
+			axios.put('/project/api/qna-free/' + freeQuestionNum + '/delete', 
 				{ freeQuestionNum }
 			).then(response => {
 				console.warn(response)

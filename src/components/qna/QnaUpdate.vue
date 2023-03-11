@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     qnaupdate: function () {
-      axios.put(`http://localhost:9000/project/api/qna-board/` + this.boardQuestionNum + '/update',
+      axios.put(`/project/api/qna-board/` + this.boardQuestionNum + '/update',
         { boardQuestionNum: this.boardQuestionNum, title: this.title, content: this.content }
       ).then(response => {
         console.warn(response)        

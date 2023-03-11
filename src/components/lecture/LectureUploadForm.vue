@@ -81,7 +81,7 @@ export default {
       formData.append("smallCategory", this.lecture.smallCategory);
 
       try {
-        const response = await axios.post('http://localhost:9000/project/api/lecture/lecture-insert', formData, {
+        const response = await axios.post('/project/api/lecture/lecture-insert', formData, {
           headers: { 'Content-Type': 'multipart/form-data' },
         });
         console.log(response.data);

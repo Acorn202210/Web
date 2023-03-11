@@ -90,7 +90,7 @@ export default {
       }
 
       const self = this;
-      const url = 'http://localhost:9000/project/api/users/checkid';
+      const url = '/project/api/users/checkid';
       const data = { lecUserId: this.id }
       axios.get(url, { params: data })
         .then(function (response) {
@@ -133,7 +133,7 @@ export default {
       } 
     },
     submitForm(){
-      const url = 'http://localhost:9000/project/api/users';
+      const url = '/project/api/users';
       const data = {
         lecUserId: this.id,
         managerYn: this.isManager,

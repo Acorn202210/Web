@@ -75,7 +75,7 @@ export default {
 	},
 	created() {
 		var vm = this;
-		var url = "http://localhost:9000/project/api/faq/faq-list";
+		var url = "/project/api/faq/faq-list";
 		const data = {
 		limit: 10
 		}
@@ -91,7 +91,7 @@ export default {
 	methods: {
 		paging: function (currentPage) {
 			var vm = this;
-			var url = "http://localhost:9000/project/api/faq/faq-list";
+			var url = "/project/api/faq/faq-list";
 			const data = {
 				limit: 10,
 				currentPage: currentPage,
@@ -107,7 +107,7 @@ export default {
 		},
 
 		faqone : function(faqNum) {
-			axios.get('http://localhost:9000/project/api/faq/' + faqNum + '/faqOne',
+			axios.get('/project/api/faq/' + faqNum + '/faqOne',
 				{ faqNum }
 			).then((response) => {
 				console.warn(response);
@@ -116,7 +116,7 @@ export default {
 		},
 
 		faqupdatedelete : function(faqNum) {
-			axios.put('http://localhost:9000/project/api/faq/' + faqNum + '/delete', 
+			axios.put('/project/api/faq/' + faqNum + '/delete', 
 				{ faqNum }
 			).then(response => {
 				console.warn(response)

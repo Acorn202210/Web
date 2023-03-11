@@ -51,7 +51,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = "http://localhost:9000/project/api/users/list";
+    var url = "/project/api/users/list";
     const data = {
       limit: 7
     }
@@ -67,7 +67,7 @@ export default {
   methods: {
     del: function (lecUserId) {
       console.log(lecUserId);
-      var url = `http://localhost:9000/project/api/users/${lecUserId}/delete`;
+      var url = `/project/api/users/${lecUserId}/delete`;
       axios.put(url)
         .then(function (response) {
           console.log(response.data);
@@ -77,7 +77,7 @@ export default {
         })
 
       var vm = this;
-      var url2 = "http://localhost:9000/project/api/users/list";
+      var url2 = "/project/api/users/list";
       const data = {
         limit: 7
       }

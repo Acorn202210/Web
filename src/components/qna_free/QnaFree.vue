@@ -81,7 +81,7 @@ export default {
 	},
 	created() {
 		var vm = this;
-		var url = "http://localhost:9000/project/api/qna-free/list";
+		var url = "/project/api/qna-free/list";
 		const data = {
 		limit: 10
 		}
@@ -100,7 +100,7 @@ export default {
 		},
 		paging: function (currentPage) {
 		var vm = this;
-		var url = "http://localhost:9000/project/api/qna-free/list";
+		var url = "/project/api/qna-free/list";
 		const data = {
 			limit: 10,
 			currentPage: currentPage,
@@ -118,7 +118,7 @@ export default {
 		},
 		submitForm: function () {
 		var vm = this;
-		var url = "http://localhost:9000/project/api/qna-free/list";
+		var url = "/project/api/qna-free/list";
 		const data = {
 			limit: 10,
 			currentPage: vm.currentPage,

@@ -26,7 +26,7 @@ export default {
 	},
 	methods: {
       qnafreeinsert : function() {
-        axios.post('http://localhost:9000/project/api/qna-free/insert', 
+        axios.post('/project/api/qna-free/insert', 
           { title:this.title, content:this.content }
         ).then(response => {
           console.warn(response)

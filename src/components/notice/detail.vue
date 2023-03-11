@@ -54,7 +54,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = `http://localhost:9000/project/api/notice/${this.$route.params.notiNum}`;
+    var url = `/project/api/notice/${this.$route.params.notiNum}`;
     axios.get(url)
       .then(function (response) {
         console.log(response.data.body);
@@ -68,7 +68,7 @@ export default {
     deleteConfirm: function (notiNum) {
       var vm = this;
       const isDelete = confirm("이 공지 사항을 삭제하겠습니까?");
-      var url = `http://localhost:9000/project/api/notice/${notiNum}/delete`;
+      var url = `/project/api/notice/${notiNum}/delete`;
       if (isDelete) {
         axios.put(url)
           .then(function () {

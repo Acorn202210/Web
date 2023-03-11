@@ -27,7 +27,7 @@ export default {
     },
     methods: {
       faqinsert : function() {
-        axios.post('http://localhost:9000/project/api/faq', 
+        axios.post('/project/api/faq', 
           { question:this.question, content:this.content }
         ).then(response => {
           console.warn(response)

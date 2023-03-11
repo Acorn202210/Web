@@ -29,7 +29,7 @@ export default {
   },
   methods: {
     faqupdate: function () {
-      axios.put('http://localhost:9000/project/api/faq/' + this.no + '/update',
+      axios.put('/project/api/faq/' + this.no + '/update',
         { faqNum: this.no, question: this.question, content: this.content }
       ).then(response => {
         console.warn(response)
