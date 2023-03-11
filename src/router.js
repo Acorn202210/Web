@@ -2,8 +2,12 @@ import { createWebHistory, createRouter } from "vue-router";
 import Faq from './components/faq/Faq.vue';
 import FaqUpdateform from './components/faq/FaqUpdateform.vue';
 import FaqInsertform from './components/faq/FaqInsertform.vue';
-import Login from './components/user/Login.vue';
+import Login from './components/user/login.vue';
 import Signup from './components/user/signup.vue';
+import UserList from './components/user/userList.vue';
+import MyPage from './components/user/myPage.vue';
+import PwdUpdate from './components/user/pwdUpdate.vue';
+import UserUpdate from './components/user/update.vue';
 import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
 import NoticeInsert from './components/notice/insert';
@@ -13,7 +17,8 @@ import QnaDetail from './components/qna/QnaDetail.vue';
 import QnaUpdate from './components/qna/QnaUpdate.vue'
 import QnaFree from './components/qna_free/QnaFree.vue';
 import QnaFreeDetail from './components/qna_free/detail.vue';
-import QnaFreeInsertform from './components/qna_free/QnaFreeInsertform.vue';
+import QnaFreeInsert from './components/qna_free/insert.vue';
+import QnaFreeUpdate from './components/qna_free/update.vue';
 import Front from './components/lecture/Front.vue';
 import Backend from './components/lecture/Backend.vue';
 import Mobile from './components/lecture/Mobile.vue';
@@ -35,8 +40,12 @@ const routes = [
         component: QnaFreeDetail
     },
     {
-        path: "/qnafreeinsertform",
-        component: QnaFreeInsertform
+        path: "/qnafree/insert",
+        component: QnaFreeInsert
+    },
+    {
+        path: "/qnafree/update/:freeQuestionNum",
+        component: QnaFreeUpdate
     },
     {
         path: "/faq",
@@ -109,6 +118,22 @@ const routes = [
     {
         path: "/signup",
         component: Signup
+    },
+    {
+        path: "/manager",
+        component: UserList,
+    },
+    {
+        path: "/my-page",
+        component: MyPage,
+    }, 
+    {
+        path: "/pwd-update",
+        component: PwdUpdate,
+    },
+    {
+        path: "/user-update",
+        component: UserUpdate,
     },
 ];
 

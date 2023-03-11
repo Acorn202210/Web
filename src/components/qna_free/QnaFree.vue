@@ -27,8 +27,8 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.userId == 'Y'">
-			<a @click="$router.push('/qnafreeinsertform')" class="new-btn btn btn-sm">새글작성</a>
+		<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isUserId != null">
+			<a @click="$router.push('/qnafree/insert')" class="new-btn btn btn-sm">새글작성</a>
 		</div>
 		<nav>
 			<ul class="pagination justify-content-center">
@@ -58,6 +58,7 @@
 				<option value="" disabled>검색 조건</option>
 				<option value="title_content">제목 + 내용</option>
 				<option value="title">제목</option>
+				<option value="writer">작성자</option>
 			</select>
 			<input type="text" name="keyword" placeholder="검색어..." class="form-control" v-model="keyword" />
 			<button type="submit" class="table-search-btn new-btn-black btn">검색</button>
@@ -72,15 +73,15 @@ import axios from 'axios';
 export default {
 	name: 'QnaFree',
     data() {
-    return {
-      qnafree: {},
-      condition: '',
-      keyword: ''
-    }
+		return {
+		qnafree: {},
+		condition: '',
+		keyword: ''
+		}
 	},
 	created() {
 		var vm = this;
-		var url = "http://localhost:9000/project/api/qna-free/list";
+		var url = "/project/api/qna-free/list";
 		const data = {
 		limit: 10
 		}
@@ -99,7 +100,7 @@ export default {
 		},
 		paging: function (currentPage) {
 		var vm = this;
-		var url = "http://localhost:9000/project/api/qna-free/list";
+		var url = "/project/api/qna-free/list";
 		const data = {
 			limit: 10,
 			currentPage: currentPage,
@@ -117,7 +118,7 @@ export default {
 		},
 		submitForm: function () {
 		var vm = this;
-		var url = "http://localhost:9000/project/api/qna-free/list";
+		var url = "/project/api/qna-free/list";
 		const data = {
 			limit: 10,
 			currentPage: vm.currentPage,

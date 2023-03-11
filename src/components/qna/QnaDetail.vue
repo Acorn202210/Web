@@ -55,7 +55,7 @@ export default {
 	  },
     created(){
       var vm = this;
-      var url = `http://localhost:9000/project/api/qna-board/${this.$route.params.boardQuestionNum}`;
+      var url = `/project/api/qna-board/${this.$route.params.boardQuestionNum}`;
       axios.get(url)
       .then(function(response){
         console.log(response.data.body);
@@ -68,7 +68,7 @@ export default {
     methods:{
       deleteConfirm:function(boardQuestionNum){
         const isDelete = confirm("이 1:1문의를 삭제하겠습니까?");
-        var url = `http://localhost:9000/project/api/qna-board/${boardQuestionNum}/delete`;
+        var url = `/project/api/qna-board/${boardQuestionNum}/delete`;
         if(isDelete){
           axios.put(url)
           .then(function(){

@@ -32,7 +32,7 @@ export default {
     },
     methods: {
       qnaboardinsert : function() {
-        axios.post('http://localhost:9000/project/api/qna-board/insert', 
+        axios.post('/project/api/qna-board/insert', 
           { title:this.title, content:this.content }
         ).then(response => {
           console.warn(response)

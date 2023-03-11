@@ -6,12 +6,12 @@
 		<a v-if="qnafree.nextNum != 0" :href="`/qnafree/${qnafree.nextNum}`" class="btn btn-sm btn-secondary">다음글</a>
     </div>
 
-    <div test="${not empty keyword }">
-		<p class="mt-2">
-			<strong>{{ qnafree.condition }}</strong> 조건
-			<strong>{{ qnafree.keyword }}</strong> 검색어로 검색된 내용입니다.
-		</p>
-    </div>
+    
+	<p v-if="qnafree.keyword" class="mt-2">
+		<strong>{{ qnafree.condition }}</strong> 조건
+		<strong v-bind:title="qnafree.keyword">{{ qnafree.keyword }}</strong> 검색어로 검색된 내용입니다.
+	</p>
+
     <h3 class="sr-only">글 상세 보기</h3>
     <h1>{{ qnafree.title }}</h1>
     <table>
@@ -34,11 +34,11 @@
 		</table>
 		<div class="mainContent mt-3">{{ qnafree.content }}</div>
 		<div class="d-grid d-md-flex justify-content-md-end mt-3">
-			<div class="d-grid d-md-flex " v-if="$store.getters.userId == 'Y'">
-				<a :href="`/qnafree/${qnafree.freeQuestionNum}/update`" class="btn btn-sm me-2 new-btn">수정</a>
-				<a href="javascript:" @click="deleteConfirm(qnafree.freeQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</a>
+			<div class="d-grid d-md-flex " v-if="$store.getters.isUserId == qnafree.freeQuestionWriter">
+				<a :href="`/qnafree/update/${qnafree.freeQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
+				<a href="javascript:" @click="confirmDelete(qnafree.freeQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</a>
 			</div>
-			<a :href="'/notice'" class="btn btn-sm me-2 btn-secondary">목록</a>
+			<a :href="'/qnafree'" class="btn btn-sm me-2 btn-secondary">목록</a>
 		</div>
 	</div>
 </template>
@@ -58,7 +58,7 @@ export default {
 
 	created() {
 		var vm = this;
-		var url = `http://localhost:9000/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
+		var url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
 		axios.get(url)
 		.then(function (response) {
 			console.log(response.data.body);
@@ -72,7 +72,7 @@ export default {
 	methods: {
 
 		qnafreedelete : function(freeQuestionNum) {
-			axios.put('http://localhost:9000/project/api/qna-free/' + freeQuestionNum + '/delete', 
+			axios.put('/project/api/qna-free/' + freeQuestionNum + '/delete', 
 				{ freeQuestionNum }
 			).then(response => {
 				console.warn(response)

@@ -27,16 +27,28 @@ const store = new Vuex.Store({
         setIsManager(state, isManager){
             state.isManager = isManager;
         },
+        setremoveManager(state){
+            state.isManager = null;
+        },
+        setremoveId(state){
+            state.userId = null;
+        },
     },
     actions : {
         setUserId:({commit}, userId) => {
             commit('setUserId', userId);
         },
         getData(){
-            axios.get('http://localhost:9000/project/api/faq/Faqlist')
+            axios.get('/project/api/faq/Faqlist')
         },
         setIsManager:({commit}, isManager) => {
             commit('setIsManager', isManager);
+        },
+        setremoveManager:({commit}) => {
+            commit('setremoveManager');
+        },
+        setremoveId:({commit}) => {
+            commit('setremoveId');
         }
     },
     plugins:[
