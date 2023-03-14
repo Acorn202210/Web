@@ -91,6 +91,26 @@
               </form>
             </div>
           </div>
+          <nav>
+          <ul class="pagination justify-content-center">
+            <li class="page-item" v-if="lectureReview.startPageNum != 1">
+              <a class="page-link new-page-link" @click="paging(lectureReview.startPageNum - 1)">
+              <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>
+
+          <li v-for="i in 5" :key="i" class="page-item ${lectureReview.pageNum eq i ? 'active' : '' }">
+            <a class="page-link new-page-link" v-if="i + lectureReview.startPageNum - 1 <= lectureReview.endPageNum"
+              @click="paging(i + lectureReview.startPageNum - 1)">{{ i + lectureReview.startPageNum - 1 }}</a>
+          </li>
+
+          <li class="page-item" v-if="lectureReview.endPageNum < lectureReview.totalPage">
+            <a class="page-link new-page-link" @click="paging(lectureReview.endPageNum + 1)">
+              <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
         </div>
         <div class="box2">
           <div>
@@ -116,27 +136,6 @@
             </button>
           </div>
         </div>
-
-        <nav>
-          <ul class="pagination justify-content-center">
-            <li class="page-item" v-if="lectureReview.startPageNum != 1">
-              <a class="page-link new-page-link" @click="paging(lectureReview.startPageNum - 1)">
-              <span aria-hidden="true">&lt;</span>
-            </a>
-          </li>
-
-          <li v-for="i in 5" :key="i" class="page-item ${lectureReview.pageNum eq i ? 'active' : '' }">
-            <a class="page-link new-page-link" v-if="i + lectureReview.startPageNum - 1 <= lectureReview.endPageNum"
-              @click="paging(i + lectureReview.startPageNum - 1)">{{ i + lectureReview.startPageNum - 1 }}</a>
-          </li>
-
-          <li class="page-item" v-if="lectureReview.endPageNum < lectureReview.totalPage">
-            <a class="page-link new-page-link" @click="paging(lectureReview.endPageNum + 1)">
-              <span aria-hidden="true">&gt;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
     </div>
   </div>
 </template>
