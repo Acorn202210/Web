@@ -1,17 +1,14 @@
 <template>
-  <div class="container mt-5">
+  <div class="container mt-3">
 
     <div class="d-md-flex justify-content-md-end">
-      <a v-if="notice.prevNum != 0" :href="`/notice/${notice.prevNum}`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-      <a v-if="notice.nextNum != 0" :href="`/notice/${notice.nextNum}`" class="btn btn-sm btn-secondary">다음글</a>
+      <a v-if="notice.prevNum != 0" :href="`/notice/${notice.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+      <a v-if="notice.nextNum != 0" :href="`/notice/${notice.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
     </div>
-
-    <c:if test="${not empty keyword }">
-      <p class="mt-2">
-        <strong>${condition }</strong> 조건
-        <strong>${keyword }</strong> 검색어로 검색된 내용입니다.
-      </p>
-    </c:if>
+    <p class="mt-2" v-if="this.$route.query.condition != ''">
+      <strong>{{ this.$route.query.condition }}</strong> 조건
+      <strong>{{ this.$route.query.keyword }}</strong> 검색어로 검색된 내용입니다.
+    </p>
     <h3 class="sr-only">글 상세 보기</h3>
     <h1>{{ notice.title }}</h1>
     <table>
@@ -21,11 +18,11 @@
       </tr>
       <tr>
         <th>조회수</th>
-        <td>${dto.viewCount }</td>
+        <td>{{ notice.viewCount }}</td>
       </tr>
       <tr>
         <th>작성자</th>
-        <td class="fw-bold fs-6">by {{ notice.notiWriter }}</td> <!--작성자 추가해야함.-->
+        <td class="fw-bold fs-6">{{ notice.notiWriter }}</td>
       </tr>
       <tr>
         <th>작성일</th>
@@ -35,7 +32,7 @@
     <div class="mainContent mt-3">{{ notice.content }}</div>
     <div class="d-grid d-md-flex justify-content-md-end mt-3">
       <div class="d-grid d-md-flex " v-if="$store.getters.isManager == 'Y'">
-        <a :href="`/notice/${notice.prevNum}/update`" class="btn btn-sm me-2 new-btn">수정</a>
+        <a :href="`/notice/update?notiNum=${notice.notiNum}`" class="btn btn-sm me-2 new-btn">수정</a>
         <a href="javascript:" @click="deleteConfirm(notice.notiNum)" class="btn btn-sm me-2 btn-danger">삭제</a>
       </div>
       <a :href="'/notice'" class="btn btn-sm me-2 btn-secondary">목록</a>
@@ -55,7 +52,11 @@ export default {
   created() {
     var vm = this;
     var url = `/project/api/notice/${this.$route.params.notiNum}`;
-    axios.get(url)
+    const data = {
+        keyword:this.$route.query.keyword,
+        condition:this.$route.query.condition
+      }
+    axios.get(url, { params: data })
       .then(function (response) {
         console.log(response.data.body);
         vm.notice = response.data.body;

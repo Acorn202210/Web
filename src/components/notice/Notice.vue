@@ -96,7 +96,7 @@ export default {
   },
   methods: {
     detail: function (notiNum) {
-      this.$router.push('/notice/' + notiNum);
+      this.$router.push('/notice/' + notiNum+'?condition='+this.condition+'&keyword='+this.keyword);
     },
     paging: function (currentPage) {
       var vm = this;

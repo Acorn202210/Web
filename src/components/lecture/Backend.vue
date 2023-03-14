@@ -8,7 +8,7 @@
 		  <div class="card mb-3">
 			<a :href="`/lectureDetail/${backend.lecNum}`">
 				<div class="img-wrapper">
-					<img :src="`http://localhost:9000/project/api/lecture/${backend.lecNum}/image?lecNum=${backend.lecNum}`">
+					<img :src="`/project/api/lecture/${backend.imageNum}/image?lecNum=${backend.imageNum}`">
 				</div>
 			</a>
 			<div class="card-body">
@@ -44,7 +44,7 @@
   import axios from 'axios';
   
   export default {
-    name: 'Backend',
+    name: 'backend',
     data() {
       return {
         list: {
@@ -66,7 +66,7 @@
     },
 	created(){
       var vm = this;
-      var url = 'http://localhost:9000/project/api/lecture/lectureList';
+      var url = '/project/api/lecture/lectureList';
       const data={
         limit: 5,
         largeCategory: vm.largeCategory,
@@ -83,7 +83,7 @@
     },
     methods: {
 		paging:function(currentPage) {
-        const url = 'http://localhost:9000/project/api/lecture/lectureList';
+        const url = '/project/api/lecture/lectureList';
         const data = {
 		  limit : 5,
 		  currentPage:currentPage,
