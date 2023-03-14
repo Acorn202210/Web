@@ -7,7 +7,7 @@
 	        </div>
         </div>
 
-        <p v-if="qna.keyword" class="mt-2">
+        <p v-if="qna.keyword != null" class="mt-2">
           <strong>{{ qna.condition }}</strong> 조건
           <strong v-bind:title="qna.keyword">{{ qna.keyword }}</strong> 검색어로 검색된 내용입니다.
         </p>
@@ -34,36 +34,85 @@
         </table>
         <div class="mainContent mt-3">{{ qna.content }}</div>
         <div class="d-grid d-md-flex justify-content-md-end mt-3">
-            <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
-                <a :href="`/qnaupdate/${qna.boardQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
-                <div>
-                  <input type="hidden" v-model="qna.boardQuestionNum"/>
-                  <button @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</button>                           
-                </div>                
-            </div>
-            <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>
-        </div>           
+          <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
+              <a :href="`/qnaupdate/${qna.boardQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
+              <div class="d-grid d-md-flex">
+                <input type="hidden" v-model="qna.boardQuestionNum"/>
+                <button @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</button>                           
+              </div>                
+          </div>
+          <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>
+        </div>     
+
+        <div>
+          <span> 번호: {{ formData.boardCommentRefGroup }}</span>
+          <span> 날짜: {{ qnaAnswer.userRegdate }}</span> 
+          <p> 댓글내용:{{ qnaAnswer.content }}</p>
+        </div>
+        
+        <div v-if="$store.getters.isManager == 'Y'">
+          <p>댓글 작성폼</p>
+          <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
+             <textarea class="me-3" name="content" v-model="formData.content"></textarea>
+             <button type="submit" class="button btn mb-5">등록</button>
+          </form>          
+        </div>
+        <!--<div>
+          <span>{{/*작성자*/}}</span>
+          <span>{{/*UserRegidate*/}}</span>
+          <div v-if="$store.getters.isUserId != null && lectureReview.lecReWriter == $store.getters.isUserId">
+            <button class="update-link" @click="showReviewUpdateForm(lectureReview.lecReNum)">수정</button>
+              <a data-num="{{lectureReview.lecReNum }}" class="delete-link" href="javascript:">삭제</a>
+          </div>
+        </div> -->
+
+
+              
     </div>
 </template>
+
 
 <script>
 import axios from 'axios'
 export default {
     name: 'QnaDetail',
+    components:{
+       
+    },
+    props:{
+
+    },
 	  data(){
       return{
         qna:{},
         condition: '',
-      	keyword: ''
+      	keyword: '',
+        formData: {
+          boardCommentRefGroup:'',
+          content:''
+        },
+        qnaAnswer:[],
+        isUpdateFormVisible: false,
+        answerSignupForm:{
+          boardCommentRefGroup: ''
+        },
+        completeForm:{
+          boardCommentRefGroup: ''
+        }
+        
       }
 	  },
     created(){
       var vm = this;
       var url = `/project/api/qna-board/${this.$route.params.boardQuestionNum}`;
       axios.get(url)
-      .then(function(response){
+      .then(response => {
         console.log(response.data.body);
         vm.qna = response.data.body;
+        this.formData.boardCommentRefGroup = this.qna.boardQuestionNum;
+        this.answerSignupForm.boardCommentRefGroup = this.qna.boardQuestionNum;
+        this.completeForm.boardCommentRefGroup = this.qna.boardQuestionNum;
+        this.getAnswer();
       })
       .catch(function(error){
         console.log(error);
@@ -72,16 +121,48 @@ export default {
 
     methods:{
 
-        qnaboarddelete: function(boardQuestionNum){
-          axios.put('/project/api/qna-board/' + boardQuestionNum + '/delete', 
-            { boardQuestionNum }
-          ).then(response => {
-            console.warn(response)
-            this.result = response.data;
-            this.$router.push('/qna');
-          }).catch((ex) => {
-            console.warn("ERROR!!!!! : ",ex)
-          })
+      submitAnswerForm(){
+        const url = '/project/api/qna-board/answerInsert';
+        const data = {
+            content : this.formData.content,
+            boardCommentRefGroup : this.formData.boardCommentRefGroup
+        };
+        axios.post(url, data)
+        .then(response => {
+          console.log(response.data);
+          alert('1:1문의 답변 등록 성공');
+        })
+        .catch(error => {
+          console.error(error);
+          alert('1:1문의 답변 등록 실패');
+        });
+      },
+
+      getAnswer(boardQuestionNum){
+        const url = `/project/api/qna-board/${boardQuestionNum}/answer`;
+        const data = {
+          boardCommentRefGroup: this.detail.boardQuestionNum
+        }
+        axios.get(url, { params: data })
+        .then(response => {
+          console.log(response.data);
+          this.qnaAnswer = response.data.body;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      },
+
+      qnaboarddelete: function(boardQuestionNum){
+        axios.put('/project/api/qna-board/' + boardQuestionNum + '/delete', 
+          { boardQuestionNum }
+        ).then(response => {
+          console.warn(response)
+          this.result = response.data;
+          this.$router.push('/qna');
+        }).catch((ex) => {
+          console.warn("ERROR!!!!! : ",ex)
+        })
       },
 
       deleteConfirm: function(boardQuestionNum){
