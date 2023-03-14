@@ -36,6 +36,42 @@
           </tbody>
         </table>
       </div>
+      <nav>
+        <ul class="pagination justify-content-center">
+          <li class="page-item" v-if="list.startPageNum != 1">
+            <a class="page-link new-page-link" @click="paging(list.startPageNum - 1)">
+              <span aria-hidden="true">&lt;</span>
+            </a>
+          </li>
+
+          <li v-for="i in 7" :key="i"
+            :class="['page-item', list.currentPage == i + list.startPageNum - 1 ? 'active' : '']">
+            <a class="page-link new-page-link" v-if="i + list.startPageNum - 1 <= list.endPageNum"
+              @click="paging(i + list.startPageNum - 1)">{{ i + list.startPageNum - 1 }}</a>
+          </li>
+
+          <li class="page-item" v-if="list.endPageNum < list.totalPage">
+            <a class="page-link new-page-link" @click="paging(list.endPageNum + 1)">
+              <span aria-hidden="true">&gt;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <form @submit.prevent="submitForm" action="list" method="get">
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end table-search-box">
+          <select v-model="condition" name="condition" id="condition" class="form-select">
+            <option value="" disabled>검색 조건</option>
+            <option value="id" >아이디</option>
+            <option value="birth" >생일</option>
+            <option value="email" >이메일</option>
+            <option value="phone" >핸드폰 번호</option>
+            <option value="regdate" >가입일</option>
+          </select>
+          <input type="text" name="keyword" placeholder="검색어..." class="form-control" v-model="keyword" />
+          <button type="submit" class="table-search-btn new-btn-black btn">검색</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
@@ -46,7 +82,14 @@ export default {
   name: 'Signup',
   data() {
     return {
-      list: {}
+      list: {},
+      condition:'',
+      keyword:'',
+      id:'',
+      birth:'',
+      email:'',
+      phone:'',
+      regdate:''
     }
   },
   created() {
@@ -90,6 +133,112 @@ export default {
           console.log(error);
         })
     },
+    paging: function (currentPage) {
+      var vm = this;
+
+      if(this.condition == 'id'){
+        this.id = this.keyword;
+        this.birth='';
+        this.email='';
+        this.phone='';
+        this.regdate='';
+      }else if(this.condition == 'birth'){
+        this.birth = this.keyword;
+        this.id='';
+        this.email='';
+        this.phone='';
+        this.regdate='';
+      }else if(this.condition == 'email'){
+        this.email = this.keyword;
+        this.birth='';
+        this.id='';
+        this.phone='';
+        this.regdate='';
+      }else if(this.condition == 'phone'){
+        this.phone = this.keyword;
+        this.birth='';
+        this.email='';
+        this.id='';
+        this.regdate='';
+      }else if(this.condition == 'regdate'){
+        this.regdate = this.keyword;
+        this.birth='';
+        this.email='';
+        this.phone='';
+        this.id='';
+      }
+      var url = "/project/api/users/list";
+      const data = {
+        limit: 7,
+        currentPage: currentPage,
+        lecUserId:vm.id,
+        userBirth:vm.birth,
+        userEmail:vm.email,
+        userPhone:vm.phone,
+        userRegdate:vm.regdate
+      }
+      axios.get(url, { params: data })
+        .then(function (response) {
+          console.log(response.data);
+          vm.list = response.data.body;
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    },
+    submitForm(){
+      var vm = this;
+
+      if(this.condition == 'id'){
+        this.id = this.keyword;
+        this.birth='';
+        this.email='';
+        this.phone='';
+        this.regdate='';
+      }else if(this.condition == 'birth'){
+        this.birth = this.keyword;
+        this.id='';
+        this.email='';
+        this.phone='';
+        this.regdate='';
+      }else if(this.condition == 'email'){
+        this.email = this.keyword;
+        this.birth='';
+        this.id='';
+        this.phone='';
+        this.regdate='';
+      }else if(this.condition == 'phone'){
+        this.phone = this.keyword;
+        this.birth='';
+        this.email='';
+        this.id='';
+        this.regdate='';
+      }else if(this.condition == 'regdate'){
+        this.regdate = this.keyword;
+        this.birth='';
+        this.email='';
+        this.phone='';
+        this.id='';
+      }
+      var url = "/project/api/users/list";
+      const data = {
+        limit: 7,
+        currentPage: vm.currentPage,
+        lecUserId:vm.id,
+        userBirth:vm.birth,
+        userEmail:vm.email,
+        userPhone:vm.phone,
+        userRegdate:vm.regdate
+      }
+      axios.get(url, { params: data })
+        .then(function (response) {
+          console.log(response.data);
+          vm.list = response.data.body;
+        })
+        .catch(function (error) {
+          console.log(error);
+        })
+    }
   }
 }
 </script>
