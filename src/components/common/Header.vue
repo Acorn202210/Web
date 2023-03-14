@@ -31,8 +31,6 @@
             <li class="dropdown"><a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown"
                 aria-expanded="false" href="#">커뮤니티</a>
               <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" role="presentation"
-                  href="${pageContext.request.contextPath}/qna_users/list">질문답변</a>
                 <a class="dropdown-item" role="presentation" @click="$router.push('/qnafree')">자유게시판</a>
               </div>
             </li>

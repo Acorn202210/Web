@@ -11,6 +11,7 @@ import UserUpdate from './components/user/update.vue';
 import Notice from './components/notice/Notice.vue';
 import NoticeDetail from './components/notice/detail';
 import NoticeInsert from './components/notice/insert';
+import NoticeUpdate from './components/notice/update';
 import Qna from './components/qna/Qna.vue';
 import qnainsertform from './components/qna/qnainsertform.vue';
 import QnaDetail from './components/qna/QnaDetail.vue';
@@ -90,6 +91,10 @@ const routes = [
     {
         path:"/notice/insert",
         component: NoticeInsert
+    },
+    {
+        path:"/notice/update",
+        component: NoticeUpdate
     },
     {
         path: "/qna",
