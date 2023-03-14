@@ -1,11 +1,14 @@
 <template>
 	<div class="container">
 	  <div class="row">
+      <div>
+        <a href="/lectureUploadForm">강의 등록</a>
+      </div>
 		<div v-for="front in list.data" :key="front.lecNum">
 		  <div class="card mb-3">
 			<a :href="`/lectureDetail/${front.lecNum}`">
 			  <div class="img-wrapper">
-				<img :src="`http://localhost:9000/project/api/lecture/${front.lecNum}/image?lecNum=${front.lecNum}`">
+				<img :src="`/project/api/lecture/${front.imageNum}/image?lecNum=${front.imageNum}`">
 			  </div>
 			</a>
 			<div class="card-body">
@@ -41,7 +44,7 @@
   import axios from 'axios';
   
   export default {
-    name: 'Front',
+    name: 'front',
     data() {
       return {
         list: {
@@ -63,7 +66,7 @@
     },
 	created(){
       var vm = this;
-      var url = 'http://localhost:9000/project/api/lecture/lectureList';
+      var url = '/project/api/lecture/lectureList';
       const data={
         limit: 5,
         largeCategory: vm.largeCategory,
@@ -80,7 +83,7 @@
     },
     methods: {
 		paging:function(currentPage) {
-        const url = 'http://localhost:9000/project/api/lecture/lectureList';
+        const url = '/project/api/lecture/lectureList';
         const data = {
 		  limit : 5,
 		  currentPage:currentPage,

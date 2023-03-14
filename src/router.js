@@ -19,11 +19,11 @@ import QnaFree from './components/qna_free/QnaFree.vue';
 import QnaFreeDetail from './components/qna_free/detail.vue';
 import QnaFreeInsert from './components/qna_free/insert.vue';
 import QnaFreeUpdate from './components/qna_free/update.vue';
-import Front from './components/lecture/Front.vue';
-import Backend from './components/lecture/Backend.vue';
-import Mobile from './components/lecture/Mobile.vue';
-import LectureDetail from './components/lecture/LectureDetail.vue'
-import LectureUploadForm from './components/lecture/LectureUploadForm.vue'
+import front from './components/lecture/front.vue';
+import backend from './components/lecture/backend.vue';
+import mobile from './components/lecture/mobile.vue';
+import lectureDetail from './components/lecture/lectureDetail.vue'
+import lectureUploadForm from './components/lecture/lectureUploadForm.vue'
 
 const routes = [
     {
@@ -61,23 +61,23 @@ const routes = [
     },
     {
         path: "/front",
-        component: Front
+        component: front
     },
     {
         path: "/backend",
-        component: Backend
+        component: backend
     },
     {
         path: "/mobile",
-        component: Mobile
+        component: mobile
     },
     {
         path: "/lectureDetail/:lecNum",
-        component: LectureDetail
+        component: lectureDetail
     },
     {
         path: "/lectureUploadForm",
-        component: LectureUploadForm
+        component: lectureUploadForm
     },
     {
         path: "/notice",

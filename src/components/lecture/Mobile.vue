@@ -8,7 +8,7 @@
         <div class="card mb-3">
           <a :href="`/lectureDetail/${mobile.lecNum}`">
             <div class="img-wrapper">
-              <img :src="`http://localhost:9000/project/api/lecture/${mobile.lecNum}/image?lecNum=${mobile.lecNum}`" >
+              <img :src="`/project/api/lecture/${mobile.imageNum}/image?lecNum=${mobile.imageNum}`" >
             </div>
           </a>
           <div class="card-body">
@@ -44,7 +44,7 @@
   import axios from 'axios';
   
   export default {
-    name: 'Mobile',
+    name: 'mobile',
     data() {
       return {
         list: {
@@ -66,7 +66,7 @@
     },
 	created(){
       var vm = this;
-      var url = 'http://localhost:9000/project/api/lecture/lectureList';
+      var url = '/project/api/lecture/lectureList';
       const data={
         limit: 5,
         largeCategory: vm.largeCategory,
@@ -83,7 +83,7 @@
     },
     methods: {
 		paging:function(currentPage) {
-        const url = 'http://localhost:9000/project/api/lecture/lectureList';
+        const url = '/project/api/lecture/lectureList';
         const data = {
 		  limit : 5,
 		  currentPage:currentPage,
