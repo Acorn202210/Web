@@ -140,8 +140,7 @@ export default {
         userBirth: this.birth,
         userEmail: this.email,
         userPhone: this.phone, 
-        userPwd : this.pwd,
-        userNickname:"dd"
+        userPwd : this.pwd
       }
       var vm = this;
       axios.post(url, data)
