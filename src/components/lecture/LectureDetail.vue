@@ -87,8 +87,8 @@
 
       <div class="box2">
         <div>
-          <form class="mt-4 mb-3 d-flex justify-content-center" method="post" id="signForm">
-            <input type="hidden" name="ref_group" v-bind:value="detail.lecNum" />
+          <form class="mt-4 mb-3 d-flex justify-content-center" @submit.prevent="lectureSignupForm">
+            <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
             <button class="button" type="submit">수강 신청</button>
           </form>
         </div>
@@ -96,9 +96,9 @@
           <div class="mt-4 d-flex justify-content-center mb-3">
             <button class="button" type="button">강의보기</button>
             <br />
-            <form id="completeForm" method="post">
-              <input type="hidden" name="complete" value="Y" />
-              <input type="hidden" name="ref_group" v-bind:value="detail.lecNum" />
+            <form id="completeForm" @submit.prevent="lectureComplete">
+              <input type="hidden" name="completeYn" value="Y" />
+              <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
               <button class="button" type="submit">강의완료</button>
             </form>
           </div>
@@ -151,7 +151,13 @@ export default {
       lectureReview: [],
       my : {},
       profile: "",
-      isUpdateFormVisible: false
+      isUpdateFormVisible: false,
+      lecSignupForm:{
+        lecStuRefGroup: ''
+      },
+      completeForm:{
+        lecStuRefGroup: ''
+      }
     };
   },
   created() {
@@ -161,6 +167,8 @@ export default {
         console.log(response.data.body);
         this.detail = response.data.body;
         this.formData.lecReStuRefGroup = this.detail.lecNum;
+        this.lecSignupForm.lecStuRefGroup = this.detail.lecNum;
+        this.completeForm.lecStuRefGroup = this.detail.lecNum;
         this.getReviewList();
         this.getProfileImageUrl();
       })
@@ -270,7 +278,37 @@ export default {
       console.error(error);
       alert('후기 수정 실패');
     });
-  },    
+  }, 
+  lectureSignupForm() {
+  const url = '/project/api/lecture-student/lecture-signup'
+  const data = {
+    lecStuRefGroup:this.lecSignupForm.lecStuRefGroup
+  };
+  axios.post(url, data)
+    .then(response => {
+      console.log(response.data);
+      alert('강의 신청 성공');
+    })
+    .catch(error => {
+      console.error(error);
+      alert('강의 신청 실패');
+    });
+  },
+  lectureComplete(){
+    const url = '/project/api/lecture-student/lecture-complete'
+    const data = {
+      lecStuRefGroup : this.completeForm.lecStuRefGroup
+    };
+    axios.post(url, data)
+    .then(response => {
+      console.log(response.data);
+      alert('강의 완료 성공');
+    })
+    .catch(error => {
+      console.error(error);
+      alert('강의 완료 실패');
+    });  
+  }
   },  
 };
 </script>
