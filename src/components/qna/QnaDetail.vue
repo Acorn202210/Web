@@ -6,12 +6,11 @@
             <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}`" class="btn btn-sm btn-secondary">다음글</a>
 	        </div>
         </div>
-        <c:if test="${not empty keyword }">
-            <p class="mt-2">
-                <strong>${condition }</strong> 조건 
-                <strong>${keyword }</strong> 검색어로 검색된 내용입니다.
-            </p>
-        </c:if>
+
+        <p v-if="qna.keyword" class="mt-2">
+          <strong>{{ qna.condition }}</strong> 조건
+          <strong v-bind:title="qna.keyword">{{ qna.keyword }}</strong> 검색어로 검색된 내용입니다.
+        </p>
 
         <h3 class="sr-only">1:1문의 상세 보기</h3>
         <h1>{{ qna.title }}</h1>
@@ -37,7 +36,10 @@
         <div class="d-grid d-md-flex justify-content-md-end mt-3">
             <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
                 <a :href="`/qnaupdate/${qna.boardQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
-                <a href="javascript:" @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</a>                           
+                <div>
+                  <input type="hidden" v-model="qna.boardQuestionNum"/>
+                  <button @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</button>                           
+                </div>                
             </div>
             <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>
         </div>           
@@ -50,7 +52,9 @@ export default {
     name: 'QnaDetail',
 	  data(){
       return{
-        qna:{}
+        qna:{},
+        condition: '',
+      	keyword: ''
       }
 	  },
     created(){
@@ -65,22 +69,31 @@ export default {
         console.log(error);
       })
     },
+
     methods:{
-      deleteConfirm:function(boardQuestionNum){
-        const isDelete = confirm("이 1:1문의를 삭제하겠습니까?");
-        var url = `/project/api/qna-board/${boardQuestionNum}/delete`;
-        if(isDelete){
-          axios.put(url)
-          .then(function(){
-            alert('1:1문의가 삭제 되었습니다.');
+
+        qnaboarddelete: function(boardQuestionNum){
+          axios.put('/project/api/qna-board/' + boardQuestionNum + '/delete', 
+            { boardQuestionNum }
+          ).then(response => {
+            console.warn(response)
+            this.result = response.data;
             this.$router.push('/qna');
+          }).catch((ex) => {
+            console.warn("ERROR!!!!! : ",ex)
           })
-          .catch(function(){
-            alert('1:1문의 삭제에 실패했습니다.')
-          })
+      },
+
+      deleteConfirm: function(boardQuestionNum){
+        const isDelete = confirm("이 1:1문의를 삭제하겠습니까?");        
+        if(isDelete){          
+          this.qnaboarddelete(boardQuestionNum);
+          alert('1:1문의가 삭제 되었습니다.');
+          this.$router.push('/qna');          
         }
       }
     }
+    
 }
 </script>
 
