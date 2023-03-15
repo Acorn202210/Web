@@ -38,36 +38,29 @@
               <a :href="`/qnaupdate/${qna.boardQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
               <div class="d-grid d-md-flex">
                 <input type="hidden" v-model="qna.boardQuestionNum"/>
-                <button @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</button>                           
+                <button @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</button>
               </div>                
           </div>
           <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>
         </div>     
 
-        <div>
-          <span> 번호: {{ formData.boardCommentRefGroup }}</span>
-          <span> 날짜: {{ qnaAnswer.userRegdate }}</span> 
-          <p> 댓글내용:{{ qnaAnswer.content }}</p>
-        </div>
-        
-        <div v-if="$store.getters.isManager == 'Y'">
-          <p>댓글 작성폼</p>
-          <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
-             <textarea class="me-3" name="content" v-model="formData.content"></textarea>
-             <button type="submit" class="button btn mb-5">등록</button>
+        <div class="mb-5 pb-5" v-show="qnaAnswer.boardCommentWriter != null">
+          <span><b> {{ qnaAnswer.boardCommentWriter }}</b></span><br>
+          <span> {{ qnaAnswer.userRegdate }}</span> 
+          <form class="comment-form pb-3">
+            <textarea class="me-3" name="content" v-model="qnaAnswer.content" readonly></textarea>            
           </form>          
         </div>
-        <!--<div>
-          <span>{{/*작성자*/}}</span>
-          <span>{{/*UserRegidate*/}}</span>
-          <div v-if="$store.getters.isUserId != null && lectureReview.lecReWriter == $store.getters.isUserId">
-            <button class="update-link" @click="showReviewUpdateForm(lectureReview.lecReNum)">수정</button>
-              <a data-num="{{lectureReview.lecReNum }}" class="delete-link" href="javascript:">삭제</a>
-          </div>
-        </div> -->
-
-
-              
+        
+        <div v-if="$store.getters.isManager == 'Y'">          
+          <br><p>댓글 작성 폼</p>
+          <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
+            <input type="hidden" name="boardCommentRefGroup" :value="qna.boardQuestionNum" />
+            <textarea class="me-3" name="content" v-model="formData.content"></textarea>
+            <button type="submit" class="button btn mb-5">등록</button>
+          </form>          
+        </div>
+                      
     </div>
 </template>
 
@@ -76,12 +69,7 @@
 import axios from 'axios'
 export default {
     name: 'QnaDetail',
-    components:{
-       
-    },
-    props:{
-
-    },
+    
 	  data(){
       return{
         qna:{},
@@ -91,7 +79,7 @@ export default {
           boardCommentRefGroup:'',
           content:''
         },
-        qnaAnswer:[],
+        qnaAnswer:{},
         isUpdateFormVisible: false,
         answerSignupForm:{
           boardCommentRefGroup: ''
@@ -112,7 +100,7 @@ export default {
         this.formData.boardCommentRefGroup = this.qna.boardQuestionNum;
         this.answerSignupForm.boardCommentRefGroup = this.qna.boardQuestionNum;
         this.completeForm.boardCommentRefGroup = this.qna.boardQuestionNum;
-        this.getAnswer();
+        this.getAnswerData();
       })
       .catch(function(error){
         console.log(error);
@@ -131,6 +119,7 @@ export default {
         .then(response => {
           console.log(response.data);
           alert('1:1문의 답변 등록 성공');
+          this.$router.push('/qna/');
         })
         .catch(error => {
           console.error(error);
@@ -138,12 +127,8 @@ export default {
         });
       },
 
-      getAnswer(boardQuestionNum){
-        const url = `/project/api/qna-board/${boardQuestionNum}/answer`;
-        const data = {
-          boardCommentRefGroup: this.detail.boardQuestionNum
-        }
-        axios.get(url, { params: data })
+      getAnswerData(){        
+        axios.get(`/project/api/qna-board/${this.$route.params.boardQuestionNum}/answer`)
         .then(response => {
           console.log(response.data);
           this.qnaAnswer = response.data.body;
