@@ -3,30 +3,29 @@
     <main class="form-signin w-100 m-auto mt-5">
       <h3 class="text-center mb-3 fw-normal">강의 등록 페이지</h3>
       <p class="text-center mb-3 fw-normal">강의 등록 페이지입니다.</p>
+      
       <form @submit.prevent="handleSubmit" enctype="multipart/form-data">
-        <div class="mb-3">
-          <label class="form-label" for="file">썸네일</label>
-          <input class="form-control" type="file" id="file" ref="file" accept="image/*" @change="handleFileChange">
-        </div>
+        썸네일
+          <input ref="image" type="file" id="image" name="image" multiple="multiple" accept=".jpg, .png, .gif" @change="imageChange"/>
         <div class="mb-3">
           <label class="form-label" for="title">강의 제목</label>
-          <input class="form-control" type="text" v-model="lecture.title" name="title" id="title" />
+          <input class="form-control" type="text" v-model="title" name="title" id="title" />
         </div>
         <div class="mb-3">
           <label class="form-label" for="teacher">강사</label>
-          <input class="form-control" type="text" v-model="lecture.teacher" name="teacher" id="teacher" />
+          <input class="form-control" type="text" v-model="teacher" name="teacher" id="teacher" />
         </div>
         <div class="mb-3">
           <label class="form-label" for="describe">강의 내용</label>
-          <textarea v-model="lecture.describe" name="describe" id="describe"></textarea>
+          <textarea v-model="describe" name="describe" id="describe"></textarea>
         </div>
         <div class="mb-3">
           <label class="form-label" for="videoPath">강의 영상</label>
-          <input class="form-control" type="text" v-model="lecture.videoPath" name="videoPath" id="videoPath" />
+          <input class="form-control" type="text" v-model="videoPath" name="videoPath" id="videoPath" />
         </div>
         <div class="mb-3">
           <label class="form-label" for="largeCategory">대분류</label>
-          <select class="form-control" v-model="lecture.largeCategory" name="largeCategory" id="largeCategory">
+          <select class="form-control" v-model="largeCategory" name="largeCategory" id="largeCategory">
             <option value="front">프론트엔드</option>
             <option value="backend">백엔드</option>
             <option value="mobile">모바일</option>
@@ -34,7 +33,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label" for="smallCategory">소분류</label>
-          <select class="form-control" v-model="lecture.smallCategory" name="smallCategory" id="smallCategory">
+          <select class="form-control" v-model="smallCategory" name="smallCategory" id="smallCategory">
             <option value="js">javascript</option>
             <option value="html_css">html/css</option>
             <option value="react">react</option>
@@ -53,9 +52,11 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
+      lectureImage: {},
       lecture: {
         title: "",
         teacher: "",
@@ -63,41 +64,44 @@ export default {
         videoPath: "",
         largeCategory: "",
         smallCategory: "",
-        file: "",
+        imageNum: ""
       },
     };
   },
   methods: {
-    handleFileChange(event) {
-      this.file = event.target.files[0];
+    imageChange() {
+      let form = new FormData();
+      let image = this.$refs['image'].files[0];
+      form.append('file', image);
+      var vm = this;
+      var url = `/project/api/lecture/lecture-img-upload`;
+            axios.post(url, form)
+                .then(function (response) {
+                  vm.lectureImage = response.data.body;
+                  vm.imageNum = vm.lectureImage.imageNum;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
     },
-    async handleSubmit() {
-      if (!this.lecture.file) {
-        console.log("파일을 선택해주세요.");
-        return;
-      }
-      const formData = new FormData();
-      formData.append("file", this.file);
-      formData.append("title", this.lecture.title);
-      formData.append("teacher", this.lecture.teacher);
-      formData.append("describe", this.lecture.describe);
-      formData.append("videoPath", this.lecture.videoPath);
-      formData.append("largeCategory", this.lecture.largeCategory);
-      formData.append("smallCategory", this.lecture.smallCategory);
-
-      const xhr = new XMLHttpRequest();
-      xhr.open("POST", "http://localhost:9000/project/api/lecture/lecture-insert");
-      xhr.send(formData);
-
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState === 4) {
-          if (xhr.status === 200) {
-            console.log("강의 등록 성공");
-          } else {
-            console.log("강의 등록 실패");
-          }
+    handleSubmit() {
+      const url = `/project/api/lecture/lecture-insert`;
+        const data = {
+            title: this.title,
+            teacher: this.teacher,
+            describe: this.describe,
+            videoPath: this.videoPath, 
+            largeCategory : this.largeCategory,
+            smallCategory : this.smallCategory,
+            imageNum : this.imageNum
         }
-      };
+      axios.post(url, data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     },
   },
 };
