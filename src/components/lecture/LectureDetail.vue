@@ -154,8 +154,6 @@ export default {
       },
       placeholderText: '리뷰를 작성해주세요',
       lectureReview: [],
-      my: {},
-      profile: "",
       isUpdateFormVisible: [],
       lecSignupForm: {
         lecStuRefGroup: ''
@@ -237,18 +235,6 @@ export default {
         .catch(error => {
           console.log(error);
         });
-    },
-    getProfileImageUrl(lecReWriter) {
-      var vm = this;
-      var url = `/project/api/users/${lecReWriter}`;
-      axios.get(url)
-        .then(function (response) {
-          vm.my = response.data.body;
-          vm.profile = vm.my.profileNum === null ? '' : vm.my.profileNum;
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
     },
     lectureReviewDelete: function (lecNum) {
       axios.put('/project/api/lecture/' + lecNum + '/lecture-delete', {}, { params: { lecNum } }
