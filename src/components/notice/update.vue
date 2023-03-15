@@ -13,7 +13,7 @@
           <textarea v-model="content" name="content" id="content" rows="10" class="form-control"></textarea>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-          <button type="submit" onclick="submitContents(this)" class="new-btn btn ">등록</button>
+          <button type="submit" onclick="submitContents(this)" class="new-btn btn ">수정</button>
         </div>
       </form>
     </div>
@@ -32,11 +32,11 @@ export default {
   },
   created() {
     var vm = this;
-    var url = `/project/api/notice/${this.$route.params.notiNum}`;
+    var url = `/project/api/notice/${this.$route.query.notiNum}`;
     axios.get(url)
       .then(function (response) {
-        console.log(response.data.body);
-        vm.notice = response.data.body;
+        vm.title = response.data.body.title;
+        vm.content = response.data.body.content;
       })
       .catch(function (error) {
         console.log(error);
@@ -44,15 +44,16 @@ export default {
   },
   methods: {
     submitForm(){
-      const url = '/project/api/notice';
+      const url = `/project/api/notice/${this.$route.query.notiNum}/update`;
       const data = {
         content:this.content,
-        title:this.title
+        title:this.title,
+        notiNum:this.$route.query.notiNum
       }
       var vm = this;
-      axios.post(url, data)
+      axios.put(url, data)
         .then(function () {
-          alert('공지사항이 등록되었습니다.');
+          alert('공지사항이 수정되었습니다.');
           vm.$router.push('/notice');
         })
     }
