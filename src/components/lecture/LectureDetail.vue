@@ -17,7 +17,7 @@
         </div>
         <p>{{ detail.describe }}</p>
         <br>
-        <div>
+        <div v-if="isStudent">
           <h4>수강 후기를 작성해주세요</h4>
           <form class="comment-form insert-form" @submit.prevent="submitReviewForm">
             <div class="star-rating">
@@ -40,20 +40,20 @@
 
         <!-- 댓글 목록-->
         <div v-for="lectureReview in lectureReview.data" :key="lectureReview.lecReWriter">
-          <img v-if="lectureReview.profileNum != ''" :src="`/project/api/users/profile/${lectureReview.profileNum}`" width="50" height="50" style="border-radius: 50%;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
-            class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-if="lectureReview.profileNum == ''">
-            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-            <path fill-rule="evenodd"
-              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-          </svg>
+          <img v-if="lectureReview.profileNum" :src="`/project/api/users/profile/${lectureReview.profileNum}`" width="50" height="50" style="border-radius: 50%;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
+              class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+              <path fill-rule="evenodd"
+                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
           <span class="ms-3"><strong>{{ lectureReview.lecReWriter }}</strong></span>
           <span class="ms-3">{{ lectureReview.userRegdate }}</span>
 
           <span class="ms-3"
             v-if="$store.getters.isUserId != null && lectureReview.lecReWriter == $store.getters.isUserId">
             <a class="update-link" @click="showReviewUpdateForm(lectureReview.lecReNum)">수정</a>
-            <a data-num="{{lectureReview.lecReNum }}" class="del ms-1" href="javascript:">삭제</a>
+            <a class="del ms-1" @click="deleteReviewConfirm(lectureReview.lecReNum)">삭제</a>
           </span>
 
             <span class="star-rating2">
@@ -114,22 +114,23 @@
       </div>
       <div class="box2">
         <div>
-          <form class="mt-4 mb-3 d-flex justify-content-center" @submit.prevent="lectureSignupForm">
-            <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
-            <button class="button" type="submit">수강 신청</button>
-          </form>
-        </div>
-        <div>
           <div class="mt-4 d-flex justify-content-center mb-3">
-            <button class="button" type="button">강의보기</button>
-            <br />
-            <form id="completeForm" @submit.prevent="lectureComplete">
-              <input type="hidden" name="completeYn" value="Y" />
-              <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
-              <button class="button" type="submit">강의완료</button>
-            </form>
+            <div v-if="!isStudent">
+              <form class="mt-4 mb-3 d-flex justify-content-center" @submit.prevent="lectureSignupForm">
+                <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
+                <button class="button" type="submit">수강 신청</button>
+              </form>
+            </div>
+            <div v-if="isStudent">
+              <form id="completeForm" @submit.prevent="lectureComplete">
+                <input type="hidden" name="completeYn" value="Y" />
+                <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
+                <button class="button" type="submit">강의완료</button>
+              </form>
+            </div>
           </div>
         </div>
+        <button class="button" type="button">강의보기</button>
         <div class="d-flex justify-content-center">
           <button type="button">
             1:1문의
@@ -154,6 +155,8 @@ data() {
     },
     placeholderText: '리뷰를 작성해주세요',
     lectureReview: [],
+    my: {},
+    profile: "",
     isUpdateFormVisible: [],
     lecSignupForm: {
       lecStuRefGroup: ''
@@ -161,6 +164,7 @@ data() {
     completeForm: {
       lecStuRefGroup: ''
     },
+    isStudent: false,
     colorStar:{
       color:'#f90'
     },
@@ -179,12 +183,21 @@ created() {
       this.lecSignupForm.lecStuRefGroup = this.detail.lecNum;
       this.completeForm.lecStuRefGroup = this.detail.lecNum;
       this.getReviewList();
-      this.getProfileImageUrl();
+      
     })
     .catch(error => {
       console.error(error);
 
     });
+    const url = `/project/api/lecture-student/checkStudent/?lecStuRefGroup=${this.$route.params.lecNum}`;
+    axios.get(url)
+      .then((response) => {
+        console.log(response);
+        this.isStudent = response.data.body.isStudent;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 },
 methods: {
   setRating(starCount) {
@@ -236,7 +249,7 @@ methods: {
         console.log(error);
       });
   },
-  lectureReviewDelete: function (lecNum) {
+  lectureDelete: function (lecNum) {
     axios.put('/project/api/lecture/' + lecNum + '/lecture-delete', {}, { params: { lecNum } }
     ).then(response => {
       console.warn(response)
@@ -248,7 +261,7 @@ methods: {
   },
   deleteConfirm: function (lecNum) {
     if (confirm("정말 삭제하시겠습니까?")) {
-      this.lectureReviewDelete(lecNum);
+      this.lectureDelete(lecNum);
     }
   },
   showReviewUpdateForm(lecReNum) {
@@ -275,6 +288,21 @@ methods: {
         console.error(error);
         alert('후기 수정 실패');
       });
+  },
+  lectureReviewDelete: function (lecReNum) {
+    axios.put('/project/api/lecture-review/' + lecReNum + '/lecture-review-delete', {}, { params: { lecReNum } }
+    ).then(response => {
+      console.warn(response)
+      this.result = response.data;
+      location.reload();
+    }).catch((ex) => {
+      console.warn("ERROR!!!!! : ", ex)
+    })
+  },
+  deleteReviewConfirm: function (lecReNum) {
+    if (confirm("정말 삭제하시겠습니까?")) {
+      this.lectureReviewDelete(lecReNum);
+    }
   },
   lectureSignupForm() {
     const url = '/project/api/lecture-student/lecture-signup'
@@ -305,7 +333,8 @@ methods: {
         console.error(error);
         alert('강의 완료 실패');
       });
-  }
+  },
+
 },
 };
 </script>
