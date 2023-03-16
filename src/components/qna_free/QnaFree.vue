@@ -96,7 +96,7 @@ export default {
 	},
 	methods: {
 		detail: function (freeQuestionNum) {
-		this.$router.push('/qnafree/' + freeQuestionNum);
+		this.$router.push('/qnafree/' + freeQuestionNum+'?condition='+this.condition+'&keyword='+this.keyword);
 		},
 		paging: function (currentPage) {
 		var vm = this;

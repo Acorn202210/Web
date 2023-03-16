@@ -2,15 +2,15 @@
     <div class="container mt-5">
 
     <div class="d-md-flex justify-content-md-end">
-		<a v-if="qnafree.prevNum != 0" :href="`/qnafree/${qnafree.prevNum}`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-		<a v-if="qnafree.nextNum != 0" :href="`/qnafree/${qnafree.nextNum}`" class="btn btn-sm btn-secondary">다음글</a>
+		<a v-if="qnafree.prevNum != 0" :href="`/qnafree/${qnafree.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+		<a v-if="qnafree.nextNum != 0" :href="`/qnafree/${qnafree.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
     </div>
 
     
-	<p v-if="qnafree.keyword" class="mt-2">
-		<strong>{{ qnafree.condition }}</strong> 조건
-		<strong v-bind:title="qnafree.keyword">{{ qnafree.keyword }}</strong> 검색어로 검색된 내용입니다.
-	</p>
+	<p class="mt-2" v-if="this.$route.query.condition != ''">
+      <strong>{{ this.$route.query.condition }}</strong> 조건
+      <strong>{{ this.$route.query.keyword }}</strong> 검색어로 검색된 내용입니다.
+    </p>
 
     <h3 class="sr-only">글 상세 보기</h3>
     <h1>{{ qnafree.title }}</h1>
@@ -51,15 +51,17 @@ export default {
 	data(){
 		return {
 			qnafree:{},
-			condition: '',
-      		keyword: ''
 		}
 	},
 
 	created() {
 		var vm = this;
 		var url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
-		axios.get(url)
+		const data = {
+        	keyword:this.$route.query.keyword,
+        	condition:this.$route.query.condition
+      	}
+		axios.get(url, { params: data })
 		.then(function (response) {
 			console.log(response.data.body);
 			vm.qnafree = response.data.body;
