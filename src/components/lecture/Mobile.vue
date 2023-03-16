@@ -80,6 +80,7 @@
       .catch(function(error){
         console.log(error);
       })
+      
     },
     methods: {
 		paging:function(currentPage) {
