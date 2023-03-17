@@ -4,6 +4,33 @@ body{
 	
 }
 
+.wrap {
+   width:auto; 
+   height:auto; 
+   overflow-x:auto; 
+   white-space:nowrap; 
+   -ms-overflow-style: none; 
+   scrollbar-width: none;
+}
+
+.wrap::-webkit-scrollbar{
+   display: none;
+}
+/*white-space: nowrap;  선언해줘야 내부 박스가 아래로 떨어지지 않고 가로로 나열됨*/
+
+.wrap > ul > li {display:inline-block; }
+ 
+ .home-img {
+   width: 200px;
+   height: 200px;
+   object-fit: fill;
+   margin-right: 50px;
+ }
+
+ .scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .selectedLecture{
 	color:#1EBD8E;
 }
