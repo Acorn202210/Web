@@ -9,7 +9,7 @@
             <a @click="$router.push('/my-lec-list')" class="me-3">수강 중인 강의</a>
             <a @click="$router.push('/my-complete-lec-list')" class="fw-bold"> 수강 완료한 강의</a>
         </div>
-        <h4>수강 중인 강의</h4>
+        <h5>수강 완료한 강의</h5>
         <div class="row">
             <div class="col-6 col-md-4 col-lg-2 mt-3" v-for="tmp in myLec.lectureData" :key="tmp.imageNum">
                 <a :href="`/lectureDetail/${tmp.lecNum}`">
