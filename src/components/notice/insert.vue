@@ -35,7 +35,6 @@ export default {
     var url = `/project/api/notice/${this.$route.params.notiNum}`;
     axios.get(url)
       .then(function (response) {
-        console.log(response.data.body);
         vm.notice = response.data.body;
       })
       .catch(function (error) {

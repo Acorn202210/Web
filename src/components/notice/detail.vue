@@ -58,7 +58,6 @@ export default {
       }
     axios.get(url, { params: data })
       .then(function (response) {
-        console.log(response.data.body);
         vm.notice = response.data.body;
       })
       .catch(function (error) {

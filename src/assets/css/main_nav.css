@@ -2,6 +2,7 @@
 
 .wrapper {
   min-height: calc(100vh - 70px);
+  margin-bottom: 20px;
 }
 .footer {
   height: 50px;
@@ -12,8 +13,6 @@
   font-family:'Source Sans Pro', sans-serif;
   border-bottom: 1px solid #1EBD8E;
 }
-
-
 
 .header-blue .navbar {
   background:transparent;

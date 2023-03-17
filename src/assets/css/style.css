@@ -1,5 +1,5 @@
 /*reset*/
-a{text-decoration: none; color:inherit;}
+a{text-decoration: none; color:inherit; cursor:pointer;}
 .sr-only {
     position: absolute;
     overflow: hidden;

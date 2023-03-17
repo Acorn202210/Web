@@ -14,9 +14,9 @@
               <a class="dropdown-toggle nav-link dropdown-toggle new-nav-link" data-toggle="dropdown"
                 aria-expanded="false" href="#">강의 </a>
               <div class="dropdown-menu" role="menu">
-                <a class="dropdown-item" role="presentation" @click="$router.push('/front')">웹프론트엔드</a>
-                <a class="dropdown-item" role="presentation" @click="$router.push('/backend')">백엔드</a>
-                <a class="dropdown-item" role="presentation" @click="$router.push('/mobile')">모바일</a>
+                <a class="dropdown-item" role="presentation" @click="this.$router.push(`/lectureList/front/all`).then(() => this.$router.go(0))">웹프론트엔드</a>
+                <a class="dropdown-item" role="presentation"  @click="this.$router.push(`/lectureList/backend/all`).then(() => this.$router.go(0))">백엔드</a>
+                <a class="dropdown-item" role="presentation" @click="this.$router.push(`/lectureList/mobile/all`).then(() => this.$router.go(0))">모바일</a>
               </div>
             </li>
             <!--<li class="nav-item" role="presentation"><a class="nav-link active" href="#">Link</a></li>-->
