@@ -6,7 +6,6 @@
       </div>
     </div>
     <div class="container">
-      
       <div class="table-responsive table-top">
         <table class="table table-hover align-middle">
           <thead>

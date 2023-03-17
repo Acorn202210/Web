@@ -39,7 +39,7 @@
             </a>
           </li>
 
-          <li v-for="i in 7" :key="i"
+          <li v-for="i in 5" :key="i"
             :class="['page-item', notices.currentPage == i + notices.startPageNum - 1 ? 'active' : '']">
             <a class="page-link new-page-link" v-if="i + notices.startPageNum - 1 <= notices.endPageNum"
               @click="paging(i + notices.startPageNum - 1)">{{ i + notices.startPageNum - 1 }}</a>
@@ -87,7 +87,6 @@ export default {
     }
     axios.get(url, { params: data })
       .then(function (response) {
-        console.log(response.data);
         vm.notices = response.data.body;
       })
       .catch(function (error) {
@@ -109,7 +108,6 @@ export default {
       }
       axios.get(url, { params: data })
         .then(function (response) {
-          console.log(response.data);
           vm.notices = response.data.body;
         })
         .catch(function (error) {
@@ -127,7 +125,6 @@ export default {
       }
       axios.get(url, { params: data })
         .then(function (response) {
-          console.log(response.data);
           vm.notices = response.data.body;
         })
         .catch(function (error) {
