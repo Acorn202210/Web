@@ -44,6 +44,7 @@
           <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>
         </div>     
 
+        <!-- 댓글 출력 폼 -->
         <div class="mb-5 pb-5" v-show="qnaAnswer.boardCommentWriter != null">
           <span><b> {{ qnaAnswer.boardCommentWriter }}</b></span><br>
           <span> {{ qnaAnswer.userRegdate }}</span> 
@@ -51,14 +52,29 @@
             <textarea class="me-3" name="content" v-model="qnaAnswer.content" readonly></textarea>            
           </form>          
         </div>
+        <span class="ms-3"
+            v-if="$store.getters.isUserId != null && $store.getters.isManager == 'Y'">
+            <a class="update-link btn btn-sm me-2 new-btn" @click="showUpdateForm(boardCommentRefGroup)">수정</a>
+            <a class="del ms-1 btn btn-sm me-2 btn-danger" @click="deleteAnswerConfirm(boardCommentRefGroup)">삭제</a>
+        </span>
         
-        <div v-if="$store.getters.isManager == 'Y'">          
+        <!-- 댓글 수정 폼 -->
+        <div v-if="isUpdateFormVisible[boardCommentRefGroup]">
+          <form class="comment-form update-form" @submit.prevent="answerUpdate(qnaAnswer.boardCommentRefGroup)">
+          <textarea class="me-3" name="content" v-model="formData.content" :placeholder="qnaAnswer.content"></textarea>
+            <button type="submit" class="button btn mb-5">수정</button>          
+          </form>
+        </div>
+
+
+        <!-- 새 댓글 작성 폼 -->
+        <div v-if="$store.getters.isManager == 'Y' && qnaAnswer.boardCommentRefGroup == null">
           <br><p>댓글 작성 폼</p>
           <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
             <input type="hidden" name="boardCommentRefGroup" :value="qna.boardQuestionNum" />
             <textarea class="me-3" name="content" v-model="formData.content"></textarea>
             <button type="submit" class="button btn mb-5">등록</button>
-          </form>          
+          </form>
         </div>
                       
     </div>
@@ -80,7 +96,7 @@ export default {
           content:''
         },
         qnaAnswer:{},
-        isUpdateFormVisible: false,
+        isUpdateFormVisible: [],
         answerSignupForm:{
           boardCommentRefGroup: ''
         },
@@ -155,9 +171,35 @@ export default {
         if(isDelete){          
           this.qnaboarddelete(boardQuestionNum);
           alert('1:1문의가 삭제 되었습니다.');
-          this.$router.push('/qna');          
+          this.$router.push('/qna');
         }
-      }
+      },
+      showUpdateForm(boardCommentRefGroup) {
+        if(this.isUpdateFormVisible[boardCommentRefGroup] == true){
+          this.isUpdateFormVisible[boardCommentRefGroup] = false;
+        }else{
+          this.isUpdateFormVisible[boardCommentRefGroup] = true;
+        }
+      },
+      answerUpdate(boardCommentRefGroup) {
+        const url = `/project/api/qna-board/${boardCommentRefGroup}/answer-update`;
+        const data = {
+          boardCommentRefGroup: this.formData.boardCommentRefGroup,
+          content: this.formData.content
+
+        };
+        axios.put(url, data)
+          .then(response => {
+            console.log(response.data);
+            alert('답변 수정 성공');
+            this.$router.go('/qna/'+boardCommentRefGroup);
+          })
+          .catch(error => {
+            console.error(error);
+            alert('답변 수정 실패');
+          });
+      },
+      //deleteAnswerConfirm 메소드추가
     }
     
 }
