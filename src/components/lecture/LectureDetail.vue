@@ -17,7 +17,7 @@
         </div>
         <p>{{ detail.describe }}</p>
         <br>
-        <div v-if="isStudent">
+        <div v-if="isStudent && $store.getters.isUserId != null">
           <h4>수강 후기를 작성해주세요</h4>
           <form class="comment-form insert-form" @submit.prevent="submitReviewForm">
             <div class="star-rating">
