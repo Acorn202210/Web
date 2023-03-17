@@ -91,7 +91,7 @@
       var vm = this;
       var url = '/project/api/lecture/lectureList';
       const data = {
-        limit: 5,
+        limit: 8,
         largeCategory: vm.largeCategory,
         smallCategory: vm.smallCategory
       }
@@ -108,7 +108,7 @@
       paging: function (currentPage) {
         const url = '/project/api/lecture/lectureList';
         const data = {
-          limit: 5,
+          limit: 8,
           currentPage: currentPage,
           largeCategory: this.largeCategory,
           smallCategory: this.smallCategory,
