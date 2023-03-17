@@ -5,6 +5,8 @@ import FaqInsertform from './components/faq/FaqInsertform.vue';
 import Login from './components/user/login.vue';
 import Signup from './components/user/signup.vue';
 import UserList from './components/user/userList.vue';
+import MyLecList from './components/user/myLecList.vue';
+import MyCompleteLecList from './components/user/myCompleteLecList.vue';
 import MyPage from './components/user/myPage.vue';
 import PwdUpdate from './components/user/pwdUpdate.vue';
 import UserUpdate from './components/user/update.vue';
@@ -144,6 +146,14 @@ const routes = [
     {
         path: "/user-update",
         component: UserUpdate,
+    },
+    {
+        path: "/my-lec-list",
+        component: MyLecList,
+    },
+    {
+        path: "/my-complete-lec-list",
+        component: MyCompleteLecList,
     },
 ];
 
