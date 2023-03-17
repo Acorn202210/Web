@@ -4,6 +4,33 @@ body{
 	
 }
 
+.wrap {
+   width:auto; 
+   height:auto; 
+   overflow-x:auto; 
+   white-space:nowrap; 
+   -ms-overflow-style: none; 
+   scrollbar-width: none;
+}
+
+.wrap::-webkit-scrollbar{
+   display: none;
+}
+/*white-space: nowrap;  선언해줘야 내부 박스가 아래로 떨어지지 않고 가로로 나열됨*/
+
+.wrap > ul > li {display:inline-block; }
+ 
+ .home-img {
+   width: 200px;
+   height: 200px;
+   object-fit: fill;
+   margin-right: 50px;
+ }
+
+ .scroll::-webkit-scrollbar {
+  display: none;
+}
+
 .selectedLecture{
 	color:#1EBD8E;
 }
@@ -63,6 +90,7 @@ body{
    /* 원본 크기의 1.1 배로 확대 시키기*/
    transform: scale(1.1);
 }
+
 
 .card .card-text{
    /* 한줄만 text 가 나오고  한줄 넘는 길이에 대해서는 ... 처리 하는 css */
