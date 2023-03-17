@@ -20,13 +20,11 @@ import QnaFree from './components/qna_free/QnaFree.vue';
 import QnaFreeDetail from './components/qna_free/detail.vue';
 import QnaFreeInsert from './components/qna_free/insert.vue';
 import QnaFreeUpdate from './components/qna_free/update.vue';
-import front from './components/lecture/front.vue';
-import backend from './components/lecture/backend.vue';
-import mobile from './components/lecture/mobile.vue';
 import lectureDetail from './components/lecture/lectureDetail.vue'
 import lectureUploadForm from './components/lecture/lectureUploadForm.vue'
 import lectureUpdateForm from './components/lecture/lectureUpdateForm.vue'
-
+import lectureView from './components/lecture/lectureView.vue'
+import lectureList from './components/lecture/lectureList.vue'
 const routes = [
     {
         path: '/',
@@ -62,16 +60,9 @@ const routes = [
         component: FaqInsertform,
     },
     {
-        path: "/front",
-        component: front
-    },
-    {
-        path: "/backend",
-        component: backend
-    },
-    {
-        path: "/mobile",
-        component: mobile
+        path: "/lectureList/:largeCategory/:smallCategory",
+        component: lectureList,
+        props: true,
     },
     {
         path: "/lectureDetail/:lecNum",
@@ -84,6 +75,10 @@ const routes = [
     {
         path: "/lectureUpdateForm/:lecNum",
         component: lectureUpdateForm
+    },
+    {
+        path: "/lectureDetail/lectureView/:lecNum",
+        component: lectureView
     },
     {
         path: "/notice",

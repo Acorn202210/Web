@@ -86,7 +86,7 @@
               <input type="radio" id="1-star" name="star" value="1" v-model="formData.star" />
               <label for="1-star" class="star" @click="setRating(1)">&#9733;</label>
             </div>
-            <textarea class="me-3" name="content" v-model="formData.content" :placeholder="lectureReview.content"></textarea>
+            <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="lectureReview.content"></textarea>
             <button type="submit" class="button btn mb-5">수정</button>
             </form>
           </div>
@@ -112,7 +112,7 @@
       </ul>
     </nav>
       </div>
-      <div class="box2">
+      <div class="box2" v-if="$store.getters.isUserId != null">
         <div>
           <div class="mt-4 d-flex justify-content-center mb-3">
             <div v-if="!isStudent">
@@ -130,7 +130,7 @@
             </div>
           </div>
         </div>
-        <button class="button" type="button">강의보기</button>
+        <button v-if="isStudent" class="button" type="button" @click="$router.push(`/lectureDetail/lectureView/${this.$route.params.lecNum}`)">강의보기</button>
         <div class="d-flex justify-content-center">
           <button type="button">
             1:1문의
@@ -142,7 +142,6 @@
 </template>
 <script>
 import axios from 'axios';
-
 export default {
 name: 'lctureDetail',
 data() {
@@ -151,6 +150,7 @@ data() {
     formData: {
       star: '',
       content: '',
+      contentUpdate: '',
       lecReStuRefGroup: ''        
     },
     placeholderText: '리뷰를 작성해주세요',
@@ -275,7 +275,7 @@ methods: {
     const url = `/project/api/lecture-review/${lecReNum}/update`;
 
     const data = {
-      content: this.formData.content,
+      content: this.formData.contentUpdate,
       star: this.formData.star,
 
     };
