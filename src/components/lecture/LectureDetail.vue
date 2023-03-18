@@ -74,20 +74,20 @@
           <div v-if="isUpdateFormVisible[lectureReview.lecReNum]" >
             <form class="comment-form update-form" @submit.prevent="reviewUpdate(lectureReview.lecReNum)">
               <div class="star-rating">
-              <input type="hidden" name="lecReStuRefGroup" :value="lectureReview.lecNum"/>
-              <input type="radio" id="5-stars" name="star" value="5" v-model="formData.star" />
-              <label for="5-stars" class="star" @click="setRating(5)">&#9733;</label>
-              <input type="radio" id="4-stars" name="star" value="4" v-model="formData.star" />
-              <label for="4-stars" class="star" @click="setRating(4)">&#9733;</label>
-              <input type="radio" id="3-stars" name="star" value="3" v-model="formData.star" />
-              <label for="3-stars" class="star" @click="setRating(3)">&#9733;</label>
-              <input type="radio" id="2-stars" name="star" value="2" v-model="formData.star" />
-              <label for="2-stars" class="star" @click="setRating(2)">&#9733;</label>
-              <input type="radio" id="1-star" name="star" value="1" v-model="formData.star" />
-              <label for="1-star" class="star" @click="setRating(1)">&#9733;</label>
-            </div>
-            <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="lectureReview.content"></textarea>
-            <button type="submit" class="button btn mb-5">수정</button>
+                <input type="hidden" name="lecReStuRefGroup" :value="lectureReview.lecNum"/>
+                <input type="radio" id="5-stars" name="star" value="5" v-model="formData.star" />
+                <label for="5-stars" class="star" @click="setRating(5)">&#9733;</label>
+                <input type="radio" id="4-stars" name="star" value="4" v-model="formData.star" />
+                <label for="4-stars" class="star" @click="setRating(4)">&#9733;</label>
+                <input type="radio" id="3-stars" name="star" value="3" v-model="formData.star" />
+                <label for="3-stars" class="star" @click="setRating(3)">&#9733;</label>
+                <input type="radio" id="2-stars" name="star" value="2" v-model="formData.star" />
+                <label for="2-stars" class="star" @click="setRating(2)">&#9733;</label>
+                <input type="radio" id="1-star" name="star" value="1" v-model="formData.star" />
+                <label for="1-star" class="star" @click="setRating(1)">&#9733;</label>
+              </div>
+              <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="lectureReview.content"></textarea>
+              <button type="submit" class="button btn mb-5">수정</button>
             </form>
           </div>
         </div>
@@ -214,17 +214,15 @@ methods: {
       lecReStuRefGroup: this.formData.lecReStuRefGroup
     };
     axios.post(url, data)
-    .then(response => {
-      console.log(response.data);
-      alert('후기 등록 성공');
-    })
-    .catch(error => {
-      console.error(error);
-      alert('후기 등록 실패');
-    })
-    .finally(() => {   
-      location.reload();
-    });
+      .then(response => {
+        console.log(response.data);
+        alert('후기 등록 성공');
+        this.$router.go();
+      })
+      .catch(error => {
+        console.error(error);
+        alert('후기 등록 실패');
+      });
   },
   getReviewList() {
     var url = `/project/api/lecture-review/LectureReviewList`;
@@ -289,6 +287,7 @@ methods: {
       .then(response => {
         console.log(response.data);
         alert('후기 수정 성공');
+        this.$router.go();
       })
       .catch(error => {
         console.error(error);

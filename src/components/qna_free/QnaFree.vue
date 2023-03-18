@@ -41,7 +41,7 @@
 			<li v-for="i in 7" :key="i"
 				:class="['page-item', qnafree.currentPage == i + qnafree.startPageNum - 1 ? 'active' : '']">
 				<a class="page-link new-page-link" v-if="i + qnafree.startPageNum - 1 <= qnafree.endPageNum"
-				@click="paging(i + notices.startPageNum - 1)">{{ i + qnafree.startPageNum - 1 }}</a>
+				@click="paging(i + qnafree.startPageNum - 1)">{{ i + qnafree.startPageNum - 1 }}</a>
 			</li>
 
 			<li class="page-item" v-if="qnafree.endPageNum < qnafree.totalPage">
@@ -96,7 +96,7 @@ export default {
 	},
 	methods: {
 		detail: function (freeQuestionNum) {
-		this.$router.push('/qnafree/' + freeQuestionNum);
+		this.$router.push('/qnafree/' + freeQuestionNum+'?condition='+this.condition+'&keyword='+this.keyword);
 		},
 		paging: function (currentPage) {
 		var vm = this;
