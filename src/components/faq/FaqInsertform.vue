@@ -1,15 +1,17 @@
 <template>
   <div class="container">
     <div>
-        <label for="question">질문</label>
-        <input type="text" v-model="question" placeholder="질문을 입력합니다"/>
+        <label for="question" class="form-label">질문</label>
+        <input type="text" v-model="question" class="form-control" placeholder="질문을 입력합니다"/>
     </div>
     <div>
-        <label for="content">내용</label>
-        <textarea type="text" v-model="content" placeholder="내용을 입력합니다"/>
+        <label for="content" class="form-label">내용</label>
+        <textarea type="text" v-model="content" class="form-control" placeholder="내용을 입력합니다"/>
     </div>
-    <button @click="faqinsert">등록</button>
-    <button @click="$router.go(-1)">취소</button>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+      <button @click="faqinsert" class="btn new-btn">등록</button>
+      <button @click="$router.go(-1)" class="btn btn-secondary">취소</button>
+    </div>
   </div>
 </template>
 

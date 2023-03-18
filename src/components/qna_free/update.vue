@@ -2,15 +2,17 @@
     <div class="container">
         <input type="hidden" v-model="no"/>
         <div>
-            <label for="title">제목</label>
-            <input type="text" v-model="title" placeholder="제목을 입력합니다"/>
+            <label for="title" class="form-label">제목</label>
+            <input type="text" v-model="title" class="form-control" placeholder="제목을 입력합니다"/>
         </div>
         <div>
-            <label for="content">내용</label>
-            <textarea type="text" v-model="content" placeholder="내용을 입력합니다"/>
+            <label for="content" class="form-label">내용</label>
+            <textarea type="text" v-model="content" class="form-control" placeholder="내용을 입력합니다"/>
         </div>
-        <button @click="qnafreeupdate">수정</button>
-        <button @click="$router.go(-1)">취소</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">    
+            <button @click="qnafreeupdate" class="btn new-btn">수정</button>
+            <button @click="$router.go(-1)" class="btn btn-secondary">취소</button>
+        </div>
     </div>
 </template>
 
