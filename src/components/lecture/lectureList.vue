@@ -18,7 +18,7 @@
             </div>
             <div class="col-6 col-md-4 col-lg-3" v-for="lectureList in list.data" :key="lectureList.lecNum">
               <div class="card mb-3">
-                <a :href="`/lectureDetail/${lectureList.lecNum}`">
+                <a  @click="this.$router.push(`/lectureDetail/${lectureList.lecNum}`)">
                   <div class="img-wrapper">
                     <img :src="`/project/api/lecture/${lectureList.imageNum}/image?imageNum=${lectureList.imageNum}`">
                   </div>

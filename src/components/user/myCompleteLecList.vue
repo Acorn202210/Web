@@ -12,7 +12,7 @@
         <h5>수강 완료한 강의</h5>
         <div class="row">
             <div class="col-6 col-md-4 col-lg-2 mt-3" v-for="tmp in myLec.lectureData" :key="tmp.imageNum">
-                <a :href="`/lectureDetail/${tmp.lecNum}`">
+                <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
                     <img class="myLecList-img" :src="`/project/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
                 </a>
             </div>
