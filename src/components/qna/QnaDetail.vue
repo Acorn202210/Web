@@ -50,30 +50,34 @@
           <span><b> {{ qnaAnswer.boardCommentWriter }}</b></span><br>
           <span> {{ qnaAnswer.userRegdate }}</span> 
           <form class="comment-form pb-3">
-            <textarea class="me-3" name="content" v-model="qnaAnswer.content" readonly></textarea>            
+            <textarea class="form-control" name="content" v-model="qnaAnswer.content" readonly></textarea>            
           </form>                  
-          <span class="ms-3"
+          <span 
               v-if="$store.getters.isUserId != null && $store.getters.isManager == 'Y'">
-              <a class="update-link btn btn-sm me-2 new-btn" @click="showUpdateForm(qnaAnswer.boardCommentNum)">수정</a>
-              <a class="del ms-1 btn btn-sm me-2 btn-danger" @click="deleteAnswerConfirm(qnaAnswer.boardCommentNum)">삭제</a>
+              <a class="update-link btn btn-sm new-btn" @click="showUpdateForm(qnaAnswer.boardCommentNum)">수정</a>
+              <a class="ms-1 btn btn-sm btn-danger" @click="deleteAnswerConfirm(qnaAnswer.boardCommentNum)">삭제</a>
           </span>
           <!-- 댓글 수정 폼 -->
           <div v-if="isUpdateFormVisible[qnaAnswer.boardCommentNum]">
             <form class="comment-form update-form" @submit.prevent="answerUpdate(qnaAnswer.boardCommentNum)">
-            <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="qnaAnswer.content"></textarea>
-              <button type="submit" class="button btn mb-5">수정</button>          
+            <div class="input-group">
+              <textarea class="form-control" name="content" v-model="formData.contentUpdate" :placeholder="qnaAnswer.content"></textarea>
+              <button type="submit" class="button btn">수정</button>          
+            </div>
             </form>
           </div>
         </div>          
 
         <!-- 새 댓글 작성 폼 -->
         <div v-if="$store.getters.isManager == 'Y'">
-          <br><p>댓글 작성 폼</p>
-          <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
-            <input type="hidden" name="boardCommentRefGroup" :value="qna.boardQuestionNum" />
-            <textarea class="me-3" name="content" v-model="formData.content"></textarea>
-            <button type="submit" class="button btn mb-5">등록</button>
-          </form>
+          <br><p>댓글 작성 폼</p>          
+            <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
+              <div class="input-group">
+                <input type="hidden" name="boardCommentRefGroup" :value="qna.boardQuestionNum" />
+                <textarea class="form-control" name="content" v-model="formData.content"></textarea>
+                <button type="submit" class="button btn">등록</button>
+              </div>
+            </form>          
         </div>
                       
     </div>
@@ -219,5 +223,11 @@ export default {
 </script>
 
 <style>
-    @import '../../assets/css/board.css'
+    @import '../../assets/css/board.css';
+
+    .input-group {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
 </style>
