@@ -130,7 +130,10 @@
             </div>
           </div>
         </div>
-        <button v-if="isStudent" class="button" type="button" @click="$router.push(`/lectureDetail/lectureView/${this.$route.params.lecNum}`)">강의보기</button>
+        <div class="d-flex justify-content-center">
+          <button v-if="isStudent" class="button " type="button" @click="$router.push(`/lectureDetail/lectureView/${this.$route.params.lecNum}`)">강의보기</button>
+        </div>  
+        <br>
         <div class="d-flex justify-content-center">
           <button type="button">
             1:1문의
@@ -289,7 +292,10 @@ methods: {
       .catch(error => {
         console.error(error);
         alert('후기 수정 실패');
-      });
+      })
+      .finally(() => {   
+      location.reload();
+    });
   },
   lectureReviewDelete: function (lecReNum) {
     axios.put('/project/api/lecture-review/' + lecReNum + '/lecture-review-delete', {}, { params: { lecReNum } }
@@ -319,7 +325,10 @@ methods: {
       .catch(error => {
         console.error(error);
         alert('강의 신청 실패');
-      });
+      })
+      .finally(() => {   
+      location.reload();
+    });
   },
   lectureComplete() {
     const url = '/project/api/lecture-student/lecture-complete'
@@ -334,7 +343,10 @@ methods: {
       .catch(error => {
         console.error(error);
         alert('강의 완료 실패');
-      });
+      })
+      .finally(() => {   
+      location.reload();
+    });
   },
 
 },
