@@ -45,30 +45,29 @@
         </div>     
 
         <!-- 댓글 출력 폼 -->
-        <div class="mb-5 pb-5" v-show="qnaAnswer.boardCommentWriter != null">
+        <div v-for="qnaAnswer in qnaAnswer.data" :key="qnaAnswer.boardCommentWriter"
+          class="mb-1 pb-1" v-show="qnaAnswer.boardCommentWriter != null">
           <span><b> {{ qnaAnswer.boardCommentWriter }}</b></span><br>
           <span> {{ qnaAnswer.userRegdate }}</span> 
           <form class="comment-form pb-3">
             <textarea class="me-3" name="content" v-model="qnaAnswer.content" readonly></textarea>            
-          </form>          
-        </div>
-        <span class="ms-3"
-            v-if="$store.getters.isUserId != null && $store.getters.isManager == 'Y'">
-            <a class="update-link btn btn-sm me-2 new-btn" @click="showUpdateForm(boardCommentRefGroup)">수정</a>
-            <a class="del ms-1 btn btn-sm me-2 btn-danger" @click="deleteAnswerConfirm(boardCommentRefGroup)">삭제</a>
-        </span>
-        
-        <!-- 댓글 수정 폼 -->
-        <div v-if="isUpdateFormVisible[boardCommentRefGroup]">
-          <form class="comment-form update-form" @submit.prevent="answerUpdate(qnaAnswer.boardCommentRefGroup)">
-          <textarea class="me-3" name="content" v-model="formData.content" :placeholder="qnaAnswer.content"></textarea>
-            <button type="submit" class="button btn mb-5">수정</button>          
-          </form>
-        </div>
-
+          </form>                  
+          <span class="ms-3"
+              v-if="$store.getters.isUserId != null && $store.getters.isManager == 'Y'">
+              <a class="update-link btn btn-sm me-2 new-btn" @click="showUpdateForm(qnaAnswer.boardCommentNum)">수정</a>
+              <a class="del ms-1 btn btn-sm me-2 btn-danger" @click="deleteAnswerConfirm(qnaAnswer.boardCommentNum)">삭제</a>
+          </span>
+          <!-- 댓글 수정 폼 -->
+          <div v-if="isUpdateFormVisible[qnaAnswer.boardCommentNum]">
+            <form class="comment-form update-form" @submit.prevent="answerUpdate(qnaAnswer.boardCommentNum)">
+            <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="qnaAnswer.content"></textarea>
+              <button type="submit" class="button btn mb-5">수정</button>          
+            </form>
+          </div>
+        </div>          
 
         <!-- 새 댓글 작성 폼 -->
-        <div v-if="$store.getters.isManager == 'Y' && qnaAnswer.boardCommentRefGroup == null">
+        <div v-if="$store.getters.isManager == 'Y'">
           <br><p>댓글 작성 폼</p>
           <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
             <input type="hidden" name="boardCommentRefGroup" :value="qna.boardQuestionNum" />
@@ -88,21 +87,17 @@ export default {
     
 	  data(){
       return{
-        qna:{},
+        qna:{},        
         condition: '',
       	keyword: '',
         formData: {
+          boardCommentNum:'',
           boardCommentRefGroup:'',
-          content:''
+          content:'',
+          contentUpdate:''
         },
         qnaAnswer:{},
-        isUpdateFormVisible: [],
-        answerSignupForm:{
-          boardCommentRefGroup: ''
-        },
-        completeForm:{
-          boardCommentRefGroup: ''
-        }
+        isUpdateFormVisible: [],        
         
       }
 	  },
@@ -113,10 +108,8 @@ export default {
       .then(response => {
         console.log(response.data.body);
         vm.qna = response.data.body;
-        this.formData.boardCommentRefGroup = this.qna.boardQuestionNum;
-        this.answerSignupForm.boardCommentRefGroup = this.qna.boardQuestionNum;
-        this.completeForm.boardCommentRefGroup = this.qna.boardQuestionNum;
-        this.getAnswerData();
+        this.formData.boardCommentRefGroup = this.qna.boardQuestionNum;        
+        this.getAnswerList();
       })
       .catch(function(error){
         console.log(error);
@@ -124,9 +117,9 @@ export default {
     },
 
     methods:{
-
+      //댓글 등록 메소드
       submitAnswerForm(){
-        const url = '/project/api/qna-board/answerInsert';
+        const url = '/project/api/qna-answer/insert';
         const data = {
             content : this.formData.content,
             boardCommentRefGroup : this.formData.boardCommentRefGroup
@@ -135,7 +128,7 @@ export default {
         .then(response => {
           console.log(response.data);
           alert('1:1문의 답변 등록 성공');
-          this.$router.push('/qna/');
+          this.$router.go('/qna/'+this.formData.boardCommentRefGroup);          
         })
         .catch(error => {
           console.error(error);
@@ -143,11 +136,15 @@ export default {
         });
       },
 
-      getAnswerData(){        
-        axios.get(`/project/api/qna-board/${this.$route.params.boardQuestionNum}/answer`)
+      getAnswerList(){        
+        var url=`/project/api/qna-answer/list`;
+        var data={
+          boardCommentRefGroup: this.qna.boardQuestionNum
+        }
+        axios.get(url, { params:data })
         .then(response => {
           console.log(response.data);
-          this.qnaAnswer = response.data.body;
+          this.qnaAnswer = response.data.body;          
         })
         .catch(error => {
           console.error(error);
@@ -174,32 +171,48 @@ export default {
           this.$router.push('/qna');
         }
       },
-      showUpdateForm(boardCommentRefGroup) {
-        if(this.isUpdateFormVisible[boardCommentRefGroup] == true){
-          this.isUpdateFormVisible[boardCommentRefGroup] = false;
+      //댓글 수정 폼 보이기
+      showUpdateForm(boardCommentNum) {
+        if(this.isUpdateFormVisible[boardCommentNum] == true){
+          this.isUpdateFormVisible[boardCommentNum] = false;
         }else{
-          this.isUpdateFormVisible[boardCommentRefGroup] = true;
+          this.isUpdateFormVisible[boardCommentNum] = true;
         }
       },
-      answerUpdate(boardCommentRefGroup) {
-        const url = `/project/api/qna-board/${boardCommentRefGroup}/answer-update`;
-        const data = {
-          boardCommentRefGroup: this.formData.boardCommentRefGroup,
-          content: this.formData.content
-
+      //댓글 수정 메소드
+      answerUpdate(boardCommentNum) {
+        const url = `/project/api/qna-answer/${boardCommentNum}/update`;
+        const data = {          
+          boardCommentNum: boardCommentNum,
+          content: this.formData.contentUpdate
         };
         axios.put(url, data)
           .then(response => {
             console.log(response.data);
             alert('답변 수정 성공');
-            this.$router.go('/qna/'+boardCommentRefGroup);
+            this.$router.go('/qna/'+boardCommentNum);
           })
           .catch(error => {
             console.error(error);
             alert('답변 수정 실패');
           });
       },
-      //deleteAnswerConfirm 메소드추가
+      //댓글 삭제 메소드
+      qnaAnswerDelete: function (boardCommentNum) {
+        axios.put('/project/api/qna-answer/' + boardCommentNum + '/delete', {}, { params: { boardCommentNum } }
+        ).then(response => {
+          console.warn(response)
+          this.result = response.data;
+          location.reload();
+        }).catch((ex) => {
+          console.warn("ERROR!!!!! : ", ex)
+        })
+      },
+      deleteAnswerConfirm: function (boardCommentNum) {
+        if (confirm("정말 삭제하시겠습니까?")) {
+          this.qnaAnswerDelete(boardCommentNum);
+        }
+      },
     }
     
 }
