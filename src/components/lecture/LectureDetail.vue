@@ -178,7 +178,7 @@ data() {
 },
 created() {
   axios
-    .get(`/project/api/lecture/${this.$route.params.lecNum}/lecture-one`)
+    .get(`/project/api/lecture/lecture-one/${this.$route.params.lecNum}`)
     .then(response => {
       console.log(response.data.body);
       this.detail = response.data.body;
@@ -217,7 +217,6 @@ methods: {
       .then(response => {
         console.log(response.data);
         alert('후기 등록 성공');
-        this.$router.go();
       })
       .catch(error => {
         console.error(error);
@@ -287,7 +286,6 @@ methods: {
       .then(response => {
         console.log(response.data);
         alert('후기 수정 성공');
-        this.$router.go();
       })
       .catch(error => {
         console.error(error);

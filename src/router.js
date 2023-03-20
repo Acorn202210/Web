@@ -34,6 +34,11 @@ const routes = [
         
     },
     {
+        path: '/project',
+        redirect: '/home',
+        
+    },
+    {
         path: "/qnafree",
         component: QnaFree
     },
