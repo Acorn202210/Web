@@ -40,7 +40,7 @@
 
       </table>      
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">            
-        <a href="/qna-insertform" class="new-btn btn btn-sm">등록</a>      
+        <a class="new-btn btn btn-sm" @click="this.$router.push(`/qna-insertform`)">등록</a>      
       </div>
     </div> 
     <div>
@@ -110,7 +110,7 @@ export default {
       detail:function(boardQuestionNum, boardQuestionWriter){
           
           if(boardQuestionWriter == this.$store.getters.isUserId || this.$store.getters.isManager == 'Y'){
-            this.$router.push('/qna/'+boardQuestionNum);     
+            this.$router.push('/qna/'+boardQuestionNum+'?condition='+this.condition+'&keyword='+this.keyword);     
           }else{
             alert('본인의 글만 열람할 수 있습니다.'); 
           }          

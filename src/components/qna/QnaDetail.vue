@@ -3,12 +3,11 @@
         <div class="wrapper mt-2">
           <div>
             <div class="d-md-flex justify-content-md-end">
-              <!-- @click 수정하기 -->
               <a v-if="qna.prevNum != 0" :href="`/qna/${qna.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
               <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
             </div>
           </div>
-          <p v-if="this.$route.query.condition != null" class="mt-2">
+          <p v-if="this.$route.query.condition !=''" class="mt-2">
             <strong>{{ this.$route.query.condition }}</strong> 조건
             <strong>{{ this.$route.query.keyword }}</strong> 검색어로 검색된 내용입니다.
           </p>
