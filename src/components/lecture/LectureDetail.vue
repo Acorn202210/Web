@@ -93,7 +93,7 @@
           </div>
         </div>
         <nav>
-          <ul class="pagination justify-content-center" v-if="lectureReview.totalCount > 0">
+          <ul class="pagination justify-content-center" >
             <li class="page-item" v-if="lectureReview.startPageNum != 1">
               <a class="page-link new-page-link" @click="paging(lectureReview.startPageNum - 1)">
                 <span aria-hidden="true"></span>
