@@ -1,17 +1,18 @@
 <template>
-    <div class="container">      
-
-        <p v-if="qna.keyword != null" class="mt-2">
-          <strong>{{ qna.condition }}</strong> 조건
-          <strong v-bind:title="qna.keyword">{{ qna.keyword }}</strong> 검색어로 검색된 내용입니다.
-        </p>
+    <div class="container">              
         <div class="wrapper mt-2">
           <div>
             <div class="d-md-flex justify-content-md-end">
-              <a v-if="qna.prevNum != 0" :href="`/qna/${qna.prevNum}`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-              <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}`" class="btn btn-sm btn-secondary">다음글</a>
+              <!-- @click 수정하기 -->
+              <a v-if="qna.prevNum != 0" :href="`/qna/${qna.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+              <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
             </div>
           </div>
+          <p v-if="this.$route.query.condition != null" class="mt-2">
+            <strong>{{ this.$route.query.condition }}</strong> 조건
+            <strong>{{ this.$route.query.keyword }}</strong> 검색어로 검색된 내용입니다.
+          </p>
+
           <h3 class="sr-only">1:1문의 상세 보기</h3>
           <h1>{{ qna.title }}</h1>
           <table>
@@ -31,13 +32,13 @@
           <div class="mainContent mt-3">{{ qna.content }}</div>
           <div class="d-grid d-md-flex justify-content-md-end mt-3">
             <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
-                <a :href="`/qnaupdate/${qna.boardQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
+                <a class="btn btn-sm me-2 new-btn" @click="this.$router.push(`/qnaupdate/${qna.boardQuestionNum}`)">수정</a>
                 <div class="d-grid d-md-flex">
                   <input type="hidden" v-model="qna.boardQuestionNum"/>
                   <button @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</button>
                 </div>                
             </div>
-            <a :href="'/qna'" class="btn btn-sm me-2 btn-secondary">목록</a>
+            <a class="btn btn-sm me-2 btn-secondary" @click="this.$router.push(`/qna`)">목록</a>
           </div>     
 
           <!-- 댓글 출력 폼 -->
@@ -89,9 +90,7 @@ export default {
     
 	  data(){
       return{
-        qna:{},        
-        condition: '',
-      	keyword: '',
+        qna:{},                
         formData: {
           boardCommentNum:'',
           boardCommentRefGroup:'',
@@ -106,7 +105,11 @@ export default {
     created(){
       var vm = this;
       var url = `/project/api/qna-board/${this.$route.params.boardQuestionNum}`;
-      axios.get(url)
+      const data = {
+        keyword:this.$route.query.keyword,
+        condition:this.$route.query.condition
+      }
+      axios.get(url, { params: data })
       .then(response => {
         console.log(response.data.body);
         vm.qna = response.data.body;
