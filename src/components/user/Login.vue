@@ -2,8 +2,8 @@
 	<div>
     <div class="container userform">
 			<main class="form-signin form-login w-100 m-auto">
-			  <form @submit.prevent="submitForm">
-			    <h1 class="mb-3 fw-normal main">login</h1>
+			  <form @submit.prevent="submitForm" id="login">
+			    <h1 class="mb-4 fw-normal main">login</h1>
 			    <div class="form-floating">
 			      <input type="text" class="form-control" id="floatingId" name="id" placeholder="id" v-model="id">
 			      <label for="floatingInput">id</label>
@@ -11,14 +11,8 @@
 			    <div class="form-floating">
 			      <input type="password" class="form-control" id="floatingPassword" name="pwd" placeholder="Password" v-model="pwd" >
 			      <label for="floatingPassword">Password</label>
-			    </div>
-			
-			    <div class="checkbox mb-3">
-			      <label>
-			            <input type="checkbox" value="remember-me" name=isSave> Remember me
-			      </label>
-			    </div>
-			    <button class="w-100 button btn-lg btn" type="submit">로그인</button>
+          </div>
+			    <button class="w-100 button btn-lg btn mt-3" type="submit">로그인</button>
 			  </form>
 			</main>
 		</div>

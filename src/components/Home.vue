@@ -16,7 +16,7 @@
         <p class="mt-3">프론트 강의</p>
         <li v-for="tmp in front.data" :key="tmp.lecNum">
           <div class="contain mb-3">
-            <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">>
+            <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
               <img class="home-img" :src="`/project/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
             </a>
           </div>
