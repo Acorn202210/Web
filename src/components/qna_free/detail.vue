@@ -68,21 +68,14 @@
             </dd>
 
 			<div v-if="isInsertFormVisible[qnafreeanswer.freeCommentNum]" >
-                <form class="comment-form update-form" @submit.prevent="answerinsert">
-					<input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum"/>
+                <form class="comment-form update-form" @submit.prevent="answerinsert(qnafreeanswer.freeCommentWriter, qnafreeanswer.commentGroup)">
+                    <input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum"/>
                     <input type="text" name="targetId" :value="qnafreeanswer.freeCommentWriter"/>
-					<input type="text" name="commentGroup" :value="qnafreeanswer.commentGroup"/>
+                    <input type="text" name="commentGroup" :value="qnafreeanswer.commentGroup"/>
                     <textarea class="me-3" name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
                     <button type="submit" class="btn new-btn">등록</button>
                 </form>
             </div>
-				<!-- <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
-					<div class="input-group">
-						<input type="hidden" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum" />
-						<textarea class="form-control" name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
-						<button type="submit" class="btn new-btn">등록</button>
-					</div>
-				</form> -->
 
             <div v-if="isUpdateFormVisible[qnafreeanswer.freeCommentNum]" >
                 <form class="comment-form update-form" @submit.prevent="answerupdate(qnafreeanswer.freeCommentNum)">
@@ -90,25 +83,25 @@
                     <button type="submit" class="button btn mb-5">수정</button>
                 </form>
             </div>
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item" v-if="qnafreeanswer.startPageNum != 1">
-                        <a class="page-link new-page-link" @click="paging(qnafreeanswer.startPageNum - 1)">
-                            <span aria-hidden="true">&lt;</span>
-                        </a>
-                    </li>
-                    <li v-for="i in 5" :key="i" class="page-item ${qnafreeanswer.pageNum eq i ? 'active' : '' }">
-                        <a class="page-link new-page-link" v-if="i + qnafreeanswer.startPageNum - 1 <= qnafreeanswer.endPageNum"
-                            @click="paging(i + qnafreeanswer.startPageNum - 1)">{{ i + qnafreeanswer.startPageNum - 1 }}</a>
-                    </li>
-                    <li class="page-item" v-if="qnafreeanswer.endPageNum < qnafreeanswer.totalPage">
-                        <a class="page-link new-page-link" @click="paging(qnafreeanswer.endPageNum + 1)">
-                            <span aria-hidden="true">&gt;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item" v-if="qnafreeanswer.startPageNum != 1">
+                    <a class="page-link new-page-link" @click="paging(qnafreeanswer.startPageNum - 1)">
+                        <span aria-hidden="true">&lt;</span>
+                    </a>
+                </li>
+                <li v-for="i in 10" :key="i" class="page-item ${qnafreeanswer.pageNum eq i ? 'active' : '' }">
+                    <a class="page-link new-page-link" v-if="i + qnafreeanswer.startPageNum - 1 <= qnafreeanswer.endPageNum"
+                        @click="paging(i + qnafreeanswer.startPageNum - 1)">{{ i + qnafreeanswer.startPageNum - 1 }}</a>
+                </li>
+                <li class="page-item" v-if="qnafreeanswer.endPageNum < qnafreeanswer.totalPage">
+                    <a class="page-link new-page-link" @click="paging(qnafreeanswer.endPageNum + 1)">
+                        <span aria-hidden="true">&gt;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 </template>
 <script>
@@ -186,7 +179,7 @@ export default {
         paging: function (currentPage) {
             const url = '/project/api/qna-free-answer/list';
             const data = {
-            limit: 5,
+            limit: 10,
             currentPage: currentPage,
             freeCommentRefGroup: this.qnafree.freeQuestionNum
             };
@@ -217,8 +210,7 @@ export default {
             const data = {
                 content : this.formData.content,
                 freeCommentRefGroup : this.qnafree.freeQuestionNum,
-                targetId : '',
-                commentGroup : '',
+                targetId : this.$store.getters.isUserId
             };
             axios.post(url, data)
             .then(response => {
@@ -249,13 +241,13 @@ export default {
                 alert('댓글 수정 실패');
             });
         },
-		answerinsert() {
+		answerinsert(targetId, commentGroup ) {
             const url = '/project/api/qna-free-answer';
             const data = {
                 content : this.formData.content,
                 freeCommentRefGroup : this.qnafree.freeQuestionNum,
-                targetId : this.qnafreeanswer.freeCommentWriter,
-				commentGroup : this.qnafreeanswer.commentGroup
+                targetId : targetId,
+                commentGroup : commentGroup
             };
             axios.post(url, data)
             .then(response => {
