@@ -29,7 +29,7 @@
         </table>
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isManager == 'Y'">
-        <a @click="$router.push('/notice/insert')" class="new-btn btn btn-sm">글쓰기</a>
+        <a @click="$router.push('/notice/insert')" class="new-btn btn btn-sm">등록</a>
       </div>
       <nav>
         <ul class="pagination justify-content-center">

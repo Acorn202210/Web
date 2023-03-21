@@ -24,10 +24,10 @@
 					<div :id="`panelsStayOpen-collapse-${faq.faqNum}`" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-heading">
 					<div class="accordion-body">
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isManager == 'Y'">
-							<a @click="$router.push(`/faqupdateform/${faq.faqNum}`)" class="btn new-btn">수정</a>
+							<a @click="$router.push(`/faqupdateform/${faq.faqNum}`)" class="btn new-btn btn-sm">수정</a>
 							<div>
 								<input type="hidden" v-model="faq.faqNum"/>
-								<button @click="confirmDelete(faq.faqNum)" class="btn btn-danger">삭제</button>
+								<button @click="confirmDelete(faq.faqNum)" class="btn btn-danger btn-sm">삭제</button>
 							</div>
 						</div>
 						<div><strong>{{ faq.content }}</strong></div>
@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isManager == 'Y'">
-				<a @click="$router.push('/faqinsertform')" class="btn new-btn">등록</a>
+				<a @click="$router.push('/faqinsertform')" class="new-btn btn btn-sm">등록</a>
 			</div>
 			<nav>
 				<ul class="pagination justify-content-center">
