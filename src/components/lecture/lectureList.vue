@@ -12,13 +12,13 @@
         <div class="col-md-8 col-lg-9">
           <div class="row">
             <div class="col-12">
-              <div class="d-flex justify-content-end mb-3">
-                <a href="/lectureUploadForm">강의 등록</a>
+              <div class="d-flex justify-content-end mb-3" v-if="$store.getters.isManager == 'Y'">
+                <a class="new-btn btn btn-sm" @click="this.$router.push(`/lectureUploadForm`)">등록</a>
               </div>
             </div>
             <div class="col-6 col-md-4 col-lg-3" v-for="lectureList in list.data" :key="lectureList.lecNum">
               <div class="card mb-3">
-                <a  @click="this.$router.push(`/lectureDetail/${lectureList.lecNum}`)">
+                <a @click="this.$router.push(`/lectureDetail/${lectureList.lecNum}`)">
                   <div class="img-wrapper">
                     <img :src="`/project/api/lecture/${lectureList.imageNum}/image?imageNum=${lectureList.imageNum}`">
                   </div>
@@ -31,26 +31,27 @@
                 </div>
               </div>
             </div>
-          <nav>
-            <ul class="pagination justify-content-center">
-              <li class="page-item" v-if="list.startPageNum != 1">
-                <a class="page-link new-page-link" @click="paging(list.startPageNum - 1)">
-                  <span aria-hidden="true">&lt;</span>
-                </a>
-              </li>
+            <nav>
+              <ul class="pagination justify-content-center">
+                <li class="page-item" v-if="list.startPageNum != 1">
+                  <a class="page-link new-page-link" @click="paging(list.startPageNum - 1)">
+                    <span aria-hidden="true">&lt;</span>
+                  </a>
+                </li>
 
-              <li v-for="i in 5" :key="i" class="page-item ${list.pageNum eq i ? 'active' : '' }">
-                <a class="page-link new-page-link" v-if="i + list.startPageNum - 1 <= list.endPageNum"
-                  @click="paging(i + list.startPageNum - 1)">{{ i + list.startPageNum - 1 }}</a>
-              </li>
+                <li v-for="i in 5" :key="i"
+                  :class="['page-item', list.currentPage == i + list.startPageNum - 1 ? 'active' : '']">
+                  <a class="page-link new-page-link" v-if="i + list.startPageNum - 1 <= list.endPageNum"
+                    @click="paging(i + list.startPageNum - 1)">{{ i + list.startPageNum - 1 }}</a>
+                </li>
 
-              <li class="page-item" v-if="list.endPageNum < list.totalPage">
-                <a class="page-link new-page-link" @click="paging(list.endPageNum + 1)">
-                  <span aria-hidden="true">&gt;</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+                <li class="page-item" v-if="list.endPageNum < list.totalPage">
+                  <a class="page-link new-page-link" @click="paging(list.endPageNum + 1)">
+                    <span aria-hidden="true">&gt;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
         </div>
       </div>
     </div>
@@ -109,17 +110,18 @@ export default {
         });
     },
     paging(currentPage) {
+      var vm = this;
       const url = '/project/api/lecture/lectureList';
       const data = {
         limit: 8,
         currentPage,
-        largeCategory: this.largeCategory,
-        smallCategory: this.smallCategory,
+        largeCategory: vm.largeCategory,
+        smallCategory: vm.smallCategory,
       };
       axios
         .get(url, { params: data })
         .then((response) => {
-          this.list = response.data.body;
+          vm.list = response.data.body;
         })
         .catch((error) => {
           console.log(error);

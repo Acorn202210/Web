@@ -98,9 +98,12 @@ export default {
       axios.post(url, data)
         .then((res) => {
           console.log(res);
+          alert("강의 등록 성공")
+          this.$router.go(-1);
         })
         .catch((err) => {
           console.error(err);
+          console.log("강의 등록 실패")
         });
     },
   },

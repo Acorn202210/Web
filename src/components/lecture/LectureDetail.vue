@@ -4,7 +4,8 @@
       <div class="box1">
         <h3 class="lecture-detail-tit">{{ detail.title }}</h3>
         <div class="d-flex justify-content-end mt-3">
-          <button class="btn btn-secondary btn-sm me-2 mb-3" type="button">수정</button>
+          <button class="btn btn-secondary btn-sm me-2 mb-3" @click="this.$router.push(`/lectureUpdateForm/${detail.lecNum}`)"
+            type="button">수정</button>
           <div>
             <input type="hidden" v-model="detail.lecNum" />
             <button class="btn btn-danger btn-sm me-2 mb-3" @click="deleteConfirm(detail.lecNum)"
@@ -112,16 +113,16 @@
       </ul>
     </nav>
       </div>
-      <div class="box2" v-if="$store.getters.isUserId != null">
+      <div class="box2" v-if="$store.getters.isManager != 'Y' && $store.getters.isUserId != null">
         <div>
           <div class="mt-4 d-flex justify-content-center mb-3">
-            <div v-if="!isStudent">
+            <div v-if="!isStudent || studentOne.completeYn == 'Y'">
               <form class="mt-4 mb-3 d-flex justify-content-center" @submit.prevent="lectureSignupForm">
                 <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
-                <button class="button" type="submit">수강 신청</button>
+                <button :disabled="isStudent" class="button" type="submit">수강 신청</button>
               </form>
             </div>
-            <div v-if="isStudent">
+            <div v-if="isStudent && studentOne.completeYn == 'N'">
               <form id="completeForm" @submit.prevent="lectureComplete">
                 <input type="hidden" name="completeYn" value="Y" />
                 <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
@@ -130,12 +131,11 @@
             </div>
           </div>
         </div>
-        <div class="d-flex justify-content-center">
-          <button v-if="isStudent" class="button " type="button" @click="$router.push(`/lectureDetail/lectureView/${this.$route.params.lecNum}`)">강의보기</button>
+        <div class="d-flex justify-content-center mb-3" v-if="isStudent && studentOne.completeYn == 'N'">
+          <button class="button " type="button" @click="$router.push(`/lectureDetail/lectureView/${this.$route.params.lecNum}`)">강의보기</button>
         </div>  
-        <br>
         <div class="d-flex justify-content-center">
-          <button type="button">
+          <button type="button" @click="this.$router.push(`/qna`)">
             1:1문의
           </button>
         </div>
@@ -168,6 +168,7 @@ data() {
       lecStuRefGroup: ''
     },
     isStudent: false,
+    studentOne: {},
     colorStar:{
       color:'#f90'
     },
@@ -186,6 +187,7 @@ created() {
       this.lecSignupForm.lecStuRefGroup = this.detail.lecNum;
       this.completeForm.lecStuRefGroup = this.detail.lecNum;
       this.getReviewList();
+      this.lecStudentOne();
       
     })
     .catch(error => {
@@ -217,6 +219,7 @@ methods: {
       .then(response => {
         console.log(response.data);
         alert('후기 등록 성공');
+        location.reload();
       })
       .catch(error => {
         console.error(error);
@@ -257,7 +260,7 @@ methods: {
     ).then(response => {
       console.warn(response)
       this.result = response.data;
-      location.reload();
+      this.$router.push('/home');
     }).catch((ex) => {
       console.warn("ERROR!!!!! : ", ex)
     })
@@ -286,6 +289,7 @@ methods: {
       .then(response => {
         console.log(response.data);
         alert('후기 수정 성공');
+        location.reload();
       })
       .catch(error => {
         console.error(error);
@@ -319,14 +323,12 @@ methods: {
       .then(response => {
         console.log(response.data);
         alert('강의 신청 성공');
+        location.reload();
       })
       .catch(error => {
         console.error(error);
         alert('강의 신청 실패');
-      })
-      .finally(() => {   
-      location.reload();
-    });
+      });
   },
   lectureComplete() {
     const url = '/project/api/lecture-student/lecture-complete'
@@ -337,16 +339,29 @@ methods: {
       .then(response => {
         console.log(response.data);
         alert('강의 완료 성공');
+        location.reload();
       })
       .catch(error => {
         console.error(error);
         alert('강의 완료 실패');
-      })
-      .finally(() => {   
-      location.reload();
-    });
+      });
   },
-
+  lecStudentOne(){
+    axios.get('/project/api/lecture-student/lecture-student-one', {
+      params: {
+        lecStuRefGroup: this.detail.lecNum
+      }
+    })
+    .then(response => {
+        console.log(response.data);
+        console.log(this.studentOne);
+        this.studentOne = response.data.body;
+      })
+      .catch(error => {
+        console.error(error);
+        console.log(this.studentOne);
+      });
+  }
 },
 };
 </script>

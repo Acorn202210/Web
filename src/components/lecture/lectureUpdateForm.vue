@@ -100,6 +100,7 @@
           .then((res) => {
             console.log(res);
             alert("강의 수정 완료");
+            this.$router.go(-1);
           })
           .catch((err) => {
             console.error(err);
