@@ -114,7 +114,7 @@ export default {
       const url = '/project/api/lecture/lectureList';
       const data = {
         limit: 8,
-        currentPage,
+        currentPage: currentPage,
         largeCategory: vm.largeCategory,
         smallCategory: vm.smallCategory,
       };

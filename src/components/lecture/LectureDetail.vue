@@ -93,25 +93,26 @@
           </div>
         </div>
         <nav>
-        <ul class="pagination justify-content-center">
-          <li class="page-item" v-if="lectureReview.startPageNum != 1">
-            <a class="page-link new-page-link" @click="paging(lectureReview.startPageNum - 1)">
-            <span aria-hidden="true">&lt;</span>
-          </a>
-        </li>
+          <ul class="pagination justify-content-center" v-if="lectureReview.totalCount > 0">
+            <li class="page-item" v-if="lectureReview.startPageNum != 1">
+              <a class="page-link new-page-link" @click="paging(lectureReview.startPageNum - 1)">
+                <span aria-hidden="true"></span>
+              </a>
+            </li>
 
-        <li v-for="i in 5" :key="i" class="page-item ${lectureReview.pageNum eq i ? 'active' : '' }">
-          <a class="page-link new-page-link" v-if="i + lectureReview.startPageNum - 1 <= lectureReview.endPageNum"
-            @click="paging(i + lectureReview.startPageNum - 1)">{{ i + lectureReview.startPageNum - 1 }}</a>
-        </li>
+            <li v-for="i in 5" :key="i"
+              :class="['page-item', lectureReview.currentPage == i + lectureReview.startPageNum - 1 ? 'active' : '']">
+              <a class="page-link new-page-link" v-if="i + lectureReview.startPageNum - 1 <= lectureReview.endPageNum"
+                @click="paging(i + lectureReview.startPageNum - 1)">{{ i + lectureReview.startPageNum - 1 }}</a>
+            </li>
 
-        <li class="page-item" v-if="lectureReview.endPageNum < lectureReview.totalPage">
-          <a class="page-link new-page-link" @click="paging(lectureReview.endPageNum + 1)">
-            <span aria-hidden="true">&gt;</span>
-          </a>
-        </li>
-      </ul>
-    </nav>
+            <li class="page-item" v-if="lectureReview.endPageNum < lectureReview.totalPage">
+              <a class="page-link new-page-link" @click="paging(lectureReview.endPageNum + 1)">
+                <span aria-hidden="true">></span>
+              </a>
+            </li>
+          </ul>
+        </nav>
       </div>
       <div class="box2" v-if="$store.getters.isManager != 'Y' && $store.getters.isUserId != null">
         <div>
@@ -229,6 +230,7 @@ methods: {
   getReviewList() {
     var url = `/project/api/lecture-review/LectureReviewList`;
     const data = {
+      limit: 8,
       lecReStuRefGroup: this.detail.lecNum
     }
     axios.get(url, { params: data })
@@ -241,15 +243,16 @@ methods: {
       });
   },
   paging: function (currentPage) {
+    var vm = this;
     const url = '/project/api/lecture-review/LectureReviewList';
     const data = {
-      limit: 5,
+      limit: 8,
       currentPage: currentPage,
       lecReStuRefGroup: this.detail.lecNum
     };
     axios.get(url, { params: data })
       .then(response => {
-        this.lectureReview = response.data.body;
+        vm.lectureReview = response.data.body;
       })
       .catch(error => {
         console.log(error);
@@ -354,12 +357,10 @@ methods: {
     })
     .then(response => {
         console.log(response.data);
-        console.log(this.studentOne);
         this.studentOne = response.data.body;
       })
       .catch(error => {
         console.error(error);
-        console.log(this.studentOne);
       });
   }
 },
