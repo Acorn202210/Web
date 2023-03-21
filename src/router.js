@@ -158,8 +158,9 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(process.env.BASE_URL), // base 경로 설정
     routes,
-});
+  });
+  
 
 export default router;

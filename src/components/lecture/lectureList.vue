@@ -60,70 +60,83 @@
 
 
     
-  <script>
-  import axios from 'axios';
-  import lectureSide from '../common/lectureSide.vue';
-  export default {
-    name: 'lectureList',
-    data() {
-      return {
-        list: {
-          data: [],
-        },
-        lecNum: '',
-        teacher: '',
-        lecWriter: '',
-        title: '',
-        describe: '',
-        videoPath: '',
-        viewCount: '',
-        userRegdate: '',
-        largeCategory: this.$route.params.largeCategory,
-        smallCategory: this.$route.params.smallCategory,
-        updateId: '',
-        serviceYnCode: '',
-      };
-    },
-  components: {
-      lectureSide
+<script>
+import axios from 'axios';
+import lectureSide from '../common/lectureSide.vue';
+
+export default {
+  name: 'lectureList',
+  data() {
+    return {
+      list: {
+        data: [],
+      },
+      lecNum: '',
+      teacher: '',
+      lecWriter: '',
+      title: '',
+      describe: '',
+      videoPath: '',
+      viewCount: '',
+      userRegdate: '',
+      largeCategory: this.$route.params.largeCategory,
+      smallCategory: this.$route.params.smallCategory,
+      updateId: '',
+      serviceYnCode: '',
+    };
   },
-    created() {
-      var vm = this;
-      var url = '/project/api/lecture/lectureList';
+  components: {
+    lectureSide,
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    getList() {
+      const url = '/project/api/lecture/lectureList';
       const data = {
         limit: 8,
-        largeCategory: vm.largeCategory,
-        smallCategory: vm.smallCategory
-      }
-      axios.get(url, { params: data })
-        .then(function (response) {
-          console.log(response.data);
-          vm.list = response.data.body;
+        largeCategory: this.largeCategory,
+        smallCategory: this.smallCategory,
+      };
+      axios
+        .get(url, { params: data })
+        .then((response) => {
+          this.list = response.data.body;
         })
-        .catch(function (error) {
+        .catch((error) => {
           console.log(error);
+        });
+    },
+    paging(currentPage) {
+      const url = '/project/api/lecture/lectureList';
+      const data = {
+        limit: 8,
+        currentPage,
+        largeCategory: this.largeCategory,
+        smallCategory: this.smallCategory,
+      };
+      axios
+        .get(url, { params: data })
+        .then((response) => {
+          this.list = response.data.body;
         })
+        .catch((error) => {
+          console.log(error);
+        });
     },
-    methods: {
-      paging: function (currentPage) {
-        const url = '/project/api/lecture/lectureList';
-        const data = {
-          limit: 8,
-          currentPage: currentPage,
-          largeCategory: this.largeCategory,
-          smallCategory: this.smallCategory,
-        };
-        axios.get(url, { params: data })
-          .then(response => {
-            this.list = response.data.body;
-          })
-          .catch(error => {
-            console.log(error);
-          });
-      },
+  },
+  watch: {
+    $route(to) {
+      this.largeCategory = to.params.largeCategory;
+      this.smallCategory = to.params.smallCategory;
+      this.getList();
     },
-  }
-  </script>
+  },
+};
+</script>
+
+
   <style>
   @import '../../assets/css/lecture.css'
   </style>
