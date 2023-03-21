@@ -6,10 +6,7 @@
     </div>
   </div>
     
-  <div class="container">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">            
-      <a href="/qna-insertform" class="new-btn btn btn-sm">등록</a>      
-    </div>         
+  <div class="container">    
     <div class="table-responsive table-top">
       <table class="table table-hover align-middle">
         <thead>
@@ -42,6 +39,9 @@
         </tbody>
 
       </table>      
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">            
+        <a href="/qna-insertform" class="new-btn btn btn-sm">등록</a>      
+      </div>
     </div> 
     <div>
       <nav>
