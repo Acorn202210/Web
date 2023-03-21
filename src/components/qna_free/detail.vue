@@ -56,18 +56,36 @@
                 </svg>
             <span class="ms-3"><strong>{{ qnafreeanswer.freeCommentWriter }}</strong></span>
             <span class="ms-3">{{ qnafreeanswer.userRegdate }}</span>
-            <span class="ms-3"
-                v-if="$store.getters.isUserId != null && qnafreeanswer.freeCommentWriter == $store.getters.isUserId">
-				
-                <a class="update-link" @click="showAnswerUpdateForm(qnafreeanswer.freeCommentNum)">수정</a>
+			<span class="mt-3" v-if="$store.getters.isUserId != null">
+				<a class="insert-link ms-3" @click="showAnswerInsertForm(qnafreeanswer.freeCommentNum)">답글</a>
+			</span>
+            <span v-if="$store.getters.isUserId != null && qnafreeanswer.freeCommentWriter == $store.getters.isUserId">
+                <a class="update-link ms-1" @click="showAnswerUpdateForm(qnafreeanswer.freeCommentNum)">수정</a>
                 <a class="del ms-1" @click="deleteAnswerConfirm(qnafreeanswer.freeCommentNum)">삭제</a>
             </span>
             <dd>
                 <pre id="pre{{qnafreeanswer.freeCommentNum }}">{{ qnafreeanswer.content }}</pre>
             </dd>
+
+			<div v-if="isInsertFormVisible[qnafreeanswer.freeCommentNum]" >
+                <form class="comment-form update-form" @submit.prevent="answerinsert">
+					<input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum"/>
+                    <input type="text" name="targetId" :value="qnafreeanswer.freeCommentWriter"/>
+					<input type="text" name="commentGroup" :value="qnafreeanswer.commentGroup"/>
+                    <textarea class="me-3" name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
+                    <button type="submit" class="btn new-btn">등록</button>
+                </form>
+            </div>
+				<!-- <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
+					<div class="input-group">
+						<input type="hidden" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum" />
+						<textarea class="form-control" name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
+						<button type="submit" class="btn new-btn">등록</button>
+					</div>
+				</form> -->
+
             <div v-if="isUpdateFormVisible[qnafreeanswer.freeCommentNum]" >
                 <form class="comment-form update-form" @submit.prevent="answerupdate(qnafreeanswer.freeCommentNum)">
-                    <input type="text" name="freeCommentRefGroup" :value="qnafreeanswer.freeQuestionNum"/>
                     <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="qnafreeanswer.content"></textarea>
                     <button type="submit" class="button btn mb-5">수정</button>
                 </form>
@@ -102,6 +120,7 @@ export default {
             qnafree:{},
             qnafreeanswer:{},
             isUpdateFormVisible: {},
+			isInsertFormVisible: {},
             formData: {
                 content:'',
                 contentUpdate:'',
@@ -109,7 +128,10 @@ export default {
                 targetId:'',
                 commentGroup:'',
 				freeCommentNum:'',
+				freeCommentWriter:'',
             },
+            freeCommentWriter:'',
+            commentGroup:'',
             profile:'',
         }
     },
@@ -136,6 +158,9 @@ export default {
         .then((response) => {
             console.log(response.data.body);
             vm.qnafreeanswer = response.data.body;
+			vm.formData.freeCommentRefGroup = this.qnafree.freeQuestionNum;
+            vm.formData.targetId = this.qnafreeanswer.freeCommentWriter;
+            vm.formData.commentGroup = this.qnafreeanswer.commentGroup;
         })
         .catch((error) => {
             console.error(error);
@@ -180,6 +205,13 @@ export default {
                 this.isUpdateFormVisible[freeCommentNum] = true;
             }
         },
+		showAnswerInsertForm(freeCommentNum) {
+            if(this.isInsertFormVisible[freeCommentNum] == true){
+                this.isInsertFormVisible[freeCommentNum] = false;
+            }else{
+                this.isInsertFormVisible[freeCommentNum] = true;
+            }
+		},
         submitAnswerForm() {
             const url = '/project/api/qna-free-answer';
             const data = {
@@ -204,7 +236,7 @@ export default {
             const url = `/project/api/qna-free-answer/${freeCommentNum}/update`;
             const data = {
                 content: this.formData.contentUpdate,
-				freeCommentNum: this.formData.freeCommentNum
+				freeCommentNum: freeCommentNum
             };
             axios.put(url, data)
             .then(response => {
@@ -215,6 +247,26 @@ export default {
             .catch(error => {
                 console.error(error);
                 alert('댓글 수정 실패');
+            });
+        },
+		answerinsert() {
+            const url = '/project/api/qna-free-answer';
+            const data = {
+                content : this.formData.content,
+                freeCommentRefGroup : this.qnafree.freeQuestionNum,
+                targetId : this.qnafreeanswer.freeCommentWriter,
+				commentGroup : this.qnafreeanswer.commentGroup
+            };
+            axios.post(url, data)
+            .then(response => {
+                console.log(response.data);
+                alert('답변 등록 성공');
+                this.$router.go();
+            })
+            .catch(error => {
+                console.error(error);
+                console.log(data);
+                alert('답변 등록 실패');
             });
         },
         qnafreeanswerdelete: function (freeCommentNum) {
