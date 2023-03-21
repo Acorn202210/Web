@@ -6,10 +6,7 @@
     </div>
   </div>
     
-  <div class="container">
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">            
-      <a href="/qna-insertform" class="new-btn btn btn-sm">등록</a>      
-    </div>         
+  <div class="container">    
     <div class="table-responsive table-top">
       <table class="table table-hover align-middle">
         <thead>
@@ -22,10 +19,15 @@
           </tr>
         </thead>
         <tbody class="table-group-divider">
-          <tr style="text-align: center;" v-for="item in qnalist.data" :key="item" @click="detail(item.boardQuestionNum)">
+          <tr style="text-align: center;" v-for="item in qnalist.data" :key="item" @click="detail(item.boardQuestionNum, item.boardQuestionWriter)">
             <td>{{item.boardQuestionNum}}</td>
             <td>
-              {{item.title}}
+              <div v-if="$store.getters.isManager == 'Y'">
+                {{item.title}}
+              </div>
+              <div v-else>
+                {{item.title}}
+              </div>
             </td>
             <td>{{item.boardQuestionWriter}}</td>
             <td>{{item.userRegdate}}</td>
@@ -37,6 +39,9 @@
         </tbody>
 
       </table>      
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end">            
+        <a href="/qna-insertform" class="new-btn btn btn-sm">등록</a>      
+      </div>
     </div> 
     <div>
       <nav>
@@ -102,8 +107,13 @@ export default {
         })
     },
     methods:{
-      detail:function(boardQuestionNum){
-        this.$router.push('/qna/'+boardQuestionNum);
+      detail:function(boardQuestionNum, boardQuestionWriter){
+          
+          if(boardQuestionWriter == this.$store.getters.isUserId || this.$store.getters.isManager == 'Y'){
+            this.$router.push('/qna/'+boardQuestionNum);     
+          }else{
+            alert('본인의 글만 열람할 수 있습니다.'); 
+          }          
       },
       paging:function(currentPage){
         var vm = this;
