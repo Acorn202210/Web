@@ -5,16 +5,20 @@
     </div>
   </div>
   <div class="container">
-    <div>
-        <label for="title">제목</label>
-        <input type="text" v-model="title" placeholder="질문 입력..."/>
-    </div>
-    <div>
-        <label for="content">내용</label>
-        <textarea type="text" v-model="content" placeholder="내용 입력..."/>
-    </div>
-    <button class="btn btn-sm me-2 mb-3 button" @click="qnaboardinsert">등록</button>
-    <button class="btn btn-sm me-2 mb-3 button" @click="$router.go(-1)">취소</button>
+    <form @submit.prevent="qnaboardinsert">
+      <div>
+          <label for="title" class="form-label">제목</label>
+          <input type="text" v-model="title" name="title" id="title" class="form-control" placeholder="질문 입력..."/>
+      </div>
+      <div class="mt-3">
+          <label for="content" class="form-label">내용</label>
+          <textarea v-model="content"  name="content" id="content" rows="10" class="form-control" placeholder="내용 입력..."/>
+      </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+        <button type="submit" onclick="submitContents(this)" class="btn btn-sm button">등록</button>
+        <button class="btn btn-sm btn-secondary" @click="$router.go(-1)">취소</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -30,15 +34,25 @@ export default {
             content: ''
         }
     },
+    created() {
+    var vm = this;
+    var url = `/project/api/qna-board/`;
+    axios.get(url)
+      .then(function (response) {
+        vm.qna = response.data.body;
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+    },
     methods: {
-      qnaboardinsert : function() {
+      qnaboardinsert () {
+        var vm = this;
         axios.post('/project/api/qna-board/insert', 
           { title:this.title, content:this.content }
-        ).then(response => {
-          console.warn(response)
-          this.result = response.data;
-          this.boardQuestionNum = response.data.boardQuestionNum;
-          this.$router.push('/qna'); 
+        ).then(function() {          
+          alert('1:1문의가 등록되었습니다.');
+          vm.$router.push('/qna'); 
         }).catch((ex) => {
           console.warn("ERROR!!!!! : ",ex)
         })
