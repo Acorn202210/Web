@@ -88,9 +88,6 @@
                     <div v-if="isInsertFormVisible[answer.freeCommentNum]">
                         <form class="comment-form update-form"
                             @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
-                            <input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum" />
-                            <input type="text" name="targetId" :value="answer.freeCommentWriter" />
-                            <input type="text" name="commentGroup" :value="answer.commentGroup" />
                             <textarea class="me-3" name="content" v-model="formData.content"
                                 placeholder="댓글을 입력합니다"></textarea>
                             <button type="submit" class="btn new-btn">등록</button>
@@ -143,9 +140,6 @@
                     <div v-if="isInsertFormVisible[answer.freeCommentNum]">
                         <form class="comment-form update-form"
                             @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
-                            <input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum" />
-                            <input type="text" name="targetId" :value="answer.freeCommentWriter" />
-                            <input type="text" name="commentGroup" :value="answer.commentGroup" />
                             <textarea class="me-3" name="content" v-model="formData.content"
                                 placeholder="댓글을 입력합니다"></textarea>
                             <button type="submit" class="btn new-btn">등록</button>
