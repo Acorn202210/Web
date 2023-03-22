@@ -1,8 +1,12 @@
 <template>
     <div class="container mt-3">
         <div class="d-md-flex justify-content-md-end">
-            <a v-if="qnafree.prevNum != 0" :href="`/qnafree/${qnafree.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-            <a v-if="qnafree.nextNum != 0" :href="`/qnafree/${qnafree.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
+            <a v-if="qnafree.prevNum != 0"
+                :href="`/qnafree/${qnafree.prevNum}?condition=${this.$route.query.condition}&keyword=${this.$route.query.keyword}`"
+                class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+            <a v-if="qnafree.nextNum != 0"
+                :href="`/qnafree/${qnafree.nextNum}?condition=${this.$route.query.condition}&keyword=${this.$route.query.keyword}`"
+                class="btn btn-sm btn-secondary">다음글</a>
         </div>
         <p class="mt-2" v-if="this.$route.query.condition != ''">
             <strong>{{ this.$route.query.condition }}</strong> 조건
@@ -32,7 +36,8 @@
         <div class="d-grid d-md-flex justify-content-md-end mt-3">
             <div class="d-grid d-md-flex " v-if="$store.getters.isUserId == qnafree.freeQuestionWriter">
                 <a :href="`/qnafree/update/${qnafree.freeQuestionNum}`" class="btn btn-sm me-2 new-btn">수정</a>
-                <a href="javascript:" @click="confirmDelete(qnafree.freeQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</a>
+                <a href="javascript:" @click="confirmDelete(qnafree.freeQuestionNum)"
+                    class="btn btn-sm me-2 btn-danger">삭제</a>
             </div>
             <a :href="'/qnafree'" class="btn btn-sm me-2 btn-secondary">목록</a>
         </div>
@@ -40,86 +45,121 @@
             <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
                 <div class="input-group">
                     <input type="hidden" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum" />
-                    <textarea class="form-control" name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
+                    <textarea class="form-control" name="content" v-model="formData.content"
+                        placeholder="댓글을 입력합니다"></textarea>
                     <button type="submit" class="btn new-btn">등록</button>
                 </div>
             </form>
         </div>
-        <!-- 댓글 목록-->
-        <!-- <div class="mt-3" v-for="qnafreeanswer in qnafreeanswer.data" :key="qnafreeanswer.freeCommentNum">
-            <img v-if="qnafreeanswer.profileNum" :src="`/project/api/users/profile/${qnafreeanswer.profileNum}`" width="50" height="50" style="border-radius: 50%;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-            </svg>
-            <span class="ms-3"><strong>{{ qnafreeanswer.freeCommentWriter }}</strong></span>
-            <span class="ms-3">{{ qnafreeanswer.userRegdate }}</span>
-            <span class="mt-3" v-if="$store.getters.isUserId != null">
-                <a class="insert-link ms-3" @click="showAnswerInsertForm(qnafreeanswer.freeCommentNum)">답글</a>
-            </span>
-            <span v-if="$store.getters.isUserId != null && qnafreeanswer.freeCommentWriter == $store.getters.isUserId">
-                <a class="update-link ms-1" @click="showAnswerUpdateForm(qnafreeanswer.freeCommentNum)">수정</a>
-                <a class="del ms-1" @click="deleteAnswerConfirm(qnafreeanswer.freeCommentNum)">삭제</a>
-            </span>
-            <dd>
-                <pre id="pre{{qnafreeanswer.freeCommentNum }}">{{ qnafreeanswer.content }}</pre>
-            </dd> -->
-            
-                <!-- 그룹번호 -->
-                <!-- <div v-if="qnafreeanswer.commentGroup == qnafreeanswer.freeCommentNum">
-                    <div v-if="qnafreeanswer.freeCommentNum == qnafreeanswer.commentGroup">
-                        {{ qnafreeanswer.content }}
-                    </div>
-                    <div v-else-if="qnafreeanswer.commentGroup == qnafreeanswer.freeCommentNum">
-                        {{ qnafreeanswer.content }}
-                    </div>
-                </div>
-            <div v-for="(answers, group) in groupedAnswers" :key="group">
-                <h2>{{ group }}</h2>
-                <div v-for="answer in answers" :key="answer.freeCommentNum">
-                    
-                </div>
-            </div> -->
+        <!-- 댓글 목록 -->
 
-        <div v-for="(answers, group) in groupedAnswers" :key="group">
-            <h2>{{ group }}</h2>
-            <div v-if="answers">
-                <div v-for="answer in answers" :key="answer.freeCommentNum">
-                    <img v-if="answer.profileNum" :src="`/project/api/users/profile/${answer.profileNum}`" width="50" height="50" style="border-radius: 50%;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
-                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                    </svg>
-                    <span class="ms-3"><strong>{{ answer.freeCommentWriter }}</strong></span>
-                    <span class="ms-3">{{ answer.userRegdate }}</span>
-                    <span class="mt-3" v-if="$store.getters.isUserId != null">
-                        <a class="insert-link ms-3" @click="showAnswerInsertForm(answer.freeCommentNum)">답글</a>
-                    </span>
-                    <span v-if="$store.getters.isUserId != null && answer.freeCommentWriter == $store.getters.isUserId">
-                        <a class="update-link ms-1" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
-                        <a class="del ms-1" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
-                    </span>
-                    <dd>
-                        <pre id="pre{{answer.freeCommentNum}}">{{ answer.content }}</pre>
-                    </dd>
+        <div class="comments" v-for="(answers, group) in groupedAnswers" :key="group">
+            <ul v-for="answer in answers" :key="answer.freeCommentNum">
+                <li :id="'reli' + answer.freeCommentNum" v-if="answer.freeCommentNum == answer.commentGroup">
+                    <dl>
+                        <dt>
+                            <svg v-if="answer.profileNum == null" class="profile-image bi bi-person-circle"
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                            <img v-if="answer.profileNum != null" class="profile-image"
+                                :src="`/project/api/users/profile/${answer.profileNum}`" />
+                            <span>{{ answer.freeCommentWriter }}</span>
 
-                    <div v-if="isInsertFormVisible[answer.freeCommentNum]" >
-                        <form class="comment-form update-form" @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
-                            <input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum"/>
-                            <input type="text" name="targetId" :value="answer.freeCommentWriter"/>
-                            <input type="text" name="commentGroup" :value="answer.commentGroup"/>
-                            <textarea class="me-3" name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
+                            <i v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</i>
+
+                            <span>{{ answer.userRegdate }}</span>
+                            <span class="mt-3" v-if="$store.getters.isUserId != null">
+                                <a class="insert-link ms-3" @click="showAnswerInsertForm(answer.freeCommentNum)">답글</a>
+                            </span>
+                            <span
+                                v-if="$store.getters.isUserId != null && answer.freeCommentWriter == $store.getters.isUserId">
+                                <a class="update-link ms-1" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
+                                <a class="del ms-1" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
+                            </span>
+                        </dt>
+                        <dd>
+                            <pre :id="'pre' + answer.freeCommentNum">{{ answer.content }}</pre>
+                        </dd>
+                    </dl>
+                    <div v-if="isInsertFormVisible[answer.freeCommentNum]">
+                        <form class="comment-form update-form"
+                            @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
+                            <input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum" />
+                            <input type="text" name="targetId" :value="answer.freeCommentWriter" />
+                            <input type="text" name="commentGroup" :value="answer.commentGroup" />
+                            <textarea class="me-3" name="content" v-model="formData.content"
+                                placeholder="댓글을 입력합니다"></textarea>
                             <button type="submit" class="btn new-btn">등록</button>
                         </form>
                     </div>
-                    <div v-if="isUpdateFormVisible[answer.freeCommentNum]" >
+                    <div v-if="isUpdateFormVisible[answer.freeCommentNum]">
                         <form class="comment-form update-form" @submit.prevent="answerupdate(answer.freeCommentNum)">
-                            <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="answer.content"></textarea>
+                            <textarea class="me-3" name="content" v-model="formData.contentUpdate"
+                                :placeholder="answer.content"></textarea>
                             <button type="submit" class="button btn mb-5">수정</button>
                         </form>
                     </div>
-                </div>
-            </div>
+                </li>
+                <li :id="'reli' + answer.freeCommentNum" style="padding-left:50px;"
+                    v-if="answer.freeCommentNum != answer.commentGroup">
+                    <svg class="reply-icon bi bi-arrow-return-right" xmlns="http://www.w3.org/2000/svg" width="16"
+                        height="16" fill="currentColor" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M1.5 1.5A.5.5 0 0 0 1 2v4.8a2.5 2.5 0 0 0 2.5 2.5h9.793l-3.347 3.346a.5.5 0 0 0 .708.708l4.2-4.2a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 8.3H3.5A1.5 1.5 0 0 1 2 6.8V2a.5.5 0 0 0-.5-.5z" />
+                    </svg>
+                    <dl>
+                        <dt>
+                            <svg v-if="answer.profileNum == null" class="profile-image bi bi-person-circle"
+                                xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                            <img v-if="answer.profileNum != null" class="profile-image"
+                                :src="`/project/api/users/profile/${answer.profileNum}`" />
+                            <span>{{ answer.freeCommentWriter }}</span>
+
+                            <i v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</i>
+
+                            <span>{{ answer.userRegdate }}</span>
+                            <span class="mt-3" v-if="$store.getters.isUserId != null">
+                                <a class="insert-link ms-3" @click="showAnswerInsertForm(answer.freeCommentNum)">답글</a>
+                            </span>
+                            <span
+                                v-if="$store.getters.isUserId != null && answer.freeCommentWriter == $store.getters.isUserId">
+                                <a class="update-link ms-1" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
+                                <a class="del ms-1" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
+                            </span>
+                        </dt>
+                        <dd>
+                            <pre :id="'pre' + answer.freeCommentNum">{{ answer.content }}</pre>
+                        </dd>
+                    </dl>
+                    <div v-if="isInsertFormVisible[answer.freeCommentNum]">
+                        <form class="comment-form update-form"
+                            @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
+                            <input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum" />
+                            <input type="text" name="targetId" :value="answer.freeCommentWriter" />
+                            <input type="text" name="commentGroup" :value="answer.commentGroup" />
+                            <textarea class="me-3" name="content" v-model="formData.content"
+                                placeholder="댓글을 입력합니다"></textarea>
+                            <button type="submit" class="btn new-btn">등록</button>
+                        </form>
+                    </div>
+                    <div v-if="isUpdateFormVisible[answer.freeCommentNum]">
+                        <form class="comment-form update-form" @submit.prevent="answerupdate(answer.freeCommentNum)">
+                            <textarea class="me-3" name="content" v-model="formData.contentUpdate"
+                                :placeholder="answer.content"></textarea>
+                            <button type="submit" class="button btn mb-5">수정</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
         </div>
         <nav>
             <ul class="pagination justify-content-center">
@@ -145,59 +185,59 @@
 import axios from 'axios';
 export default {
     name: 'QnaFreeDetail',
-    data(){
+    data() {
         return {
-            qnafree:{},
-            qnafreeanswer:{},
+            qnafree: {},
+            qnafreeanswer: {},
             isUpdateFormVisible: {},
-			isInsertFormVisible: {},
+            isInsertFormVisible: {},
             formData: {
-                content:'',
-                contentUpdate:'',
-                freeCommentRefGroup:'',
-                targetId:'',
-                commentGroup:'',
-				freeCommentNum:'',
-				freeCommentWriter:'',
+                content: '',
+                contentUpdate: '',
+                freeCommentRefGroup: '',
+                targetId: '',
+                commentGroup: '',
+                freeCommentNum: '',
+                freeCommentWriter: '',
             },
-            freeCommentWriter:'',
-            commentGroup:'',
-            profile:'',
+            freeCommentWriter: '',
+            commentGroup: '',
+            profile: '',
         }
     },
     created() {
         var vm = this;
         var url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
         const data = {
-            keyword:this.$route.query.keyword,
-            condition:this.$route.query.condition
+            keyword: this.$route.query.keyword,
+            condition: this.$route.query.condition
         }
         axios.get(url, { params: data })
-        .then((response) => {
-            console.log(response.data.body);
-            vm.qnafree = response.data.body;
-			vm.formData.freeCommentRefGroup = this.qnafree.freeQuestionNum;
-            vm.formData.targetId = this.qnafree.freeQuestionWriter;
-            vm.formData.commentGroup = this.qnafree.freeQuestionNum;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+            .then((response) => {
+                console.log(response.data.body);
+                vm.qnafree = response.data.body;
+                vm.formData.freeCommentRefGroup = this.qnafree.freeQuestionNum;
+                vm.formData.targetId = this.qnafree.freeQuestionWriter;
+                vm.formData.commentGroup = this.qnafree.freeQuestionNum;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
         var url2 = `/project/api/qna-free-answer/list?freeCommentRefGroup=${this.$route.params.freeQuestionNum}`;
         axios.get(url2)
-        .then((response) => {
-            console.log(response.data.body);
-            vm.qnafreeanswer = response.data.body;
-			vm.formData.freeCommentRefGroup = this.qnafree.freeQuestionNum;
-            vm.formData.targetId = this.qnafreeanswer.freeCommentWriter;
-            vm.formData.commentGroup = this.qnafreeanswer.commentGroup;
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+            .then((response) => {
+                console.log(response.data.body);
+                vm.qnafreeanswer = response.data.body;
+                vm.formData.freeCommentRefGroup = this.qnafree.freeQuestionNum;
+                vm.formData.targetId = this.qnafreeanswer.freeCommentWriter;
+                vm.formData.commentGroup = this.qnafreeanswer.commentGroup;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     },
     methods: {
-        qnafreedelete : function(freeQuestionNum) {
+        qnafreedelete: function (freeQuestionNum) {
             axios.put('/project/api/qna-free/' + freeQuestionNum + '/delete',
                 { freeQuestionNum }
             ).then(response => {
@@ -205,7 +245,7 @@ export default {
                 this.result = response.data;
                 this.$router.push('/qnafree');
             }).catch((ex) => {
-                console.warn("ERROR!!!!! : ",ex)
+                console.warn("ERROR!!!!! : ", ex)
             })
         },
         confirmDelete: function (freeQuestionNum) {
@@ -216,97 +256,99 @@ export default {
         paging: function (currentPage) {
             const url = '/project/api/qna-free-answer/list';
             const data = {
-            limit: 10,
-            currentPage: currentPage,
-            freeCommentRefGroup: this.qnafree.freeQuestionNum
+                limit: 10,
+                currentPage: currentPage,
+                freeCommentRefGroup: this.qnafree.freeQuestionNum
             };
             axios.get(url, { params: data })
-            .then(response => {
-                this.qnafreeanswer = response.data.body;
-            })
-            .catch(error => {
-                console.log(error);
-            });
+                .then(response => {
+                    this.qnafreeanswer = response.data.body;
+                })
+                .catch(error => {
+                    console.log(error);
+                });
         },
         showAnswerUpdateForm(freeCommentNum) {
-            if(this.isUpdateFormVisible[freeCommentNum] == true){
+            if (this.isUpdateFormVisible[freeCommentNum] == true) {
                 this.isUpdateFormVisible[freeCommentNum] = false;
-            }else{
+            } else {
                 this.isUpdateFormVisible[freeCommentNum] = true;
             }
         },
-		showAnswerInsertForm(freeCommentNum) {
-            if(this.isInsertFormVisible[freeCommentNum] == true){
+        showAnswerInsertForm(freeCommentNum) {
+            if (this.isInsertFormVisible[freeCommentNum] == true) {
                 this.isInsertFormVisible[freeCommentNum] = false;
-            }else{
+            } else {
                 this.isInsertFormVisible[freeCommentNum] = true;
             }
-		},
+            console.log(freeCommentNum);
+
+        },
         submitAnswerForm() {
             const url = '/project/api/qna-free-answer';
             const data = {
-                content : this.formData.content,
-                freeCommentRefGroup : this.qnafree.freeQuestionNum,
-                targetId : this.$store.getters.isUserId,
+                content: this.formData.content,
+                freeCommentRefGroup: this.qnafree.freeQuestionNum,
+                targetId: this.$store.getters.isUserId,
             };
             axios.post(url, data)
-            .then(response => {
-                console.log(response.data);
-                alert('답변 등록 성공');
-                this.$router.go();
-            })
-            .catch(error => {
-                console.error(error);
-                console.log(data);
-                alert('답변 등록 실패');
-            });
+                .then(response => {
+                    console.log(response.data);
+                    alert('답변 등록 성공');
+                    this.$router.go();
+                })
+                .catch(error => {
+                    console.error(error);
+                    console.log(data);
+                    alert('답변 등록 실패');
+                });
         },
         answerupdate(freeCommentNum) {
             const url = `/project/api/qna-free-answer/${freeCommentNum}/update`;
             const data = {
                 content: this.formData.contentUpdate,
-				freeCommentNum: freeCommentNum
+                freeCommentNum: freeCommentNum
             };
             axios.put(url, data)
-            .then(response => {
-                console.log(response.data);
-                alert('댓글 수정 성공');
-                this.$router.go();
-            })
-            .catch(error => {
-                console.error(error);
-                alert('댓글 수정 실패');
-            });
+                .then(response => {
+                    console.log(response.data);
+                    alert('댓글 수정 성공');
+                    this.$router.go();
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('댓글 수정 실패');
+                });
         },
-		answerinsert(targetId, commentGroup ) {
+        answerinsert(targetId, commentGroup) {
             const url = '/project/api/qna-free-answer';
             const data = {
-                content : this.formData.content,
-                freeCommentRefGroup : this.qnafree.freeQuestionNum,
-                targetId : targetId,
-                commentGroup : commentGroup
+                content: this.formData.content,
+                freeCommentRefGroup: this.qnafree.freeQuestionNum,
+                targetId: targetId,
+                commentGroup: commentGroup
             };
             axios.post(url, data)
-            .then(response => {
-                console.log(response.data);
-                alert('답변 등록 성공');
-                this.$router.go();
-            })
-            .catch(error => {
-                console.error(error);
-                console.log(data);
-                alert('답변 등록 실패');
-            });
+                .then(response => {
+                    console.log(response.data);
+                    alert('답변 등록 성공');
+                    this.$router.go();
+                })
+                .catch(error => {
+                    console.error(error);
+                    console.log(data);
+                    alert('답변 등록 실패');
+                });
         },
         qnafreeanswerdelete: function (freeCommentNum) {
             axios.put('/project/api/qna-free-answer/' + freeCommentNum + '/delete',
                 { freeCommentNum }
             ).then(response => {
-            console.warn(response)
-            this.result = response.data;
-            location.reload();
+                console.warn(response)
+                this.result = response.data;
+                location.reload();
             }).catch((ex) => {
-            console.warn("ERROR!!!!! : ", ex)
+                console.warn("ERROR!!!!! : ", ex)
             })
         },
         deleteAnswerConfirm: function (freeCommentNum) {
@@ -319,20 +361,14 @@ export default {
         groupedAnswers() {
             const groups = {};
             this.qnafreeanswer.data.forEach(answer => {
-            if (!groups[answer.commentGroup]) {
-                groups[answer.commentGroup] = [];
-            }
-            groups[answer.commentGroup].push(answer);
+                if (!groups[answer.commentGroup]) {
+                    groups[answer.commentGroup] = [];
+                }
+                groups[answer.commentGroup].push(answer);
             });
             return groups;
         }
     }
 }
 </script>
-<style>
-    .input-group {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-</style>
+<style>@import '../../assets/css/board.css'</style>
