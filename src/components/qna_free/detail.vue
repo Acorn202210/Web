@@ -46,26 +46,74 @@
             </form>
         </div>
         <!-- 댓글 목록-->
-        <div class="mt-3" v-for="qnafreeanswer in qnafreeanswer.data" :key="qnafreeanswer">
+        <!-- <div class="mt-3" v-for="qnafreeanswer in qnafreeanswer.data" :key="qnafreeanswer.freeCommentNum">
             <img v-if="qnafreeanswer.profileNum" :src="`/project/api/users/profile/${qnafreeanswer.profileNum}`" width="50" height="50" style="border-radius: 50%;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
-                class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
+            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
                 <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                <path fill-rule="evenodd"
-                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                </svg>
+                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+            </svg>
             <span class="ms-3"><strong>{{ qnafreeanswer.freeCommentWriter }}</strong></span>
             <span class="ms-3">{{ qnafreeanswer.userRegdate }}</span>
-			<span class="mt-3" v-if="$store.getters.isUserId != null">
-				<a class="insert-link ms-3" @click="showAnswerInsertForm(qnafreeanswer.freeCommentNum)">답글</a>
-			</span>
+            <span class="mt-3" v-if="$store.getters.isUserId != null">
+                <a class="insert-link ms-3" @click="showAnswerInsertForm(qnafreeanswer.freeCommentNum)">답글</a>
+            </span>
             <span v-if="$store.getters.isUserId != null && qnafreeanswer.freeCommentWriter == $store.getters.isUserId">
                 <a class="update-link ms-1" @click="showAnswerUpdateForm(qnafreeanswer.freeCommentNum)">수정</a>
                 <a class="del ms-1" @click="deleteAnswerConfirm(qnafreeanswer.freeCommentNum)">삭제</a>
             </span>
             <dd>
                 <pre id="pre{{qnafreeanswer.freeCommentNum }}">{{ qnafreeanswer.content }}</pre>
-            </dd>
+            </dd> -->
+            
+                <!-- 그룹번호 -->
+                <!-- <div v-if="qnafreeanswer.commentGroup == qnafreeanswer.freeCommentNum">
+                    <div v-if="qnafreeanswer.freeCommentNum == qnafreeanswer.commentGroup">
+                        {{ qnafreeanswer.content }}
+                    </div>
+                    <div v-else-if="qnafreeanswer.commentGroup == qnafreeanswer.freeCommentNum">
+                        {{ qnafreeanswer.content }}
+                    </div>
+                </div>
+            <div v-for="(answers, group) in groupedAnswers" :key="group">
+                <h2>{{ group }}</h2>
+                <div v-for="answer in answers" :key="answer.freeCommentNum">
+                    
+                </div>
+            </div> -->
+
+            <div v-for="(answers, group) in groupedAnswers" :key="group">
+                <h2>{{ group }}</h2>
+                    <div v-if="answers">
+                        <div v-for="answer in answers" :key="answer.freeCommentNum">
+                            <img v-if="answer.profileNum" :src="`/project/api/users/profile/${answer.profileNum}`" width="50" height="50" style="border-radius: 50%;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                            <span class="ms-3"><strong>{{ answer.freeCommentWriter }}</strong></span>
+                            <span class="ms-3">{{ answer.userRegdate }}</span>
+                            <span class="mt-3" v-if="$store.getters.isUserId != null">
+                                <a class="insert-link ms-3" @click="showAnswerInsertForm(answer.freeCommentNum)">답글</a>
+                            </span>
+                            <span v-if="$store.getters.isUserId != null && answer.freeCommentWriter == $store.getters.isUserId">
+                                <a class="update-link ms-1" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
+                                <a class="del ms-1" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
+                            </span>
+                            <dd>
+                                <pre id="pre{{answer.freeCommentNum}}">{{ answer.content }}</pre>
+                            </dd>
+                        </div>
+                    </div>
+            </div>
+
+
+
+
+
+
+            
+
+
 
 			<div v-if="isInsertFormVisible[qnafreeanswer.freeCommentNum]" >
                 <form class="comment-form update-form" @submit.prevent="answerinsert(qnafreeanswer.freeCommentWriter, qnafreeanswer.commentGroup)">
@@ -102,7 +150,7 @@
                 </li>
             </ul>
         </nav>
-    </div>
+    <!-- </div> -->
 </template>
 <script>
 import axios from 'axios';
@@ -210,7 +258,7 @@ export default {
             const data = {
                 content : this.formData.content,
                 freeCommentRefGroup : this.qnafree.freeQuestionNum,
-                targetId : this.$store.getters.isUserId
+                targetId : this.$store.getters.isUserId,
             };
             axios.post(url, data)
             .then(response => {
@@ -277,6 +325,18 @@ export default {
                 this.qnafreeanswerdelete(freeCommentNum);
             }
         },
+    },
+    computed: {
+        groupedAnswers() {
+            const groups = {};
+            this.qnafreeanswer.data.forEach(answer => {
+            if (!groups[answer.commentGroup]) {
+                groups[answer.commentGroup] = [];
+            }
+            groups[answer.commentGroup].push(answer);
+            });
+            return groups;
+        }
     }
 }
 </script>
