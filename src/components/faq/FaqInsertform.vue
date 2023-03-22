@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container mt-5">
     <div>
         <label for="question" class="form-label">질문</label>
         <input type="text" v-model="question" class="form-control" placeholder="질문을 입력합니다"/>
