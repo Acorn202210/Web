@@ -81,55 +81,44 @@
                 </div>
             </div> -->
 
-            <div v-for="(answers, group) in groupedAnswers" :key="group">
-                <h2>{{ group }}</h2>
-                    <div v-if="answers">
-                        <div v-for="answer in answers" :key="answer.freeCommentNum">
-                            <img v-if="answer.profileNum" :src="`/project/api/users/profile/${answer.profileNum}`" width="50" height="50" style="border-radius: 50%;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                            </svg>
-                            <span class="ms-3"><strong>{{ answer.freeCommentWriter }}</strong></span>
-                            <span class="ms-3">{{ answer.userRegdate }}</span>
-                            <span class="mt-3" v-if="$store.getters.isUserId != null">
-                                <a class="insert-link ms-3" @click="showAnswerInsertForm(answer.freeCommentNum)">답글</a>
-                            </span>
-                            <span v-if="$store.getters.isUserId != null && answer.freeCommentWriter == $store.getters.isUserId">
-                                <a class="update-link ms-1" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
-                                <a class="del ms-1" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
-                            </span>
-                            <dd>
-                                <pre id="pre{{answer.freeCommentNum}}">{{ answer.content }}</pre>
-                            </dd>
-                        </div>
+        <div v-for="(answers, group) in groupedAnswers" :key="group">
+            <h2>{{ group }}</h2>
+            <div v-if="answers">
+                <div v-for="answer in answers" :key="answer.freeCommentNum">
+                    <img v-if="answer.profileNum" :src="`/project/api/users/profile/${answer.profileNum}`" width="50" height="50" style="border-radius: 50%;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                    </svg>
+                    <span class="ms-3"><strong>{{ answer.freeCommentWriter }}</strong></span>
+                    <span class="ms-3">{{ answer.userRegdate }}</span>
+                    <span class="mt-3" v-if="$store.getters.isUserId != null">
+                        <a class="insert-link ms-3" @click="showAnswerInsertForm(answer.freeCommentNum)">답글</a>
+                    </span>
+                    <span v-if="$store.getters.isUserId != null && answer.freeCommentWriter == $store.getters.isUserId">
+                        <a class="update-link ms-1" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
+                        <a class="del ms-1" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
+                    </span>
+                    <dd>
+                        <pre id="pre{{answer.freeCommentNum}}">{{ answer.content }}</pre>
+                    </dd>
+
+                    <div v-if="isInsertFormVisible[answer.freeCommentNum]" >
+                        <form class="comment-form update-form" @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
+                            <input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum"/>
+                            <input type="text" name="targetId" :value="answer.freeCommentWriter"/>
+                            <input type="text" name="commentGroup" :value="answer.commentGroup"/>
+                            <textarea class="me-3" name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
+                            <button type="submit" class="btn new-btn">등록</button>
+                        </form>
                     </div>
-            </div>
-
-
-
-
-
-
-            
-
-
-
-			<div v-if="isInsertFormVisible[qnafreeanswer.freeCommentNum]" >
-                <form class="comment-form update-form" @submit.prevent="answerinsert(qnafreeanswer.freeCommentWriter, qnafreeanswer.commentGroup)">
-                    <input type="text" name="freeCommentRefGroup" :value="qnafree.freeQuestionNum"/>
-                    <input type="text" name="targetId" :value="qnafreeanswer.freeCommentWriter"/>
-                    <input type="text" name="commentGroup" :value="qnafreeanswer.commentGroup"/>
-                    <textarea class="me-3" name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
-                    <button type="submit" class="btn new-btn">등록</button>
-                </form>
-            </div>
-
-            <div v-if="isUpdateFormVisible[qnafreeanswer.freeCommentNum]" >
-                <form class="comment-form update-form" @submit.prevent="answerupdate(qnafreeanswer.freeCommentNum)">
-                    <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="qnafreeanswer.content"></textarea>
-                    <button type="submit" class="button btn mb-5">수정</button>
-                </form>
+                    <div v-if="isUpdateFormVisible[answer.freeCommentNum]" >
+                        <form class="comment-form update-form" @submit.prevent="answerupdate(answer.freeCommentNum)">
+                            <textarea class="me-3" name="content" v-model="formData.contentUpdate" :placeholder="answer.content"></textarea>
+                            <button type="submit" class="button btn mb-5">수정</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <nav>
@@ -150,7 +139,7 @@
                 </li>
             </ul>
         </nav>
-    <!-- </div> -->
+    </div>
 </template>
 <script>
 import axios from 'axios';
