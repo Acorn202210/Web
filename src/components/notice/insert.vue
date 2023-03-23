@@ -13,7 +13,7 @@
           <textarea v-model="content" name="content" id="content" rows="10" class="form-control"></textarea>
         </div>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-          <button type="submit" onclick="submitContents(this)" class="new-btn btn ">등록</button>
+          <button type="submit" onclick="submitContents(this)" class="new-btn btn btn-sm">등록</button>
         </div>
       </form>
     </div>

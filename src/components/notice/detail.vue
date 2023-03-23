@@ -2,8 +2,8 @@
   <div class="container mt-3">
 
     <div class="d-md-flex justify-content-md-end">
-      <a v-if="notice.prevNum != 0" :href="`/notice/${notice.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-      <a v-if="notice.nextNum != 0" :href="`/notice/${notice.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
+      <a v-if="notice.prevNum != 0" @click="goToPrev" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+      <a v-if="notice.nextNum != 0" @click="goToNext" class="btn btn-sm btn-secondary">다음글</a>
     </div>
     <p class="mt-2" v-if="this.$route.query.condition != ''">
       <strong>{{ this.$route.query.condition }}</strong> 조건
@@ -29,13 +29,13 @@
         <td>{{ notice.regdate }}</td>
       </tr>
     </table>
-    <div class="mainContent mt-3">{{ notice.content }}</div>
+    <textarea class="mainContent mt-3" v-model="notice.content"></textarea>
     <div class="d-grid d-md-flex justify-content-md-end mt-3">
       <div class="d-grid d-md-flex " v-if="$store.getters.isManager == 'Y'">
-        <a :href="`/notice/update?notiNum=${notice.notiNum}`" class="btn btn-sm me-2 new-btn">수정</a>
+        <a @click="this.$router.push(`/notice/update?notiNum=${notice.notiNum}`)" class="btn btn-sm me-2 new-btn">수정</a>
         <a href="javascript:" @click="deleteConfirm(notice.notiNum)" class="btn btn-sm me-2 btn-danger">삭제</a>
       </div>
-      <a :href="'/notice'" class="btn btn-sm me-2 btn-secondary">목록</a>
+      <a @click="this.$router.push(`/notice`)" class="btn btn-sm me-2 btn-secondary">목록</a>
     </div>
   </div>
 </template>
@@ -53,9 +53,9 @@ export default {
     var vm = this;
     var url = `/project/api/notice/${this.$route.params.notiNum}`;
     const data = {
-        keyword:this.$route.query.keyword,
-        condition:this.$route.query.condition
-      }
+      keyword: this.$route.query.keyword,
+      condition: this.$route.query.condition
+    }
     axios.get(url, { params: data })
       .then(function (response) {
         vm.notice = response.data.body;
@@ -79,11 +79,47 @@ export default {
             alert('공지 사항 삭제에 실패했습니다.');
           })
       }
+    },
+    fetchData() {
+            axios.get(`/project/api/notice/${this.$route.params.notiNum}`, {
+                    params: {
+                        keyword: this.$route.query.keyword,
+                        condition: this.$route.query.condition
+                    }
+                })
+                .then(response => {
+                  this.notice = response.data.body;
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+    goToPrev() {
+      this.$router.push({
+        path: `/notice/${this.notice.prevNum}`,
+        query: {
+          condition: this.$route.query.condition,
+          keyword: this.$route.query.keyword
+        }
+      })
+    },
+    goToNext() {
+      this.$router.push({
+        path: `/notice/${this.notice.nextNum}`,
+        query: {
+          condition:this.$route.query.condition,
+          keyword:this.$route.query.keyword
+        }
+      })
     }
-  }
+  },
+  watch: {
+        '$route.params.notiNum': function() {
+            this.fetchData();
+        }
+    },
 }
 </script>
 
 <style>
-@import '../../assets/css/board.css'
-</style>
+@import '../../assets/css/board.css'</style>
