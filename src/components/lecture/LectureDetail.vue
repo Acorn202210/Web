@@ -14,9 +14,10 @@
         </div>
         <div>
           <img :src="`/project/api/lecture/${detail.imageNum}/image?imageNum=${detail.imageNum}`"
-            style="width: 350px; height: 350px;">
+            style="width: 500px; height: 500px;">
         </div>
-        <p>{{ detail.describe }}</p>
+        <br>
+        <p style="width: 500px;">{{ detail.describe }}</p>
         <br>
         <div v-if="isStudent && $store.getters.isUserId != null">
           <h4>수강 후기를 작성해주세요</h4>
