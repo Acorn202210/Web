@@ -28,7 +28,7 @@
                   <td>{{qna.userRegdate}}</td>
               </tr>
           </table>
-          <div class="mainContent mt-3">{{ qna.content }}</div>
+          <textarea class="mainContent mt-3" v-model="qna.content"></textarea>
           <div class="d-grid d-md-flex justify-content-md-end mt-3">
             <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
                 <a class="btn btn-sm me-2 new-btn" @click="this.$router.push(`/qnaupdate/${qna.boardQuestionNum}`)">수정</a>
@@ -43,21 +43,22 @@
           <!-- 댓글 출력 폼 -->
           <div v-for="qnaAnswer in qnaAnswer.data" :key="qnaAnswer.boardCommentWriter"
             class="mb-1 pb-1" v-show="qnaAnswer.boardCommentWriter != null">
-            <span><b> {{ qnaAnswer.boardCommentWriter }}</b></span><br>
-            <span> {{ qnaAnswer.userRegdate }}</span> 
-            <form class="comment-form mb-3">
-              <textarea class="form-control me-1" name="content" v-model="qnaAnswer.content" readonly></textarea>            
-            </form>
-            
+            <span><b> {{ qnaAnswer.boardCommentWriter }}</b></span>
+            <span class="ms-3"> {{ qnaAnswer.userRegdate }}</span> 
             <span
                 v-if="$store.getters.isUserId != null && $store.getters.isManager == 'Y'">
-                <a class="update-link btn btn-sm me-2 new-btn" @click="showUpdateForm(qnaAnswer.boardCommentNum)">수정</a>
-                <a class="btn btn-sm me-2 btn-danger" @click="deleteAnswerConfirm(qnaAnswer.boardCommentNum)">삭제</a>
+                <a class="update-link ms-3" @click="showUpdateForm(qnaAnswer.boardCommentNum)">수정</a>
+                <a class="del ms-3" @click="deleteAnswerConfirm(qnaAnswer.boardCommentNum)">삭제</a>
             </span>
+            
+            <form class="comment-form mb-3">
+              <textarea class="form-control" name="content" v-model="qnaAnswer.content" readonly></textarea>            
+            </form>                        
             
             <!-- 댓글 수정 폼 -->
             <div v-if="isUpdateFormVisible[qnaAnswer.boardCommentNum]">
               <form class="comment-form update-form" @submit.prevent="answerUpdate(qnaAnswer.boardCommentNum)">
+              
               <div class="input-group">
                 <textarea class="form-control" name="content" v-model="formData.contentUpdate" :placeholder="qnaAnswer.content"></textarea>
                 <button type="submit" class="button btn">수정</button>          
@@ -68,8 +69,10 @@
 
           <!-- 새 댓글 작성 폼 -->
           <div v-if="$store.getters.isManager == 'Y'">
-            <br><p class="mt-4">댓글 작성 폼</p>          
+            <br>
               <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
+                <br>
+                <span class="mt-2">댓글 작성</span>
                 <div class="input-group">
                   <input type="hidden" name="boardCommentRefGroup" :value="qna.boardQuestionNum" />
                   <textarea class="form-control" name="content" v-model="formData.content"></textarea>
