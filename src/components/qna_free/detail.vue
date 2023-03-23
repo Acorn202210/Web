@@ -53,7 +53,7 @@
         </div>
         <!-- 댓글 목록 -->
 
-        <div class="comments" v-for="(answers, group) in groupedAnswers" :key="group">
+        <div class="comments mt-3" v-for="(answers, group) in groupedAnswers" :key="group">
             <ul v-for="answer in answers" :key="answer.freeCommentNum">
                 <li :id="'reli' + answer.freeCommentNum" v-if="answer.freeCommentNum == answer.commentGroup">
                     <dl>
@@ -67,18 +67,18 @@
                             </svg>
                             <img v-if="answer.profileNum != null" class="profile-image"
                                 :src="`/project/api/users/profile/${answer.profileNum}`" />
-                            <span>{{ answer.freeCommentWriter }}</span>
+                            <span class="ms-3">{{ answer.freeCommentWriter }}</span>
 
                             <i v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</i>
 
-                            <span>{{ answer.userRegdate }}</span>
+                            <span class="ms-3">{{ answer.userRegdate }}</span>
                             <span class="mt-3" v-if="$store.getters.isUserId != null">
                                 <a class="insert-link ms-3" @click="showAnswerInsertForm(answer.freeCommentNum)">답글</a>
                             </span>
                             <span
                                 v-if="$store.getters.isUserId != null && answer.freeCommentWriter == $store.getters.isUserId">
-                                <a class="update-link ms-1" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
-                                <a class="del ms-1" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
+                                <a class="update-link ms-3" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
+                                <a class="del ms-3" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
                             </span>
                         </dt>
                         <dd>
@@ -119,22 +119,22 @@
                             </svg>
                             <img v-if="answer.profileNum != null" class="profile-image"
                                 :src="`/project/api/users/profile/${answer.profileNum}`" />
-                            <span>{{ answer.freeCommentWriter }}</span>
+                            <span class="ms-3">{{ answer.freeCommentWriter }}</span>
 
-                            <i v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</i>
+                            <!-- <i class="ms-3" v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</i> -->
 
-                            <span>{{ answer.userRegdate }}</span>
+                            <span class="ms-3">{{ answer.userRegdate }}</span>
                             <span class="mt-3" v-if="$store.getters.isUserId != null">
                                 <a class="insert-link ms-3" @click="showAnswerInsertForm(answer.freeCommentNum)">답글</a>
                             </span>
                             <span
                                 v-if="$store.getters.isUserId != null && answer.freeCommentWriter == $store.getters.isUserId">
-                                <a class="update-link ms-1" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
-                                <a class="del ms-1" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
+                                <a class="update-link ms-3" @click="showAnswerUpdateForm(answer.freeCommentNum)">수정</a>
+                                <a class="del ms-3" @click="deleteAnswerConfirm(answer.freeCommentNum)">삭제</a>
                             </span>
                         </dt>
                         <dd>
-                            <pre :id="'pre' + answer.freeCommentNum">{{ answer.content }}</pre>
+                            <pre :id="'pre' + answer.freeCommentNum"><strong v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</strong> {{ answer.content }}</pre>
                         </dd>
                     </dl>
                     <div v-if="isInsertFormVisible[answer.freeCommentNum]">
@@ -157,20 +157,23 @@
         </div>
         <nav>
             <ul class="pagination justify-content-center">
-                <li class="page-item" v-if="qnafreeanswer.startPageNum != 1">
-                    <a class="page-link new-page-link" @click="paging(qnafreeanswer.startPageNum - 1)">
-                        <span aria-hidden="true">&lt;</span>
-                    </a>
-                </li>
-                <li v-for="i in 10" :key="i" class="page-item ${qnafreeanswer.pageNum eq i ? 'active' : '' }">
-                    <a class="page-link new-page-link" v-if="i + qnafreeanswer.startPageNum - 1 <= qnafreeanswer.endPageNum"
-                        @click="paging(i + qnafreeanswer.startPageNum - 1)">{{ i + qnafreeanswer.startPageNum - 1 }}</a>
-                </li>
-                <li class="page-item" v-if="qnafreeanswer.endPageNum < qnafreeanswer.totalPage">
-                    <a class="page-link new-page-link" @click="paging(qnafreeanswer.endPageNum + 1)">
-                        <span aria-hidden="true">&gt;</span>
-                    </a>
-                </li>
+            <li class="page-item" v-if="qnafreeanswer.startPageNum != 1">
+                <a class="page-link new-page-link" @click="paging(qnafreeanswer.startPageNum - 1)">
+                <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+
+            <li v-for="i in 10" :key="i"
+                :class="['page-item', qnafreeanswer.currentPage == i + qnafreeanswer.startPageNum - 1 ? 'active' : '']">
+                <a class="page-link new-page-link" v-if="i + qnafreeanswer.startPageNum - 1 <= qnafreeanswer.endPageNum"
+                @click="paging(i + qnafreeanswer.startPageNum - 1)">{{ i + qnafreeanswer.startPageNum - 1 }}</a>
+            </li>
+
+            <li class="page-item" v-if="qnafreeanswer.endPageNum < qnafreeanswer.totalPage">
+                <a class="page-link new-page-link" @click="paging(qnafreeanswer.endPageNum + 1)">
+                <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
             </ul>
         </nav>
     </div>
@@ -200,31 +203,26 @@ export default {
         }
     },
     created() {
-        var vm = this;
-        var url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
-        const data = {
-            keyword: this.$route.query.keyword,
-            condition: this.$route.query.condition
-        }
-        axios.get(url, { params: data })
+        axios
+        .get(`/project/api/qna-free/${this.$route.params.freeQuestionNum}`, {
+            params: {
+                keyword: this.$route.query.keyword,
+                condition: this.$route.query.condition
+            }
+        })
+        .then(response => {
+            console.log(response.data.body);
+            this.qnafree = response.data.body;
+            this.getReviewList();
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+        const url = `/project/api/qna-free-answer/list?freeCommentRefGroup=${this.$route.params.freeQuestionNum}`;
+        axios.get(url)
             .then((response) => {
-                console.log(response.data.body);
-                vm.qnafree = response.data.body;
-                vm.formData.freeCommentRefGroup = this.qnafree.freeQuestionNum;
-                vm.formData.targetId = this.qnafree.freeQuestionWriter;
-                vm.formData.commentGroup = this.qnafree.freeQuestionNum;
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-        var url2 = `/project/api/qna-free-answer/list?freeCommentRefGroup=${this.$route.params.freeQuestionNum}`;
-        axios.get(url2)
-            .then((response) => {
-                console.log(response.data.body);
-                vm.qnafreeanswer = response.data.body;
-                vm.formData.freeCommentRefGroup = this.qnafree.freeQuestionNum;
-                vm.formData.targetId = this.qnafreeanswer.freeCommentWriter;
-                vm.formData.commentGroup = this.qnafreeanswer.commentGroup;
+                console.log(response);
+                this.qnafreeanswer = response.data.body;
             })
             .catch((error) => {
                 console.error(error);
@@ -246,6 +244,21 @@ export default {
             if (confirm("정말 삭제하시겠습니까?")) {
                 this.qnafreedelete(freeQuestionNum);
             }
+        },
+        getReviewList() {
+            var url = `/project/api/qna-free-answer/list`;
+            const data = {
+            limit: 10,
+            freeCommentRefGroup: this.qnafree.freeQuestionNum
+            }
+            axios.get(url, { params: data })
+            .then(response => {
+                console.log(response.data);
+                this.qnafreeanswer = response.data.body;
+            })
+            .catch(error => {
+                console.error(error);
+            });
         },
         paging: function (currentPage) {
             const url = '/project/api/qna-free-answer/list';
@@ -365,4 +378,6 @@ export default {
     }
 }
 </script>
-<style>@import '../../assets/css/board.css'</style>
+<style>
+@import '../../assets/css/board.css'
+</style>
