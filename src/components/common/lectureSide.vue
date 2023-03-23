@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-2">
     <h5><a :class="{ 'bold-link': activeLink === 'front-all' }" @click="setActiveLink('front-all')">웹프론트엔드</a></h5>
-    <br><a :class="{ 'bold-link': activeLink === 'front-js' }" @click="setActiveLink('front-js')">javascript</a>
+    <a :class="{ 'bold-link': activeLink === 'front-js' }" @click="setActiveLink('front-js')">javascript</a>
     <br><a :class="{ 'bold-link': activeLink === 'front-html-css' }" @click="setActiveLink('front-html_css')">html/css</a>
     <br><a :class="{ 'bold-link': activeLink === 'front-react' }" @click="setActiveLink('front-react')">react</a>
     <br><a :class="{ 'bold-link': activeLink === 'front-vue' }" @click="setActiveLink('front-vue')">vue</a>

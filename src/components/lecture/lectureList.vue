@@ -26,7 +26,7 @@
                 <div class="card-body">
                   <div>
                     <h5>{{ lectureList.title }}</h5>
-                    <p><strong>{{ lectureList.teacher }}</strong></p>
+                    <p><strong>Teacher.</strong>{{ lectureList.teacher }}</p>
                   </div>
                 </div>
               </div>
