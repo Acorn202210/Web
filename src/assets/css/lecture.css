@@ -202,10 +202,7 @@ object-fit: contain;
    width: 8%;
    height: 70px;
 }
-/* 댓글에 댓글을 다는 폼과 수정폼은 일단 숨긴다. */
-.comments .comment-form{
-   display: none;
-}
+
 /* .reply_icon 을 li 요소를 기준으로 배치 하기 */
 .comments li{
    position: relative;

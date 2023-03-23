@@ -3,14 +3,16 @@
     <input type="hidden" v-model="boardQuestionNum"/>
     <div>
         <label for="title">제목</label>
-        <input type="text" v-model="title" placeholder="질문을 입력합니다"/>
+        <input type="text" v-model="title" name="title" id="title" class="form-control" placeholder="질문을 입력합니다"/>
     </div>
     <div>
         <label for="content">내용</label>
-        <textarea type="text" v-model="content" placeholder="내용을 입력합니다"/>
+        <textarea v-model="content" name="content" id="content" rows="10" class="form-control" placeholder="내용을 입력합니다"/>
     </div>
-    <button class="btn btn-sm me-2 mb-3 button" @click="qnaboardupdate">수정</button>
-    <button class="btn btn-sm me-2 mb-3 button" @click="$router.go(-1)">취소</button>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+      <button class="btn btn-sm button" @click="qnaboardupdate">수정</button>
+      <button class="btn btn-sm btn-secondary" @click="$router.go(-1)">취소</button>
+    </div>
   </div>
 </template>
 
@@ -27,6 +29,18 @@ export default {
       content: ''
     }
   },
+  created() {
+    var vm = this;
+    var url = `/project/api/qna-board/${this.$route.params.boardQuestionNum}`;
+    axios.get(url)
+      .then(function (response) {
+        vm.title = response.data.body.title;
+        vm.content = response.data.body.content;
+      })
+      .catch(function (error) {
+        console.log(error);
+      })
+  },
   methods: {
     qnaboardupdate: function () {
       axios.put('/project/api/qna-board/' + this.boardQuestionNum + '/update',
@@ -36,6 +50,7 @@ export default {
         this.title = '';
         this.content = '';
         this.result = response.data;
+        alert('1:1문의가 수정되었습니다.');
         this.$router.push('/qna');
       }).catch((ex) => {
         console.warn("ERROR!!!!! : ", ex)

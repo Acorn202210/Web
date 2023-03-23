@@ -28,7 +28,7 @@
 			</table>
 		</div>
 		<div class="d-grid gap-2 d-md-flex justify-content-md-end" v-if="$store.getters.isUserId != null">
-			<a @click="$router.push('/qnafree/insert')" class="new-btn btn btn-sm">새글작성</a>
+			<a @click="$router.push('/qnafree/insert')" class="new-btn btn btn-sm">등록</a>
 		</div>
 		<nav>
 			<ul class="pagination justify-content-center">

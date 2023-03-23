@@ -1,18 +1,19 @@
 <template>
-  <div class="container">
-    <input type="hidden" v-model="no"/>
-    <div>
+  <div class="container mt-5">
+    <h3 class="sr-only">새글 작성 폼입니다.</h3>
+    <form @submit.prevent="submitForm">
+      <div>
         <label for="question" class="form-label">질문</label>
-        <input type="text" v-model="question" class="form-control" placeholder="질문을 입력합니다"/>
-    </div>
-    <div>
+        <input v-model="question" type="text" name="question" id="question" class="form-control" />
+      </div>
+      <div class="mt-3">
         <label for="content" class="form-label">내용</label>
-        <textarea type="text" v-model="content" class="form-control" placeholder="내용을 입력합니다"/>
-    </div>
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">    
-      <button @click="faqupdate" class="btn new-btn">수정</button>
-      <button @click="$router.go(-1)" class="btn btn-secondary">취소</button>
-    </div>
+        <textarea v-model="content" name="content" id="content" rows="10" class="form-control"></textarea>
+      </div>
+      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+        <button type="submit" class="new-btn btn ">수정</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -23,26 +24,37 @@ export default {
   name: 'FaqUpdate',
   data() {
     return {
-      faq: {},
-      no: this.$route.params.num, // $route.params.num 값으로 초기화
       question: '',
       content: '',
     }
   },
-  methods: {
-    faqupdate: function () {
-      axios.put('/project/api/faq/' + this.no + '/update',
-        { faqNum: this.no, question: this.question, content: this.content }
-      ).then(response => {
-        console.warn(response)
-        this.question = '';
-        this.content = '';
-        this.result = response.data;
-        this.$router.push('/faq'); // 수정 완료 후 faq 페이지로 이동
-      }).catch((ex) => {
-        console.warn("ERROR!!!!! : ", ex)
+  created() {
+    var vm = this;
+    var url = `/project/api/faq/${this.$route.params.num}`;
+    axios.get(url)
+      .then(function (response) {
+        vm.question = response.data.body.question;
+        vm.content = response.data.body.content;
       })
-    },
+      .catch(function (error) {
+        console.log(error);
+      })
+  },
+  methods: {
+    submitForm(){
+      const url = `/project/api/faq/${this.$route.params.num}/update`;
+      const data = {
+        content:this.content,
+        question:this.question,
+        faqNum:this.$route.params.num
+      }
+      var vm = this;
+      axios.put(url, data)
+        .then(function () {
+          alert('자주묻는질문이 수정되었습니다.');
+          vm.$router.push('/faq');
+        })
+    }
   }
 };
 </script>
