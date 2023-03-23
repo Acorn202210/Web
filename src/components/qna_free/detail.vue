@@ -84,16 +84,20 @@
                     <div v-if="isInsertFormVisible[answer.freeCommentNum]">
                         <form class="comment-form update-form"
                             @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
-                            <textarea class="me-3" name="content" v-model="formData.content"
-                                placeholder="댓글을 입력합니다"></textarea>
-                            <button type="submit" class="btn new-btn">등록</button>
+                            <div class="input-group">
+                                <textarea name="content" v-model="formData.content"
+                                    placeholder="댓글을 입력합니다"></textarea>
+                                <button type="submit" class="btn new-btn">등록</button>
+                            </div>
                         </form>
                     </div>
                     <div v-if="isUpdateFormVisible[answer.freeCommentNum]">
                         <form class="comment-form update-form" @submit.prevent="answerupdate(answer.freeCommentNum)">
-                            <textarea class="me-3" name="content" v-model="formData.contentUpdate"
-                                :placeholder="answer.content"></textarea>
-                            <button type="submit" class="button btn mb-5">수정</button>
+                            <div class="input-group">
+                                <textarea name="content" v-model="formData.contentUpdate"
+                                    :placeholder="answer.content"></textarea>
+                                <button type="submit" class="btn new-btn">수정</button>
+                            </div>
                         </form>
                     </div>
                 </li>
@@ -134,18 +138,20 @@
                         </dd>
                     </dl>
                     <div v-if="isInsertFormVisible[answer.freeCommentNum]">
-                        <form class="comment-form update-form"
-                            @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
-                            <textarea class="me-3" name="content" v-model="formData.content"
-                                placeholder="댓글을 입력합니다"></textarea>
-                            <button type="submit" class="btn new-btn">등록</button>
+                        <form class="comment-form update-form" @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
+                            <div class="input-group">
+                                <textarea name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
+                                <button type="submit" class="btn new-btn">등록</button>
+                            </div>
                         </form>
                     </div>
                     <div v-if="isUpdateFormVisible[answer.freeCommentNum]">
                         <form class="comment-form update-form" @submit.prevent="answerupdate(answer.freeCommentNum)">
-                            <textarea class="me-3" name="content" v-model="formData.contentUpdate"
-                                :placeholder="answer.content"></textarea>
-                            <button type="submit" class="button btn mb-5">수정</button>
+                            <div class="input-group">
+                                <textarea name="content" v-model="formData.contentUpdate"
+                                    :placeholder="answer.content"></textarea>
+                                <button type="submit" class="btn new-btn">수정</button>
+                            </div>
                         </form>
                     </div>
                 </li>
