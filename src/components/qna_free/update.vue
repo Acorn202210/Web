@@ -1,18 +1,18 @@
 <template>
-    <div class="container">
-        <input type="hidden" v-model="no"/>
+    <div class="container mt-5">
+        <form @submit.prevent="submitForm">
         <div>
-            <label for="title" class="form-label">제목</label>
-            <input type="text" v-model="title" class="form-control" placeholder="제목을 입력합니다"/>
+            <label for="title" class="form-label">질문</label>
+            <input v-model="title" type="text" name="title" id="title" class="form-control" />
         </div>
-        <div>
+        <div class="mt-3">
             <label for="content" class="form-label">내용</label>
-            <textarea type="text" v-model="content" class="form-control" placeholder="내용을 입력합니다"/>
+            <textarea v-model="content" name="content" id="content" rows="10" class="form-control"></textarea>
         </div>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">    
-            <button @click="qnafreeupdate" class="btn new-btn">수정</button>
-            <button @click="$router.go(-1)" class="btn btn-secondary">취소</button>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
+            <button type="submit" class="new-btn btn ">수정</button>
         </div>
+        </form>
     </div>
 </template>
 
@@ -23,26 +23,37 @@ export default {
     name: 'QnaFreeUpdate',
 	data(){
 		return {
-			qnafree:{},
-            no: this.$route.params.freeQuestionNum,
 			title: '',
 			content: '',
 		}
 	},
+    created() {
+        var vm = this;
+        var url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
+        axios.get(url)
+            .then(function (response) {
+                vm.title = response.data.body.title;
+                vm.content = response.data.body.content;
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    },
     methods: {
-        qnafreeupdate: function () {
-        axios.put('/project/api/qna-free/' + this.no + '/update',
-            { freeQuestionNum: this.no, title: this.title, content: this.content }
-        ).then(response => {
-            console.warn(response)
-            this.title = '';
-            this.content = '';
-            this.result = response.data;
-            this.$router.push('/qnafree'); // 수정 완료 후 faq 페이지로 이동
-        }).catch((ex) => {
-            console.warn("ERROR!!!!! : ", ex)
-        })
-        },
+        submitForm(){
+        const url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}/update`;
+        const data = {
+            title:this.title,
+            content:this.content,
+            freeQuestionNum:this.$route.params.freeQuestionNum
+        }
+        var vm = this;
+        axios.put(url, data)
+            .then(function () {
+            alert('자유게시판이 수정되었습니다.');
+            vm.$router.push('/qnafree');
+            })
+        }
     }
 }
 </script>

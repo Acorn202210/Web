@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container mt-5">
 		<div>
 			<label for="title" class="form-label">제목</label>
 			<input type="text" v-model="title" class="form-control" placeholder="제목을 입력합니다"/>

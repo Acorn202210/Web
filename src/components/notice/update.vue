@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
     <div class="container mt-5">
       <h3 class="sr-only">새글 작성 폼입니다.</h3>
       <form @submit.prevent="submitForm">
