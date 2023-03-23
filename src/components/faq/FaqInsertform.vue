@@ -9,8 +9,8 @@
         <textarea type="text" v-model="content" class="form-control" placeholder="내용을 입력합니다"/>
     </div>
     <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-      <button @click="faqinsert" class="btn new-btn">등록</button>
-      <button @click="$router.go(-1)" class="btn btn-secondary">취소</button>
+      <button @click="faqinsert" class="btn new-btn btn-sm">등록</button>
+      <button @click="$router.go(-1)" class="btn btn-secondary btn-sm">취소</button>
     </div>
   </div>
 </template>
