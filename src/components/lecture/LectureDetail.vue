@@ -17,7 +17,7 @@
             style="width: 500px; height: 500px;">
         </div>
         <br>
-        <p style="width: 500px;">{{ detail.describe }}</p>
+        <textarea style="width: 500px;" v-model=" detail.describe"></textarea>
         <br>
         <div v-if="isStudent && $store.getters.isUserId != null">
           <h4>수강 후기를 작성해주세요</h4>
