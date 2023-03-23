@@ -30,7 +30,7 @@
 								<button @click="confirmDelete(faq.faqNum)" class="btn btn-danger btn-sm">삭제</button>
 							</div>
 						</div>
-						<div><strong>{{ faq.content }}</strong></div>
+						<div><textarea style="border:none; height:200px" v-model="faq.content"></textarea></div>
 					</div>
 					</div>
 				</div>

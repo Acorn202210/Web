@@ -11,7 +11,7 @@
         <textarea v-model="content" name="content" id="content" rows="10" class="form-control"></textarea>
       </div>
       <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-        <button type="submit" class="new-btn btn ">수정</button>
+        <button type="submit" class="new-btn btn btn-sm">수정</button>
       </div>
     </form>
   </div>
