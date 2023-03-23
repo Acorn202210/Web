@@ -24,7 +24,6 @@ created() {
     })
     .catch(error => {
       console.error(error);
-
     });
 },
 }

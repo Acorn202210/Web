@@ -9,23 +9,23 @@
             <input ref="image" type="file" id="image" name="image" multiple="multiple" accept=".jpg, .png, .gif" @change="imageChange"/>
           <div class="mb-3">
             <label class="form-label" for="title">강의 제목</label>
-            <input class="form-control" type="text" v-model="title" name="title" id="title" />
+            <input class="form-control" type="text" v-model="detail.title" name="title" id="title" />
           </div>
           <div class="mb-3">
             <label class="form-label" for="teacher">강사</label>
-            <input class="form-control" type="text" v-model="teacher" name="teacher" id="teacher" />
+            <input class="form-control" type="text" v-model="detail.teacher" name="teacher" id="teacher" />
           </div>
           <div class="mb-3">
             <label class="form-label" for="describe">강의 내용</label>
-            <textarea v-model="describe" name="describe" id="describe"></textarea>
+            <textarea v-model="detail.describe" name="describe" id="describe"></textarea>
           </div>
           <div class="mb-3">
             <label class="form-label" for="videoPath">강의 영상</label>
-            <input class="form-control" type="text" v-model="videoPath" name="videoPath" id="videoPath" />
+            <input class="form-control" type="text" v-model="detail.videoPath" name="videoPath" id="videoPath" />
           </div>
           <div class="mb-3">
             <label class="form-label" for="largeCategory">대분류</label>
-            <select class="form-control" v-model="largeCategory" name="largeCategory" id="largeCategory">
+            <select class="form-control" v-model="detail.largeCategory" name="largeCategory" id="largeCategory">
               <option value="front">프론트엔드</option>
               <option value="backend">백엔드</option>
               <option value="mobile">모바일</option>
@@ -33,7 +33,7 @@
           </div>
           <div class="mb-3">
             <label class="form-label" for="smallCategory">소분류</label>
-            <select class="form-control" v-model="smallCategory" name="smallCategory" id="smallCategory">
+            <select class="form-control" v-model="detail.smallCategory" name="smallCategory" id="smallCategory">
               <option value="js">javascript</option>
               <option value="html_css">html/css</option>
               <option value="react">react</option>
@@ -56,6 +56,7 @@
   export default {
     data() {
       return {
+        detail: {},
         lectureImage: {},
         lecture: {
           title: "",
@@ -67,6 +68,19 @@
           imageNum: ""
         },
       };
+    },
+    created() {
+    axios
+      .get(`/project/api/lecture/lecture-one/${this.$route.params.lecNum}`)
+      .then(response => {
+        console.log(response.data.body);
+        this.detail = response.data.body;
+        
+      })
+      .catch(error => {
+        console.error(error);
+
+      });
     },
     methods: {
       imageChange() {
@@ -87,12 +101,12 @@
       handleSubmit() {
         const url = `/project/api/lecture/${this.$route.params.lecNum}/lecture-update`;
           const data = {
-              title: this.title,
-              teacher: this.teacher,
-              describe: this.describe,
-              videoPath: this.videoPath, 
-              largeCategory : this.largeCategory,
-              smallCategory : this.smallCategory,
+              title: this.detail.title,
+              teacher: this.detail.teacher,
+              describe: this.detail.describe,
+              videoPath: this.detail.videoPath, 
+              largeCategory : this.detail.largeCategory,
+              smallCategory : this.detail.smallCategory,
               imageNum : this.imageNum,
               lecNum: this.$route.params.lecNum,
           }

@@ -3,7 +3,7 @@
     <div class="box">
       <div class="box1">
         <h3 class="lecture-detail-tit">{{ detail.title }}</h3>
-        <div class="d-flex justify-content-end mt-3">
+        <div class="d-flex justify-content-end mt-3" v-if="$store.getters.isManager == 'Y'">
           <button class="btn btn-secondary btn-sm me-2 mb-3" @click="this.$router.push(`/lectureUpdateForm/${detail.lecNum}`)"
             type="button">수정</button>
           <div>
@@ -14,9 +14,10 @@
         </div>
         <div>
           <img :src="`/project/api/lecture/${detail.imageNum}/image?imageNum=${detail.imageNum}`"
-            style="width: 350px; height: 350px;">
+            style="width: 500px; height: 500px;">
         </div>
-        <p>{{ detail.describe }}</p>
+        <br>
+        <p style="width: 500px;">{{ detail.describe }}</p>
         <br>
         <div v-if="isStudent && $store.getters.isUserId != null">
           <h4>수강 후기를 작성해주세요</h4>
@@ -155,7 +156,7 @@ data() {
       star: '',
       content: '',
       contentUpdate: '',
-      lecReStuRefGroup: ''        
+      lecReStuRefGroup: ''     
     },
     placeholderText: '리뷰를 작성해주세요',
     lectureReview: [],
