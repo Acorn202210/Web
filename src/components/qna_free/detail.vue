@@ -1,12 +1,8 @@
 <template>
     <div class="container mt-3">
         <div class="d-md-flex justify-content-md-end">
-            <a v-if="qnafree.prevNum != 0"
-                :href="`/qnafree/${qnafree.prevNum}?condition=${this.$route.query.condition}&keyword=${this.$route.query.keyword}`"
-                class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-            <a v-if="qnafree.nextNum != 0"
-                :href="`/qnafree/${qnafree.nextNum}?condition=${this.$route.query.condition}&keyword=${this.$route.query.keyword}`"
-                class="btn btn-sm btn-secondary">다음글</a>
+            <button v-if="qnafree.prevNum != 0" @click="goToPrev" class="btn btn-sm me-md-2 btn-secondary">이전글</button>
+            <button v-if="qnafree.nextNum != 0" @click="goToNext" class="btn btn-sm btn-secondary">다음글</button>
         </div>
         <p class="mt-2" v-if="this.$route.query.condition != ''">
             <strong>{{ this.$route.query.condition }}</strong> 조건
@@ -227,6 +223,7 @@ export default {
             .catch((error) => {
                 console.error(error);
             });
+        this.fetchData();
     },
     methods: {
         qnafreedelete: function (freeQuestionNum) {
@@ -363,6 +360,41 @@ export default {
                 this.qnafreeanswerdelete(freeCommentNum);
             }
         },
+        fetchData() {
+            axios
+                .get(`/project/api/qna-free/${this.$route.params.freeQuestionNum}`, {
+                    params: {
+                        keyword: this.$route.query.keyword,
+                        condition: this.$route.query.condition
+                    }
+                })
+                .then(response => {
+                    console.log(response.data.body);
+                    this.qnafree = response.data.body;
+                    this.getReviewList();
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        },
+        goToPrev() {
+            this.$router.push({
+                path: `/qnafree/${this.qnafree.prevNum}`,
+                query: {
+                condition: this.$route.query.condition,
+                keyword: this.$route.query.keyword
+                }
+            })
+        },
+        goToNext() {
+            this.$router.push({
+                path: `/qnafree/${this.qnafree.nextNum}`,
+                query: {
+                condition: this.$route.query.condition,
+                keyword: this.$route.query.keyword
+                }
+            })
+        }
     },
     computed: {
         groupedAnswers() {
@@ -375,7 +407,12 @@ export default {
             });
             return groups;
         }
-    }
+    },
+    watch: {
+        '$route.params.freeQuestionNum': function() {
+            this.fetchData();
+        }
+    },
 }
 </script>
 <style>
