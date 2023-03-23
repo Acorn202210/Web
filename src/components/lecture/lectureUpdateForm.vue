@@ -56,6 +56,7 @@
   export default {
     data() {
       return {
+        detail: {},
         lectureImage: {},
         lecture: {
           title: "",
@@ -67,6 +68,19 @@
           imageNum: ""
         },
       };
+    },
+    created() {
+    axios
+      .get(`/project/api/lecture/lecture-one/${this.$route.params.lecNum}`)
+      .then(response => {
+        console.log(response.data.body);
+        this.detail = response.data.body;
+        
+      })
+      .catch(error => {
+        console.error(error);
+
+      });
     },
     methods: {
       imageChange() {
