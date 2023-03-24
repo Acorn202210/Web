@@ -25,7 +25,7 @@
         </div>
         <div class="mb-3">
           <label class="form-label" for="largeCategory">대분류</label>
-          <select class="form-control" v-model="largeCategory" name="largeCategory" id="largeCategory">
+          <select v-on:change="largeCategoryChange()" class="form-control" v-model="largeCategory" name="largeCategory" id="largeCategory">
             <option value="front">프론트엔드</option>
             <option value="backend">백엔드</option>
             <option value="mobile">모바일</option>
@@ -34,15 +34,7 @@
         <div class="mb-3">
           <label class="form-label" for="smallCategory">소분류</label>
           <select class="form-control" v-model="smallCategory" name="smallCategory" id="smallCategory">
-            <option value="js">javascript</option>
-            <option value="html_css">html/css</option>
-            <option value="react">react</option>
-            <option value="vue">vue.js</option>
-            <option value="jquery">jQuery</option>
-            <option value="java">java</option>
-            <option value="spring">spring</option>
-            <option value="springboot">spring boot</option>
-            <option value="kotlin">kotlin</option>
+            <option v-for="option in smallCategoryOptions" :value="option.value" :key="option.value">{{ option.label }}</option>
           </select>
         </div>
         <button class="w-100 button btn btn-lg mt-3 mb-5" type="submit">강의 등록</button>
@@ -66,6 +58,7 @@ export default {
         smallCategory: "",
         imageNum: ""
       },
+      smallCategoryOptions: []
     };
   },
   methods: {
@@ -106,6 +99,27 @@ export default {
           console.log("강의 등록 실패")
         });
     },
+    largeCategoryChange() {
+    if (this.largeCategory === 'front') {
+      this.smallCategoryOptions = [
+        { value: 'js', label: 'javascript' },
+        { value: 'html_css', label: 'html/css' },
+        { value: 'react', label: 'react' },
+        { value: 'vue', label: 'vue.js' },
+        { value: 'jquery', label: 'jQuery' },
+      ];
+    } else if (this.largeCategory === 'backend') {
+      this.smallCategoryOptions = [
+        { value: 'java', label: 'java' },
+        { value: 'spring', label: 'spring' },
+        { value: 'springboot', label: 'spring boot' },
+      ];
+    } else if (this.largeCategory === 'mobile') {
+      this.smallCategoryOptions = [
+        { value: 'kotlin', label: 'kotlin' },
+      ];
+    }
+   }
   },
 };
 </script>
