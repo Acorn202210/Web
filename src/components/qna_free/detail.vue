@@ -85,16 +85,16 @@
                         <form class="comment-form update-form"
                             @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
                             <div class="input-group">
-                                <textarea name="content" v-model="formData.content"
+                                <textarea name="content" v-model="formData.content2"
                                     placeholder="댓글을 입력합니다"></textarea>
                                 <button type="submit" class="btn new-btn">등록</button>
                             </div>
                         </form>
                     </div>
                     <div v-if="isUpdateFormVisible[answer.freeCommentNum]">
-                        <form class="comment-form update-form" @submit.prevent="answerupdate(answer.freeCommentNum)">
+                        <form class="comment-form update-form" @submit.prevent="answerupdate2(answer.freeCommentNum)">
                             <div class="input-group">
-                                <textarea name="content" v-model="formData.contentUpdate"
+                                <textarea name="content" v-model="formData.contentUpdate2"
                                     :placeholder="answer.content"></textarea>
                                 <button type="submit" class="btn new-btn">수정</button>
                             </div>
@@ -121,7 +121,7 @@
                                 :src="`/project/api/users/profile/${answer.profileNum}`" />
                             <span class="ms-3">{{ answer.freeCommentWriter }}</span>
 
-                            <!-- <i class="ms-3" v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</i> -->
+                            <i class="ms-3" v-if="answer.freeCommentNum != answer.commentGroup" :style="{ color: 'red' }">@{{ answer.targetId }}</i>
 
                             <span class="ms-3">{{ answer.userRegdate }}</span>
                             <span class="mt-3" v-if="$store.getters.isUserId != null">
@@ -134,7 +134,7 @@
                             </span>
                         </dt>
                         <dd>
-                            <pre :id="'pre' + answer.freeCommentNum"><strong v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</strong> {{ answer.content }}</pre>
+                            <pre :id="'pre' + answer.freeCommentNum"> {{ answer.content }}</pre>
                         </dd>
                     </dl>
                     <div v-if="isInsertFormVisible[answer.freeCommentNum]">
@@ -334,7 +334,7 @@ export default {
         answerinsert(targetId, commentGroup) {
             const url = '/project/api/qna-free-answer';
             const data = {
-                content: this.formData.content,
+                content: this.formData.content2,
                 freeCommentRefGroup: this.qnafree.freeQuestionNum,
                 targetId: targetId,
                 commentGroup: commentGroup
@@ -349,6 +349,23 @@ export default {
                     console.error(error);
                     console.log(data);
                     alert('답변 등록 실패');
+                });
+        },
+        answerupdate2(freeCommentNum) {
+            const url = `/project/api/qna-free-answer/${freeCommentNum}/update`;
+            const data = {
+                content: this.formData.contentUpdate2,
+                freeCommentNum: freeCommentNum
+            };
+            axios.put(url, data)
+                .then(response => {
+                    console.log(response.data);
+                    alert('댓글 수정 성공');
+                    this.$router.go();
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('댓글 수정 실패');
                 });
         },
         qnafreeanswerdelete: function (freeCommentNum) {
