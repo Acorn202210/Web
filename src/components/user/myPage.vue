@@ -53,7 +53,7 @@
                         </table>
                     </div>
                     <a @click="this.$router.push('/pwd-update')" class="btn new-btn">비밀번호 수정하기</a>
-                    <a @click="del" class="btn btn-outline-secondary">탈퇴</a>
+                    <a @click="delconfirm" class="btn btn-outline-secondary">탈퇴</a>
                 </div>
             </div>
         </div>
@@ -89,6 +89,11 @@ export default {
 
     },
     methods: {
+        delconfirm:function(){
+            if(confirm('정말로 탈퇴하시겠습니까?')){
+                this.del();
+            }
+        },
         del: function () {
             var vm = this;
             var url = `/project/api/users/${this.id}/delete`;
