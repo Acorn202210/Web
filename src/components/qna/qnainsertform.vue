@@ -36,7 +36,7 @@ export default {
     },
     created() {
     var vm = this;
-    var url = `/project/api/qna-board/`;
+    var url = `/plec/api/qna-board/`;
     axios.get(url)
       .then(function (response) {
         vm.qna = response.data.body;
@@ -48,7 +48,7 @@ export default {
     methods: {
       qnaboardinsert () {
         var vm = this;
-        axios.post('/project/api/qna-board/insert', 
+        axios.post('/plec/api/qna-board/insert', 
           { title:this.title, content:this.content }
         ).then(function() {          
           alert('1:1문의가 등록되었습니다.');

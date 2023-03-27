@@ -29,7 +29,7 @@ export default {
     },
     methods: {
       faqinsert : function() {
-        axios.post('/project/api/faq', 
+        axios.post('/plec/api/faq', 
           { question:this.question, content:this.content }
         ).then(response => {
           console.warn(response)

@@ -31,7 +31,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = `/project/api/qna-board/${this.$route.params.boardQuestionNum}`;
+    var url = `/plec/api/qna-board/${this.$route.params.boardQuestionNum}`;
     axios.get(url)
       .then(function (response) {
         vm.title = response.data.body.title;
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     qnaboardupdate: function () {
-      axios.put('/project/api/qna-board/' + this.boardQuestionNum + '/update',
+      axios.put('/plec/api/qna-board/' + this.boardQuestionNum + '/update',
         { boardQuestionNum: this.boardQuestionNum, title: this.title, content: this.content }
       ).then(response => {
         console.warn(response)        

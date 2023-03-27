@@ -28,7 +28,7 @@ export default {
 	},
 	methods: {
       qnafreeinsert : function() {
-        axios.post('/project/api/qna-free/insert', 
+        axios.post('/plec/api/qna-free/insert', 
           { title:this.title, content:this.content }
         ).then(response => {
           console.warn(response)

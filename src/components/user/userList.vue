@@ -90,7 +90,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = "/project/api/users/list";
+    var url = "/plec/api/users/list";
     const data = {
       limit: 7
     }
@@ -106,7 +106,7 @@ export default {
   methods: {
     del: function (lecUserId) {
       console.log(lecUserId);
-      var url = `/project/api/users/${lecUserId}/delete`;
+      var url = `/plec/api/users/${lecUserId}/delete`;
       axios.put(url)
         .then(function (response) {
           console.log(response.data);
@@ -116,7 +116,7 @@ export default {
         })
 
       var vm = this;
-      var url2 = "/project/api/users/list";
+      var url2 = "/plec/api/users/list";
       const data = {
         limit: 7
       }
@@ -163,7 +163,7 @@ export default {
         this.phone='';
         this.id='';
       }
-      var url = "/project/api/users/list";
+      var url = "/plec/api/users/list";
       const data = {
         limit: 7,
         currentPage: currentPage,
@@ -216,7 +216,7 @@ export default {
         this.phone='';
         this.id='';
       }
-      var url = "/project/api/users/list";
+      var url = "/plec/api/users/list";
       const data = {
         limit: 7,
         currentPage: vm.currentPage,

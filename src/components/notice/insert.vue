@@ -32,7 +32,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = `/project/api/notice/${this.$route.params.notiNum}`;
+    var url = `/plec/api/notice/${this.$route.params.notiNum}`;
     axios.get(url)
       .then(function (response) {
         vm.notice = response.data.body;
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     submitForm(){
-      const url = '/project/api/notice';
+      const url = '/plec/api/notice';
       const data = {
         content:this.content,
         title:this.title

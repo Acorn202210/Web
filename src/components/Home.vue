@@ -17,7 +17,7 @@
         <li v-for="tmp in front.data" :key="tmp.lecNum">
           <div class="contain mb-3">
             <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
-              <img class="home-img" :src="`/project/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
+              <img class="home-img" :src="`/plec/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
             </a>
           </div>
         </li>
@@ -29,7 +29,7 @@
         <li v-for="tmp in back.data" :key="tmp.lecNum">
           <div class="contain mb-3">
             <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
-              <img class="home-img" :src="`/project/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
+              <img class="home-img" :src="`/plec/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
             </a>
           </div>
         </li>
@@ -41,7 +41,7 @@
         <li v-for="tmp in mobile.data" :key="tmp.lecNum">
           <div class="contain mb-3">
             <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
-              <img class="home-img" :src="`/project/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
+              <img class="home-img" :src="`/plec/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
             </a>
           </div>
         </li>
@@ -70,7 +70,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = '/project/api/lecture/lectureList';
+    var url = '/plec/api/lecture/lectureList';
     const data = {
       limit: 5,
       largeCategory: 'front',

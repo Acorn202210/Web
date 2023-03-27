@@ -106,7 +106,7 @@ export default {
 	  },
     created(){
       var vm = this;
-      var url = `/project/api/qna-board/${this.$route.params.boardQuestionNum}`;
+      var url = `/plec/api/qna-board/${this.$route.params.boardQuestionNum}`;
       const data = {
         keyword:this.$route.query.keyword,
         condition:this.$route.query.condition
@@ -126,7 +126,7 @@ export default {
     methods:{
       //댓글 등록 메소드
       submitAnswerForm(){
-        const url = '/project/api/qna-answer/insert';
+        const url = '/plec/api/qna-answer/insert';
         const data = {
             content : this.formData.content,
             boardCommentRefGroup : this.formData.boardCommentRefGroup
@@ -144,7 +144,7 @@ export default {
       },
 
       getAnswerList(){        
-        var url=`/project/api/qna-answer/list`;
+        var url=`/plec/api/qna-answer/list`;
         var data={
           boardCommentRefGroup: this.qna.boardQuestionNum
         }
@@ -159,7 +159,7 @@ export default {
       },
 
       qnaboarddelete: function(boardQuestionNum){
-        axios.put('/project/api/qna-board/' + boardQuestionNum + '/delete', 
+        axios.put('/plec/api/qna-board/' + boardQuestionNum + '/delete', 
           { boardQuestionNum }
         ).then(response => {
           console.warn(response)
@@ -188,7 +188,7 @@ export default {
       },
       //댓글 수정 메소드
       answerUpdate(boardCommentNum) {
-        const url = `/project/api/qna-answer/${boardCommentNum}/update`;
+        const url = `/plec/api/qna-answer/${boardCommentNum}/update`;
         const data = {          
           boardCommentNum: boardCommentNum,
           content: this.formData.contentUpdate
@@ -206,7 +206,7 @@ export default {
       },
       //댓글 삭제 메소드
       qnaAnswerDelete: function (boardCommentNum) {
-        axios.put('/project/api/qna-answer/' + boardCommentNum + '/delete', {}, { params: { boardCommentNum } }
+        axios.put('/plec/api/qna-answer/' + boardCommentNum + '/delete', {}, { params: { boardCommentNum } }
         ).then(response => {
           console.warn(response)
           this.result = response.data;

@@ -17,7 +17,7 @@
                                     <path fill-rule="evenodd"
                                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                                 </svg>
-                                <img v-if="profile != ''" id="profileImage" :src="`/project/api/users/profile/${profile}`"
+                                <img v-if="profile != ''" id="profileImage" :src="`/plec/api/users/profile/${profile}`"
                                     width="150" height="150">
                             </a>
                             <span class="d-block mt-2 fw-bold">{{ my.lecUserId }}님</span>
@@ -76,7 +76,7 @@ export default {
     },
     created() {
         var vm = this;
-        var url = `/project/api/users/${this.id}`;
+        var url = `/plec/api/users/${this.id}`;
         axios.get(url)
             .then(function (response) {
                 vm.my = response.data.body;
@@ -115,7 +115,7 @@ export default {
             form.append('file', image);
 
             var vm = this;
-            var url = `/project/api/users/${this.id}/profile-img-upload`;
+            var url = `/plec/api/users/${this.id}/profile-img-upload`;
             axios.post(url, form)
                 .then(function (response) {
                     vm.my = response.data.body;
@@ -126,7 +126,7 @@ export default {
                 })
         },
         submitForm(){
-            const url = `/project/api/users/${this.id}/profile-upload`;
+            const url = `/plec/api/users/${this.id}/profile-upload`;
         const data = {
             lecUserId: this.id,
             profileNum: this.profile,

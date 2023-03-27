@@ -29,7 +29,7 @@ export default {
 	},
     created() {
         var vm = this;
-        var url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}`;
+        var url = `/plec/api/qna-free/${this.$route.params.freeQuestionNum}`;
         axios.get(url)
             .then(function (response) {
                 vm.title = response.data.body.title;
@@ -41,7 +41,7 @@ export default {
     },
     methods: {
         submitForm(){
-        const url = `/project/api/qna-free/${this.$route.params.freeQuestionNum}/update`;
+        const url = `/plec/api/qna-free/${this.$route.params.freeQuestionNum}/update`;
         const data = {
             title:this.title,
             content:this.content,

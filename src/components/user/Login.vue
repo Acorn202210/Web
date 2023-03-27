@@ -31,7 +31,7 @@ import axios from 'axios';
 	  },
 	  methods:{
         submitForm: function(){
-          const url = '/project/api/users/login';
+          const url = '/plec/api/users/login';
           const data ={
             lecUserId : this.id,
             userPwd : this.pwd

@@ -31,7 +31,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = `/project/api/notice/${this.$route.query.notiNum}`;
+    var url = `/plec/api/notice/${this.$route.query.notiNum}`;
     axios.get(url)
       .then(function (response) {
         vm.title = response.data.body.title;
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     submitForm(){
-      const url = `/project/api/notice/${this.$route.query.notiNum}/update`;
+      const url = `/plec/api/notice/${this.$route.query.notiNum}/update`;
       const data = {
         content:this.content,
         title:this.title,

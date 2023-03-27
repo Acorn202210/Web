@@ -64,7 +64,7 @@
     },
     created() {
     axios
-      .get(`/project/api/lecture/lecture-one/${this.$route.params.lecNum}`)
+      .get(`/plec/api/lecture/lecture-one/${this.$route.params.lecNum}`)
       .then(response => {
         console.log(response.data.body);
         this.detail = response.data.body;
@@ -81,7 +81,7 @@
         let image = this.$refs['image'].files[0];
         form.append('file', image);
         var vm = this;
-        var url = `/project/api/lecture/lecture-img-upload`;
+        var url = `/plec/api/lecture/lecture-img-upload`;
               axios.post(url, form)
                   .then(function (response) {
                     vm.lectureImage = response.data.body;
@@ -92,7 +92,7 @@
                   })
       },
       handleSubmit() {
-        const url = `/project/api/lecture/${this.$route.params.lecNum}/lecture-update`;
+        const url = `/plec/api/lecture/${this.$route.params.lecNum}/lecture-update`;
           const data = {
               title: this.detail.title,
               teacher: this.detail.teacher,

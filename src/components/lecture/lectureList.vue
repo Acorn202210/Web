@@ -20,7 +20,7 @@
               <div class="card mb-3">
                 <a @click="this.$router.push(`/lectureDetail/${lectureList.lecNum}`)">
                   <div class="img-wrapper">
-                    <img :src="`/project/api/lecture/${lectureList.imageNum}/image?imageNum=${lectureList.imageNum}`">
+                    <img :src="`/plec/api/lecture/${lectureList.imageNum}/image?imageNum=${lectureList.imageNum}`">
                   </div>
                 </a>
                 <div class="card-body">
@@ -94,7 +94,7 @@ export default {
   },
   methods: {
     getList() {
-      const url = '/project/api/lecture/lectureList';
+      const url = '/plec/api/lecture/lectureList';
       const data = {
         limit: 8,
         largeCategory: this.largeCategory,
@@ -111,7 +111,7 @@ export default {
     },
     paging(currentPage) {
       var vm = this;
-      const url = '/project/api/lecture/lectureList';
+      const url = '/plec/api/lecture/lectureList';
       const data = {
         limit: 8,
         currentPage: currentPage,

@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-6 col-md-4 col-lg-2 mt-3" v-for="tmp in myLec.lectureData" :key="tmp.imageNum">
                 <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
-                    <img class="myLecList-img" :src="`/project/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
+                    <img class="myLecList-img" :src="`/plec/api/lecture/${tmp.imageNum}/image?imageNum=${tmp.imageNum}`">
                 </a>
             </div>
         </div>
@@ -52,7 +52,7 @@ export default {
     },
     created() {
         var vm = this;
-        var url = "/project/api/users/my-lecture-list";
+        var url = "/plec/api/users/my-lecture-list";
         axios.get(url)
             .then(function (response) {
                 vm.myLec = response.data.body;
@@ -65,7 +65,7 @@ export default {
     methods: {
         paging: function (currentPage) {
             var vm = this;
-            var url = "/project/api/users/my-lecture-list";
+            var url = "/plec/api/users/my-lecture-list";
             const data = {
                 currentPage: currentPage
             }

@@ -13,7 +13,7 @@
           </div>
         </div>
         <div>
-          <img :src="`/project/api/lecture/${detail.imageNum}/image?imageNum=${detail.imageNum}`"
+          <img :src="`/plec/api/lecture/${detail.imageNum}/image?imageNum=${detail.imageNum}`"
             style="width: 500px; height: 500px;">
         </div>
         <br>
@@ -42,7 +42,7 @@
 
         <!-- 댓글 목록-->
         <div v-for="lectureReview in lectureReview.data" :key="lectureReview.lecReWriter">
-          <img v-if="lectureReview.profileNum" :src="`/project/api/users/profile/${lectureReview.profileNum}`" width="50" height="50" style="border-radius: 50%;">
+          <img v-if="lectureReview.profileNum" :src="`/plec/api/users/profile/${lectureReview.profileNum}`" width="50" height="50" style="border-radius: 50%;">
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor"
               class="bi bi-person-circle me-3" viewBox="0 0 16 16" v-else>
               <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
@@ -181,7 +181,7 @@ data() {
 },
 created() {
   axios
-    .get(`/project/api/lecture/lecture-one/${this.$route.params.lecNum}`)
+    .get(`/plec/api/lecture/lecture-one/${this.$route.params.lecNum}`)
     .then(response => {
       console.log(response.data.body);
       this.detail = response.data.body;
@@ -196,7 +196,7 @@ created() {
       console.error(error);
 
     });
-    const url = `/project/api/lecture-student/checkStudent/?lecStuRefGroup=${this.$route.params.lecNum}`;
+    const url = `/plec/api/lecture-student/checkStudent/?lecStuRefGroup=${this.$route.params.lecNum}`;
     axios.get(url)
       .then((response) => {
         console.log(response);
@@ -211,7 +211,7 @@ methods: {
     this.formData.star = starCount;
   },
   submitReviewForm() {
-    const url = '/project/api/lecture-review/Lecture-review-insert';
+    const url = '/plec/api/lecture-review/Lecture-review-insert';
     const data = {
       content: this.formData.content,
       star: this.formData.star,
@@ -229,7 +229,7 @@ methods: {
       });
   },
   getReviewList() {
-    var url = `/project/api/lecture-review/LectureReviewList`;
+    var url = `/plec/api/lecture-review/LectureReviewList`;
     const data = {
       limit: 8,
       lecReStuRefGroup: this.detail.lecNum
@@ -245,7 +245,7 @@ methods: {
   },
   paging: function (currentPage) {
     var vm = this;
-    const url = '/project/api/lecture-review/LectureReviewList';
+    const url = '/plec/api/lecture-review/LectureReviewList';
     const data = {
       limit: 8,
       currentPage: currentPage,
@@ -260,7 +260,7 @@ methods: {
       });
   },
   lectureDelete: function (lecNum) {
-    axios.put('/project/api/lecture/' + lecNum + '/lecture-delete', {}, { params: { lecNum } }
+    axios.put('/plec/api/lecture/' + lecNum + '/lecture-delete', {}, { params: { lecNum } }
     ).then(response => {
       console.warn(response)
       this.result = response.data;
@@ -282,7 +282,7 @@ methods: {
     }
   },
   reviewUpdate(lecReNum) {
-    const url = `/project/api/lecture-review/${lecReNum}/update`;
+    const url = `/plec/api/lecture-review/${lecReNum}/update`;
 
     const data = {
       content: this.formData.contentUpdate,
@@ -304,7 +304,7 @@ methods: {
     });
   },
   lectureReviewDelete: function (lecReNum) {
-    axios.put('/project/api/lecture-review/' + lecReNum + '/lecture-review-delete', {}, { params: { lecReNum } }
+    axios.put('/plec/api/lecture-review/' + lecReNum + '/lecture-review-delete', {}, { params: { lecReNum } }
     ).then(response => {
       console.warn(response)
       this.result = response.data;
@@ -319,7 +319,7 @@ methods: {
     }
   },
   lectureSignupForm() {
-    const url = '/project/api/lecture-student/lecture-signup'
+    const url = '/plec/api/lecture-student/lecture-signup'
     const data = {
       lecStuRefGroup: this.lecSignupForm.lecStuRefGroup
     };
@@ -335,7 +335,7 @@ methods: {
       });
   },
   lectureComplete() {
-    const url = '/project/api/lecture-student/lecture-complete'
+    const url = '/plec/api/lecture-student/lecture-complete'
     const data = {
       lecStuRefGroup: this.completeForm.lecStuRefGroup
     };
@@ -351,7 +351,7 @@ methods: {
       });
   },
   lecStudentOne(){
-    axios.get('/project/api/lecture-student/lecture-student-one', {
+    axios.get('/plec/api/lecture-student/lecture-student-one', {
       params: {
         lecStuRefGroup: this.detail.lecNum
       }

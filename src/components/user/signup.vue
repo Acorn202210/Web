@@ -90,7 +90,7 @@ export default {
       }
 
       const self = this;
-      const url = '/project/api/users/checkid';
+      const url = '/plec/api/users/checkid';
       const data = { lecUserId: this.id }
       axios.get(url, { params: data })
         .then(function (response) {
@@ -133,7 +133,7 @@ export default {
       } 
     },
     submitForm(){
-      const url = '/project/api/users';
+      const url = '/plec/api/users';
       const data = {
         lecUserId: this.id,
         managerYn: this.isManager,

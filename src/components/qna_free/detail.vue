@@ -62,7 +62,7 @@
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                             </svg>
                             <img v-if="answer.profileNum != null" class="profile-image"
-                                :src="`/project/api/users/profile/${answer.profileNum}`" />
+                                :src="`/plec/api/users/profile/${answer.profileNum}`" />
                             <span class="ms-3">{{ answer.freeCommentWriter }}</span>
 
                             <i v-if="answer.freeCommentNum != answer.commentGroup">@{{ answer.targetId }}</i>
@@ -118,7 +118,7 @@
                                     d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
                             </svg>
                             <img v-if="answer.profileNum != null" class="profile-image"
-                                :src="`/project/api/users/profile/${answer.profileNum}`" />
+                                :src="`/plec/api/users/profile/${answer.profileNum}`" />
                             <span class="ms-3">{{ answer.freeCommentWriter }}</span>
 
                             <i class="ms-3" v-if="answer.freeCommentNum != answer.commentGroup" :style="{ color: 'red' }">@{{ answer.targetId }}</i>
@@ -208,7 +208,7 @@ export default {
     },
     created() {
         axios
-        .get(`/project/api/qna-free/${this.$route.params.freeQuestionNum}`, {
+        .get(`/plec/api/qna-free/${this.$route.params.freeQuestionNum}`, {
             params: {
                 keyword: this.$route.query.keyword,
                 condition: this.$route.query.condition
@@ -222,7 +222,7 @@ export default {
         .catch((error) => {
             console.error(error);
         });
-        const url = `/project/api/qna-free-answer/list?freeCommentRefGroup=${this.$route.params.freeQuestionNum}`;
+        const url = `/plec/api/qna-free-answer/list?freeCommentRefGroup=${this.$route.params.freeQuestionNum}`;
         axios.get(url)
             .then((response) => {
                 console.log(response);
@@ -234,7 +234,7 @@ export default {
     },
     methods: {
         qnafreedelete: function (freeQuestionNum) {
-            axios.put('/project/api/qna-free/' + freeQuestionNum + '/delete',
+            axios.put('/plec/api/qna-free/' + freeQuestionNum + '/delete',
                 { freeQuestionNum }
             ).then(response => {
                 console.warn(response)
@@ -250,7 +250,7 @@ export default {
             }
         },
         getReviewList() {
-            var url = `/project/api/qna-free-answer/list`;
+            var url = `/plec/api/qna-free-answer/list`;
             const data = {
             limit: 10,
             freeCommentRefGroup: this.qnafree.freeQuestionNum
@@ -265,7 +265,7 @@ export default {
             });
         },
         paging: function (currentPage) {
-            const url = '/project/api/qna-free-answer/list';
+            const url = '/plec/api/qna-free-answer/list';
             const data = {
                 limit: 10,
                 currentPage: currentPage,
@@ -296,7 +296,7 @@ export default {
 
         },
         submitAnswerForm() {
-            const url = '/project/api/qna-free-answer';
+            const url = '/plec/api/qna-free-answer';
             const data = {
                 content: this.formData.content,
                 freeCommentRefGroup: this.qnafree.freeQuestionNum,
@@ -315,7 +315,7 @@ export default {
                 });
         },
         answerupdate(freeCommentNum) {
-            const url = `/project/api/qna-free-answer/${freeCommentNum}/update`;
+            const url = `/plec/api/qna-free-answer/${freeCommentNum}/update`;
             const data = {
                 content: this.formData.contentUpdate,
                 freeCommentNum: freeCommentNum
@@ -332,7 +332,7 @@ export default {
                 });
         },
         answerinsert(targetId, commentGroup) {
-            const url = '/project/api/qna-free-answer';
+            const url = '/plec/api/qna-free-answer';
             const data = {
                 content: this.formData.content2,
                 freeCommentRefGroup: this.qnafree.freeQuestionNum,
@@ -352,7 +352,7 @@ export default {
                 });
         },
         answerupdate2(freeCommentNum) {
-            const url = `/project/api/qna-free-answer/${freeCommentNum}/update`;
+            const url = `/plec/api/qna-free-answer/${freeCommentNum}/update`;
             const data = {
                 content: this.formData.contentUpdate2,
                 freeCommentNum: freeCommentNum
@@ -369,7 +369,7 @@ export default {
                 });
         },
         qnafreeanswerdelete: function (freeCommentNum) {
-            axios.put('/project/api/qna-free-answer/' + freeCommentNum + '/delete',
+            axios.put('/plec/api/qna-free-answer/' + freeCommentNum + '/delete',
                 { freeCommentNum }
             ).then(response => {
                 console.warn(response)
@@ -386,7 +386,7 @@ export default {
         },
         fetchData() {
             axios
-                .get(`/project/api/qna-free/${this.$route.params.freeQuestionNum}`, {
+                .get(`/plec/api/qna-free/${this.$route.params.freeQuestionNum}`, {
                     params: {
                         keyword: this.$route.query.keyword,
                         condition: this.$route.query.condition

@@ -30,7 +30,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = `/project/api/faq/${this.$route.params.num}`;
+    var url = `/plec/api/faq/${this.$route.params.num}`;
     axios.get(url)
       .then(function (response) {
         vm.question = response.data.body.question;
@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     submitForm(){
-      const url = `/project/api/faq/${this.$route.params.num}/update`;
+      const url = `/plec/api/faq/${this.$route.params.num}/update`;
       const data = {
         content:this.content,
         question:this.question,

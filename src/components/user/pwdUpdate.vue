@@ -62,7 +62,7 @@ export default {
     },
     created() {
         var vm = this;
-        var url = `/project/api/users/${this.id}`;
+        var url = `/plec/api/users/${this.id}`;
         axios.get(url)
             .then(function (response) {
                 vm.my = response.data.body;
@@ -71,7 +71,7 @@ export default {
                 console.log(error);
             })
 
-        var url2 = `/project/api/users/${this.id}/profile`;
+        var url2 = `/plec/api/users/${this.id}/profile`;
         axios.get(url2)
             .then(function (response) {
                 if (response != null) {
@@ -85,7 +85,7 @@ export default {
     methods: {
         del: function () {
             var vm = this;
-            var url = `/project/api/users/${this.id}/delete`;
+            var url = `/plec/api/users/${this.id}/delete`;
             axios.put(url)
                 .then(function () {
                     alert("탈퇴되었습니다.");
@@ -117,7 +117,7 @@ export default {
             }
         },
         submitForm() {
-            const url = `/project/api/users/${this.id}/pwdUpdate`;
+            const url = `/plec/api/users/${this.id}/pwdUpdate`;
             const data = {
                 lecUserId: this.id,
                 newPwd: this.newPwd,

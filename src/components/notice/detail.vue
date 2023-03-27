@@ -51,7 +51,7 @@ export default {
   },
   created() {
     var vm = this;
-    var url = `/project/api/notice/${this.$route.params.notiNum}`;
+    var url = `/plec/api/notice/${this.$route.params.notiNum}`;
     const data = {
       keyword: this.$route.query.keyword,
       condition: this.$route.query.condition
@@ -68,7 +68,7 @@ export default {
     deleteConfirm: function (notiNum) {
       var vm = this;
       const isDelete = confirm("이 공지 사항을 삭제하겠습니까?");
-      var url = `/project/api/notice/${notiNum}/delete`;
+      var url = `/plec/api/notice/${notiNum}/delete`;
       if (isDelete) {
         axios.put(url)
           .then(function () {
@@ -81,7 +81,7 @@ export default {
       }
     },
     fetchData() {
-            axios.get(`/project/api/notice/${this.$route.params.notiNum}`, {
+            axios.get(`/plec/api/notice/${this.$route.params.notiNum}`, {
                     params: {
                         keyword: this.$route.query.keyword,
                         condition: this.$route.query.condition

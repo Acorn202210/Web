@@ -21,7 +21,7 @@ export default {
 },
 created() {
   axios
-    .get(`/project/api/lecture/lecture-one/${this.$route.params.lecNum}`)
+    .get(`/plec/api/lecture/lecture-one/${this.$route.params.lecNum}`)
     .then(response => {
       console.log(response.data.body);
       this.detail = response.data.body;

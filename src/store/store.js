@@ -39,7 +39,7 @@ const store = new Vuex.Store({
             commit('setUserId', userId);
         },
         getData(){
-            axios.get('/project/api/faq/Faqlist')
+            axios.get('/plec/api/faq/Faqlist')
         },
         setIsManager:({commit}, isManager) => {
             commit('setIsManager', isManager);

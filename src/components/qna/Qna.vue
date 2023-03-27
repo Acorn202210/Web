@@ -93,7 +93,7 @@ export default {
 	  },
     created(){
       var vm=this;
-      var url = "/project/api/qna-board/list";
+      var url = "/plec/api/qna-board/list";
       const data={
         limit : 5
       }
@@ -117,7 +117,7 @@ export default {
       },
       paging:function(currentPage){
         var vm = this;
-        var url = "/project/api/qna-board/list";
+        var url = "/plec/api/qna-board/list";
         const data={
           limit : 5,
           currentPage:currentPage,
@@ -135,7 +135,7 @@ export default {
       },
       submitForm:function(){
         var vm = this;
-        var url = "/project/api/qna-board/list";
+        var url = "/plec/api/qna-board/list";
         const data={
           limit : 5,
           currentPage:vm.currentPage,

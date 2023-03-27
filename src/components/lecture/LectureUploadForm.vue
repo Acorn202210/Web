@@ -67,7 +67,7 @@ export default {
       let image = this.$refs['image'].files[0];
       form.append('file', image);
       var vm = this;
-      var url = `/project/api/lecture/lecture-img-upload`;
+      var url = `/plec/api/lecture/lecture-img-upload`;
             axios.post(url, form)
                 .then(function (response) {
                   vm.lectureImage = response.data.body;
@@ -78,7 +78,7 @@ export default {
                 })
     },
     handleSubmit() {
-      const url = `/project/api/lecture/lecture-insert`;
+      const url = `/plec/api/lecture/lecture-insert`;
         const data = {
             title: this.title,
             teacher: this.teacher,

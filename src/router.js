@@ -34,7 +34,7 @@ const routes = [
         
     },
     {
-        path: '/project',
+        path: '/plec',
         redirect: '/home',
         
     },
