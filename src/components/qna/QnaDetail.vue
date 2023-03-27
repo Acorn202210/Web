@@ -28,7 +28,7 @@
                   <td>{{qna.userRegdate}}</td>
               </tr>
           </table>
-          <textarea class="mainContent mt-3" v-model="qna.content"></textarea>
+          <textarea readonly class="mainContent mt-3" v-model="qna.content"></textarea>
           <div class="d-grid d-md-flex justify-content-md-end mt-3">
             <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
                 <a class="btn btn-sm me-2 new-btn" @click="this.$router.push(`/qnaupdate/${qna.boardQuestionNum}`)">수정</a>

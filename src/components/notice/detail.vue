@@ -29,7 +29,7 @@
         <td>{{ notice.regdate }}</td>
       </tr>
     </table>
-    <textarea class="mainContent mt-3" v-model="notice.content"></textarea>
+    <textarea readonly class="mainContent mt-3" v-model="notice.content"></textarea>
     <div class="d-grid d-md-flex justify-content-md-end mt-3">
       <div class="d-grid d-md-flex " v-if="$store.getters.isManager == 'Y'">
         <a @click="this.$router.push(`/notice/update?notiNum=${notice.notiNum}`)" class="btn btn-sm me-2 new-btn">수정</a>

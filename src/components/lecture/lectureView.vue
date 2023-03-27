@@ -6,7 +6,7 @@
       <p><strong>Teacher.</strong>{{ detail.teacher }}</p>
       <br>
       <p>강의 설명</p>
-      <textarea style="width: 540px; border: none; height: 300px;" v-model=" detail.describe"></textarea>
+      <textarea readonly style="width: 540px; border: none; height: 300px;" v-model=" detail.describe"></textarea>
     </div>
   </div>
 </template>
