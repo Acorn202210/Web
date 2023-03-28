@@ -138,17 +138,17 @@
                         </dd>
                     </dl>
                     <div v-if="isInsertFormVisible[answer.freeCommentNum]">
-                        <form class="comment-form update-form" @submit.prevent="answerinsert(answer.freeCommentWriter, answer.commentGroup)">
+                        <form class="comment-form update-form" @submit.prevent="answerinsert2(answer.freeCommentWriter, answer.commentGroup)">
                             <div class="input-group">
-                                <textarea name="content" v-model="formData.content" placeholder="댓글을 입력합니다"></textarea>
+                                <textarea name="content" v-model="formData.content3" placeholder="댓글을 입력합니다"></textarea>
                                 <button type="submit" class="btn new-btn">등록</button>
                             </div>
                         </form>
                     </div>
                     <div v-if="isUpdateFormVisible[answer.freeCommentNum]">
-                        <form class="comment-form update-form" @submit.prevent="answerupdate(answer.freeCommentNum)">
+                        <form class="comment-form update-form" @submit.prevent="answerupdate3(answer.freeCommentNum)">
                             <div class="input-group">
-                                <textarea name="content" v-model="formData.contentUpdate"
+                                <textarea name="content" v-model="formData.contentUpdate3"
                                     :placeholder="answer.content"></textarea>
                                 <button type="submit" class="btn new-btn">수정</button>
                             </div>
@@ -193,8 +193,10 @@ export default {
             formData: {
                 content: '',
                 content2: '',
+                content3: '',
                 contentUpdate: '',
                 contentUpdate2: '',
+                contentUpdate3: '',
                 freeCommentRefGroup: '',
                 targetId: '',
                 commentGroup: '',
@@ -351,10 +353,47 @@ export default {
                     alert('답변 등록 실패');
                 });
         },
+        answerinsert2(targetId, commentGroup) {
+            const url = '/plec/api/qna-free-answer';
+            const data = {
+                content: this.formData.content3,
+                freeCommentRefGroup: this.qnafree.freeQuestionNum,
+                targetId: targetId,
+                commentGroup: commentGroup
+            };
+            axios.post(url, data)
+                .then(response => {
+                    console.log(response.data);
+                    alert('답변 등록 성공');
+                    this.$router.go();
+                })
+                .catch(error => {
+                    console.error(error);
+                    console.log(data);
+                    alert('답변 등록 실패');
+                });
+        },
         answerupdate2(freeCommentNum) {
             const url = `/plec/api/qna-free-answer/${freeCommentNum}/update`;
             const data = {
                 content: this.formData.contentUpdate2,
+                freeCommentNum: freeCommentNum
+            };
+            axios.put(url, data)
+                .then(response => {
+                    console.log(response.data);
+                    alert('댓글 수정 성공');
+                    this.$router.go();
+                })
+                .catch(error => {
+                    console.error(error);
+                    alert('댓글 수정 실패');
+                });
+        },
+        answerupdate3(freeCommentNum) {
+            const url = `/plec/api/qna-free-answer/${freeCommentNum}/update`;
+            const data = {
+                content: this.formData.contentUpdate3,
                 freeCommentNum: freeCommentNum
             };
             axios.put(url, data)
