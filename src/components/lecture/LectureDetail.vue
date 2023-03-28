@@ -121,7 +121,7 @@
             <div v-if="!isStudent || studentOne.completeYn == 'Y'">
               <form class="mt-4 mb-3 d-flex justify-content-center" @submit.prevent="lectureSignupForm">
                 <input type="hidden" name="lecStuRefGroup" :value="detail.lecNum" />
-                <button :disabled="isStudent" class="button" type="submit">수강 신청</button>
+                <button class="button" type="submit">수강 신청</button>
               </form>
             </div>
             <div v-if="isStudent && studentOne.completeYn == 'N'">
@@ -319,20 +319,24 @@ methods: {
     }
   },
   lectureSignupForm() {
-    const url = '/plec/api/lecture-student/lecture-signup'
-    const data = {
-      lecStuRefGroup: this.lecSignupForm.lecStuRefGroup
-    };
-    axios.post(url, data)
-      .then(response => {
-        console.log(response.data);
-        alert('강의 신청 성공');
-        location.reload();
-      })
-      .catch(error => {
-        console.error(error);
-        alert('강의 신청 실패');
-      });
+    if(!this.isStudent){
+      alert("이미 수강 완료한 강의입니다.")
+    }else{
+      const url = '/plec/api/lecture-student/lecture-signup'
+      const data = {
+        lecStuRefGroup: this.lecSignupForm.lecStuRefGroup
+      };
+      axios.post(url, data)
+        .then(response => {
+          console.log(response.data);
+          alert('강의 신청 성공');
+          location.reload();
+        })
+        .catch(error => {
+          console.error(error);
+          alert('강의 신청 실패');
+        });
+    }
   },
   lectureComplete() {
     const url = '/plec/api/lecture-student/lecture-complete'
