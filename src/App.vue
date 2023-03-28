@@ -31,6 +31,9 @@ export default {
     Header,
     Footer
   },
+  mounted() {
+    document.title = 'plec';
+  }
   
   
 }
