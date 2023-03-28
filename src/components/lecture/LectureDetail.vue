@@ -319,7 +319,7 @@ methods: {
     }
   },
   lectureSignupForm() {
-    if(!this.isStudent){
+    if(this.isStudent){
       alert("이미 수강 완료한 강의입니다.")
     }else{
       const url = '/plec/api/lecture-student/lecture-signup'
