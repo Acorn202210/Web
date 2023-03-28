@@ -105,29 +105,31 @@ export default {
   },
   methods: {
     del: function (lecUserId) {
-      console.log(lecUserId);
-      var url = `/plec/api/users/${lecUserId}/delete`;
-      axios.put(url)
-        .then(function (response) {
-          console.log(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
+      if(confirm("정말로 "+lecUserId+"님을 탈퇴 시키겠습니까?")){
+        console.log(lecUserId);
+        var url = `/plec/api/users/${lecUserId}/delete`;
+        axios.put(url)
+          .then(function (response) {
+            console.log(response.data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
 
-      var vm = this;
-      var url2 = "/plec/api/users/list";
-      const data = {
-        limit: 7
+        var vm = this;
+        var url2 = "/plec/api/users/list";
+        const data = {
+          limit: 7
+        }
+        axios.get(url2, { params: data })
+          .then(function (response) {
+            console.log(response.data);
+            vm.list = response.data.body;
+          })
+          .catch(function (error) {
+            console.log(error);
+          })
       }
-      axios.get(url2, { params: data })
-        .then(function (response) {
-          console.log(response.data);
-          vm.list = response.data.body;
-        })
-        .catch(function (error) {
-          console.log(error);
-        })
     },
     paging: function (currentPage) {
       var vm = this;
