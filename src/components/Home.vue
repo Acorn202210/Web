@@ -23,7 +23,7 @@
   <div class="container">
     <div class="wrap">
       <ul>
-        <p class="mt-3">프론트 강의</p>
+        <p class="mt-3"><a @click="this.$router.push(`/lectureList/front/all`)">프론트 강의</a></p>
         <li v-for="tmp in front.data" :key="tmp.lecNum">
           <div class="contain mb-3">
             <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
@@ -35,7 +35,7 @@
     </div>
     <div class="wrap">
       <ul>
-        <p>백엔드 강의</p>
+        <p><a @click="this.$router.push(`/lectureList/backend/all`)">백엔드 강의</a></p>
         <li v-for="tmp in back.data" :key="tmp.lecNum">
           <div class="contain mb-3">
             <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
@@ -47,7 +47,7 @@
     </div>
     <div class="wrap">
       <ul>
-        <p>모바일 강의</p>
+        <p><a @click="this.$router.push(`/lectureList/mobile/all`)">모바일 강의</a></p>
         <li v-for="tmp in mobile.data" :key="tmp.lecNum">
           <div class="contain mb-3">
             <a @click="this.$router.push(`/lectureDetail/${tmp.lecNum}`)">
