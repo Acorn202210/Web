@@ -1,88 +1,88 @@
 <template>
     <div class="container">              
-        <div class="wrapper mt-2">
-          <div>
-            <div class="d-md-flex justify-content-md-end">
-              <a v-if="qna.prevNum != 0" @click="goToPrev" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-              <a v-if="qna.nextNum != 0" @click="goToNext" class="btn btn-sm btn-secondary">다음글</a>
-              <!--
-                <a v-if="qna.prevNum != 0" :href="`/qna/${qna.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-                <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
-              -->
-            </div>
+      <div class="wrapper mt-2">
+        <div>
+          <div class="d-md-flex justify-content-md-end">
+            <a v-if="qna.prevNum != 0 && $store.getters.isManager == 'Y'" @click="goToPrev" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+            <a v-if="qna.nextNum != 0 && $store.getters.isManager == 'Y'" @click="goToNext" class="btn btn-sm btn-secondary">다음글</a>
+            <!--
+              <a v-if="qna.prevNum != 0" :href="`/qna/${qna.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+              <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
+            -->
           </div>
-          <p v-if="this.$route.query.condition !=''" class="mt-2">
-            <strong>{{ this.$route.query.condition }}</strong> 조건
-            <strong>{{ this.$route.query.keyword }}</strong> 검색어로 검색된 내용입니다.
-          </p>
+        </div>
+        <p v-if="this.$route.query.condition !=''" class="mt-2">
+          <strong>{{ this.$route.query.condition }}</strong> 조건
+          <strong>{{ this.$route.query.keyword }}</strong> 검색어로 검색된 내용입니다.
+        </p>
 
-          <h3 class="sr-only">1:1문의 상세 보기</h3>
-          <h1>{{ qna.title }}</h1>
-          <table>
-              <tr>                
-                  <th>글번호</th>
-                  <td>{{qna.boardQuestionNum}}</td>
-              </tr>            
-              <tr>                
-                  <th>작성자</th>
-                  <td>{{qna.boardQuestionWriter}}</td>
-              </tr>
-              <tr>                
-                  <th>작성일</th>
-                  <td>{{qna.userRegdate}}</td>
-              </tr>
-          </table>
-          <textarea readonly class="mainContent mt-3" v-model="qna.content"></textarea>
-          <div class="d-grid d-md-flex justify-content-md-end mt-3">
-            <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
-                <a class="btn btn-sm me-2 new-btn" @click="this.$router.push(`/qnaupdate/${qna.boardQuestionNum}`)">수정</a>
-                <div class="d-grid d-md-flex">
-                  <input type="hidden" v-model="qna.boardQuestionNum"/>
-                  <button @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</button>
-                </div>                
+        <h3 class="sr-only">1:1문의 상세 보기</h3>
+        <h1>{{ qna.title }}</h1>
+        <table>
+            <tr>                
+                <th>글번호</th>
+                <td>{{qna.boardQuestionNum}}</td>
+            </tr>            
+            <tr>                
+                <th>작성자</th>
+                <td>{{qna.boardQuestionWriter}}</td>
+            </tr>
+            <tr>                
+                <th>작성일</th>
+                <td>{{qna.userRegdate}}</td>
+            </tr>
+        </table>
+        <textarea readonly class="mainContent mt-3" v-model="qna.content"></textarea>
+        <div class="d-grid d-md-flex justify-content-md-end mt-3">
+          <div class="d-grid d-md-flex" v-if="$store.getters.isUserId == qna.boardQuestionWriter">
+              <a class="btn btn-sm me-2 new-btn" @click="this.$router.push(`/qnaupdate/${qna.boardQuestionNum}`)">수정</a>
+              <div class="d-grid d-md-flex">
+                <input type="hidden" v-model="qna.boardQuestionNum"/>
+                <button @click="deleteConfirm(qna.boardQuestionNum)" class="btn btn-sm me-2 btn-danger">삭제</button>
+              </div>                
+          </div>
+          <a class="btn btn-sm me-2 btn-secondary" @click="this.$router.push(`/qna`)">목록</a>
+        </div>     
+
+        <!-- 댓글 출력 폼 -->
+        <div v-for="qnaAnswer in qnaAnswer.data" :key="qnaAnswer.boardCommentWriter"
+          class="mb-1 pb-1" v-show="qnaAnswer.boardCommentWriter != null">
+          <span><b> {{ qnaAnswer.boardCommentWriter }}</b></span>
+          <span class="ms-3"> {{ qnaAnswer.userRegdate }}</span> 
+          <span
+              v-if="$store.getters.isUserId != null && $store.getters.isManager == 'Y'">
+              <a class="update-link ms-3" @click="showUpdateForm(qnaAnswer.boardCommentNum)">수정</a>
+              <a class="del ms-3" @click="deleteAnswerConfirm(qnaAnswer.boardCommentNum)">삭제</a>
+          </span>
+          
+          <form class="comment-form mb-3">
+            <textarea class="form-control" name="content" v-model="qnaAnswer.content" readonly></textarea>            
+          </form>                        
+          
+          <!-- 댓글 수정 폼 -->
+          <div v-if="isUpdateFormVisible[qnaAnswer.boardCommentNum]">
+            <form class="comment-form update-form" @submit.prevent="answerUpdate(qnaAnswer.boardCommentNum)">
+            
+            <div class="input-group">
+              <textarea class="form-control" name="content" v-model="formData.contentUpdate" :placeholder="qnaAnswer.content"></textarea>
+              <button type="submit" class="button btn">수정</button>          
             </div>
-            <a class="btn btn-sm me-2 btn-secondary" @click="this.$router.push(`/qna`)">목록</a>
-          </div>     
+            </form>
+          </div>
+        </div>          
 
-          <!-- 댓글 출력 폼 -->
-          <div v-for="qnaAnswer in qnaAnswer.data" :key="qnaAnswer.boardCommentWriter"
-            class="mb-1 pb-1" v-show="qnaAnswer.boardCommentWriter != null">
-            <span><b> {{ qnaAnswer.boardCommentWriter }}</b></span>
-            <span class="ms-3"> {{ qnaAnswer.userRegdate }}</span> 
-            <span
-                v-if="$store.getters.isUserId != null && $store.getters.isManager == 'Y'">
-                <a class="update-link ms-3" @click="showUpdateForm(qnaAnswer.boardCommentNum)">수정</a>
-                <a class="del ms-3" @click="deleteAnswerConfirm(qnaAnswer.boardCommentNum)">삭제</a>
-            </span>
-            
-            <form class="comment-form mb-3">
-              <textarea class="form-control" name="content" v-model="qnaAnswer.content" readonly></textarea>            
-            </form>                        
-            
-            <!-- 댓글 수정 폼 -->
-            <div v-if="isUpdateFormVisible[qnaAnswer.boardCommentNum]">
-              <form class="comment-form update-form" @submit.prevent="answerUpdate(qnaAnswer.boardCommentNum)">
-              
+        <!-- 새 댓글 작성 폼 -->
+        <div v-if="$store.getters.isManager == 'Y'">
+          <br>
+            <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
+              <br>
+              <span class="mt-2">댓글 작성</span>
               <div class="input-group">
-                <textarea class="form-control" name="content" v-model="formData.contentUpdate" :placeholder="qnaAnswer.content"></textarea>
-                <button type="submit" class="button btn">수정</button>          
+                <input type="hidden" name="boardCommentRefGroup" :value="qna.boardQuestionNum" />
+                <textarea class="form-control" name="content" v-model="formData.content"></textarea>
+                <button type="submit" class="button btn">등록</button>
               </div>
-              </form>
-            </div>
-          </div>          
-
-          <!-- 새 댓글 작성 폼 -->
-          <div v-if="$store.getters.isManager == 'Y'">
-            <br>
-              <form class="comment-form insert-form" @submit.prevent="submitAnswerForm">
-                <br>
-                <span class="mt-2">댓글 작성</span>
-                <div class="input-group">
-                  <input type="hidden" name="boardCommentRefGroup" :value="qna.boardQuestionNum" />
-                  <textarea class="form-control" name="content" v-model="formData.content"></textarea>
-                  <button type="submit" class="button btn">등록</button>
-                </div>
-              </form>          
+            </form>          
           </div>                        
         </div>
       </div>
