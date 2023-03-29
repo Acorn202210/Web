@@ -3,8 +3,12 @@
         <div class="wrapper mt-2">
           <div>
             <div class="d-md-flex justify-content-md-end">
-              <a v-if="qna.prevNum != 0" :href="`/qna/${qna.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
-              <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
+              <a v-if="qna.prevNum != 0" @click="goToPrev" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+              <a v-if="qna.nextNum != 0" @click="goToNext" class="btn btn-sm btn-secondary">다음글</a>
+              <!--
+                <a v-if="qna.prevNum != 0" :href="`/qna/${qna.prevNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm me-md-2 btn-secondary">이전글</a>
+                <a v-if="qna.nextNum != 0" :href="`/qna/${qna.nextNum}?condition=${this.$route.query.condition }&keyword=${this.$route.query.keyword }`" class="btn btn-sm btn-secondary">다음글</a>
+              -->
             </div>
           </div>
           <p v-if="this.$route.query.condition !=''" class="mt-2">
@@ -105,22 +109,21 @@ export default {
       }
 	  },
     created(){
-      var vm = this;
-      var url = `/plec/api/qna-board/${this.$route.params.boardQuestionNum}`;
-      const data = {
-        keyword:this.$route.query.keyword,
-        condition:this.$route.query.condition
-      }
-      axios.get(url, { params: data })
-      .then(response => {
-        console.log(response.data.body);
-        vm.qna = response.data.body;
-        this.formData.boardCommentRefGroup = this.qna.boardQuestionNum;        
-        this.getAnswerList();
-      })
-      .catch(function(error){
-        console.log(error);
-      })
+      axios
+        .get(`/plec/api/qna-board/${this.$route.params.boardQuestionNum}`, {
+            params: {
+                keyword: this.$route.query.keyword,
+                condition: this.$route.query.condition
+            }
+        })
+        .then(response => {
+            console.log(response.data.body);
+            this.qna = response.data.body;
+            this.getAnswerList();
+        })
+        .catch((error) => {
+            console.error(error);
+        });       
     },
 
     methods:{
@@ -220,8 +223,47 @@ export default {
           this.qnaAnswerDelete(boardCommentNum);
         }
       },
-    }
-    
+      fetchData() {
+            axios
+              .get(`/plec/api/qna-board/${this.$route.params.boardQuestionNum}`, {
+                  params: {
+                      keyword: this.$route.query.keyword,
+                      condition: this.$route.query.condition
+                  }
+              })
+              .then(response => {
+                  console.log(response.data.body);
+                  this.qna = response.data.body;
+                  this.getAnswerList();
+              })
+              .catch((error) => {
+                  console.error(error);
+              });           
+      },
+      goToPrev() {
+        this.$router.push({
+          path: `/qna/${this.qna.prevNum}`,
+          query: {
+            condition: this.$route.query.condition,
+            keyword: this.$route.query.keyword
+          }
+        })
+      },
+      goToNext() {
+        this.$router.push({
+          path: `/qna/${this.qna.nextNum}`,
+          query: {
+            condition:this.$route.query.condition,
+            keyword:this.$route.query.keyword
+          }
+        })
+      }      
+  },   
+  watch: {
+      '$route.params.boardQuestionNum': function() {
+          this.fetchData();
+      },
+  },     
 }
 </script>
 
