@@ -40,7 +40,7 @@
 
       </table>      
       <div class="d-grid gap-2 d-md-flex justify-content-md-end">            
-        <a class="new-btn btn btn-sm" @click="this.$router.push(`/qna-insertform`)">등록</a>      
+        <a v-if="$store.getters.isManager == 'N'" class="new-btn btn btn-sm" @click="this.$router.push(`/qna-insertform`)">등록</a>      
       </div>
     </div> 
     <div>
