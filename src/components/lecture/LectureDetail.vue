@@ -19,7 +19,7 @@
         <br>
         <textarea readonly style="width: 1000px; border: none; height: 300px;" v-model=" detail.describe"></textarea>
         <br>
-        <div v-if="isStudent && $store.getters.isUserId != null">
+        <div v-if="isStudent && $store.getters.isUserId != null && $store.getters.isManager != 'Y'">
           <h4>수강 후기를 작성해주세요</h4>
           <form class="comment-form insert-form" @submit.prevent="submitReviewForm">
             <div class="star-rating">
