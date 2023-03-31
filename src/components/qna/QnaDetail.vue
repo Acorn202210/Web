@@ -119,6 +119,7 @@ export default {
         .then(response => {
             console.log(response.data.body);
             this.qna = response.data.body;
+            this.formData.boardCommentRefGroup = this.qna.boardQuestionNum;
             this.getAnswerList();
         })
         .catch((error) => {
@@ -234,6 +235,7 @@ export default {
               .then(response => {
                   console.log(response.data.body);
                   this.qna = response.data.body;
+                  this.formData.boardCommentRefGroup = this.qna.boardQuestionNum;
                   this.getAnswerList();
               })
               .catch((error) => {
